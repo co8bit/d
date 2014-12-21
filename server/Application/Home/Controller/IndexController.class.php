@@ -7,6 +7,6 @@ class IndexController extends Controller
     public function index()
     {
     	//$this->show("asd");
-    	echo "Asd";
+    	echo "你知道的太多了";
     }
 }
