@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>首页</title>
+    <script src="js/jquery-1.10.2.js"></script>
+    <script src="js/jquery.validity.js"></script>
+    <script src="js/jquery.datetimepicker.js"></script>
+    <script src="js/index.js"></script>
+    <link type="text/css" rel="stylesheet" href="style/jquery.validity.css">
+    <link type="text/css" rel="stylesheet" href="style/jquery.datetimepicker.css"/>
+    <link type="text/css" href="style/index.css" rel="stylesheet"/>
+
+</head>
+<body>
+    <div id="container">
+        <div class="column1 left">
+            <div class="column1-search">
+                <input type="text" placeholder="Search"/>
+                <img src="image/oneday-fangda.png" class="right">
+            </div>
+            <div class="column1-tags">
+                <div class="column1-tag">
+                    <div class="left column1-tag-label">日历</div>
+                    <div class="right"><img src="image/oneday-rightarrow.png"></div>
+                </div>
+                <div class="column1-tag">
+                    <div class="left column1-tag-label">发现活动</div>
+                    <div class="right"><img src="image/oneday-rightarrow.png"></div>
+                </div>
+                <div class="column1-tag">
+                    <div class="left column1-tag-label">稍后阅读</div>
+                    <div class="right"><img src="image/oneday-rightarrow.png"></div>
+                </div>
+                <div class="column1-tag">
+                    <div class="left column1-tag-label">求职信息</div>
+                    <div class="right"><img src="image/oneday-rightarrow.png"></div>
+                </div>
+            </div>
+        </div>
+        <div class="column2 left">
+            <div class="column2-date">
+                <div class="column2-date-calender left reverge-tag" id="oneday-calender">
+                </div>
+                <div class="column2-divider left"></div>
+                <div class="column2-date-time left">周三,12月3日</div>
+                <div class="column2-divider left"></div>
+                <div class="column2-arrows left">
+                    <div class="column2-arrows-left left reverge-tag" id="oneday-leftarrow"></div>
+                    <div class="column2-arrawdivider left"></div>
+                    <div class="column2-arrows-right left reverge-tag" id="oneday-rightarrow"></div>
+                </div>
+                <div class="column2-divider left"></div>
+                <div class="column2-cal right reverge-tag" id="oneday-calcu">
+                </div>
+                <div class="column2-divider right"></div>
+            </div>
+            <div class="column2-bottom">
+                <div class="column2-bottom-addbutton">
+                    点此快速新建任务
+                </div>
+                <div class="item-container">
+                    <div class="item">
+                        <div class="left item-container-time">
+                            07:15
+                        </div>
+                        <div class="left item-container-circle">
+                        </div>
+                        <div class="item-container-con">
+                            <div class="left item-cotainer-border">
+                                <div class="item-cotainer-content">
+                                    起床
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--<div class="item">
+                        <div class="left item-container-time">
+                            07:15
+                        </div>
+                        <div class="left item-container-circle">
+                        </div>
+                        <div class="item-container-con">
+                            <div class="left item-cotainer-border">
+                                <div class="item-cotainer-content">
+                                    起床
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="left item-container-time">
+                            17:15
+                        </div>
+                        <div class="left item-container-circle">
+                        </div>
+                        <div class="item-container-con">
+                            <div class="left item-cotainer-border">
+                                <div class="item-cotainer-content">
+                                    起床
+                                </div>
+                            </div>
+                        </div>
+                    </div>-->
+                </div>
+            </div>
+        </div>
+        <div class="column3 left">
+            <div class="column3-top">
+                <div class="column3-add left reverge-tag" id="oneday-add">
+                </div>
+                <div class="column3-divider left"></div>
+                <div class="column3-rubbish left reverge-tag" id="oneday-rubbish">
+                </div>
+                <div class="column3-divider left"></div>
+                <div class="column3-page left reverge-tag" id="oneday-page">
+                </div>
+                <div class="column3-divider left"></div>
+                <div class="column3-setting right reverge-tag" id="oneday-setting">
+                </div>
+                <div class="column3-divider right"></div>
+            </div>
+            <div class="column3-bottom">
+                <div class="column3-bottom-title">
+                    <div class="left"><img src="image/oneday-rightarrow.png"></div>
+                    正在创建新任务
+                </div>
+                <form id="newtask">
+                    <div class="column3-bottom-input">
+                        <label>标题<input type="text" name="title" placeholder="在此输入标题"/></label>
+                    </div>
+                    <div class="column3-bottom-input">
+                        <label>标签<input type="text"  name="tag"placeholder="添加标签"/></label>
+                    </div>
+                    <div class="column3-bottom-input">
+                        <label>地点<input type="text"  name="destination" placeholder="在此输入地点"/></label>
+                    </div>
+                    <div class="column3-bottom-inputtime">
+                        <div class="label left">时间</div>
+                        <div class="left">
+                            <div class="overflow">
+                                <label class="left">始于<input type="text" name="starttime"/></label>
+                            </div>
+                            <div class="overflow">
+                                <label class="left">止于<input type="text" name="endtime"/></label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="column3-bottom-input">
+                        <label>描述<textarea name="description"/></textarea></label>
+                    </div>
+                    <div class="column3-bottom-option">
+                        <div class="column3-bottom-option-label left">检查项</div>
+                        <div class="column3-bottom-group left">
+                            <!--<div class="option">
+                                <label><input type="checkbox" name="check"/>苹果</label>
+                            </div>
+                            <div class="option">
+                                <label><input type="checkbox" name="check"/>苹果</label>
+                            </div>-->
+                        </div>
+                        <div class="column3-bottom-option-new">
+                            <div class="column3-bottom-option-input">
+                                <input type="text" placeholder="输入检查项内容" name="checkoption"/>
+                            </div>
+                            <div class="column3-bottom-option-new-confirm left">添 加</div>
+                            <div class="column3-bottom-option-new-cancel left">取 消</div>
+                        </div>
+                    </div>
+                </form>
+                <div class="column3-bottom-person overflow">
+                    <div class="column3-bottom-person-label left">参与者</div>
+                    <div class="column3-bottom-person-img left">
+                        <img src="image/oneday-addperson.png" width="50px" height="50px"/>
+                        <img src="image/oneday-addperson.png" width="50px" height="50px"/>
+                        <img src="image/oneday-addperson.png" width="50px" height="50px"/>
+                    </div>
+                    <div id="addperson">
+                    </div>
+                </div>
+                <div class="column3-bottom-cancel left">取 消</div>
+                <div class="column3-bottom-confirm left">确 认</div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

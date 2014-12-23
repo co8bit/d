@@ -1,0 +1,12 @@
+*{margin: 0;padding: 0}
+@font-face {
+    font-family: fzzxh;
+    src: url('../font/方正正纤黑简体.TTF');
+}
+.container{overflow: hidden;background: url("../image/background.jpg");background-size:cover;text-align: center;font-family: fzzxh;padding-bottom: 50px}
+.underline{width: 960px;background: #fff;height: 2px;opacity: 0.4;margin: 40px auto}
+.logo{margin-top: 10px}
+.logo span{vertical-align: 50px;font-size: 40px;color: #ffffff}
+.video{margin-top: 40px;}
+.video video{width: 960px;margin: 0 auto}
+.button{width: 200px;height: 40px;border-radius: 10px;background: #ffffff;opacity: 0.4;margin: 0 auto;margin-top: 30px;cursor: pointer;line-height: 40px;font-size: 20px}
