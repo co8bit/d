@@ -26,6 +26,7 @@ class UserController extends Controller
      * @param string $userName 用户名
      * @param string  密码
      * @return bool"" 是否成功
+     *         error"" 用户名或密码为空
      */
     public function login() 
     {
@@ -33,8 +34,8 @@ class UserController extends Controller
        // {
             $userName           =       I('param.userName');
             $userPassword       =       I('param.userPassword');
-            empty($userName) && exit("错误：用户名不能为空");
-            empty($userPassword) && exit("错误：密码不能为空");
+            empty($userName) && exit("error");
+            empty($userPassword) && exit("error");
             
             if ( $result = D("User")->login($userName,$userPassword) )
             {
@@ -78,18 +79,19 @@ class UserController extends Controller
      * @param string $userName 用户名
      * @param string $userPassword 密码
      * @return bool "" 是否成功
-     *         "error" 用户名已存在
+     *         "error" 用户名已存在或用户名密码为空
      */
     public function sign()
     {
         $dbUser = D("User");
         $data["name"]      =       I('param.userName');
         $data["pwd"]       =       I('param.userPassword');
-        empty($data["name"]) && exit("错误：用户名不能为空");
-        empty($data["pwd"]) && exit("错误：密码不能为空");
+        empty($data["name"]) && exit("error");
+        empty($data["pwd"]) && exit("error");
 
-        //判断用户名是否重复
-        if ( !empty($dbUser->where(array("name"=>$data["name"]))->find()) )
+        //判断用户名是否重复 TODO:
+        $tmpResult  =   $dbUser->where(array("name"=>$data["name"]))->find();
+        if ( !empty($tmpResult) )
             exit("error");
 
         $userId = $dbUser->add($data);

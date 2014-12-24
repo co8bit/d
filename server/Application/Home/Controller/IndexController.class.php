@@ -13,6 +13,6 @@ class IndexController extends Controller
     {
     	//$this->show("asd");
     	echo "你知道的太多了<br>";
-    	echo "注册地址：".U("User/sign");
+    	echo "<a href='".U("User/sign")."'>注册</a>";
     }
 }
