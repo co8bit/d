@@ -1,11 +1,12 @@
 <?php
-class UserModel extends Model {
+namespace Home\Model;
+use Think\Model;
 
-	private $userName = "";
-	
-	public function init($userName)//传入userName
+class UserModel extends Model
+{
+
+	public function init()
 	{
-		$this->userName = $userName;
 	}
 	
 	// 自动验证设置
@@ -22,76 +23,36 @@ class UserModel extends Model {
 	/**
 	 * 判断用户名和密码是否能登录
 	 * @param 	string $userName;用户名
-	 * 					string $userPassword 用户密码
-	 * @return 数据库返回的结果集，数组大小应为1。外面调用形如$re[0][]
+	 * 			string $userPassword 用户密码
+	 * @return  array[],数据库返回的结果集
 	 */
 	public function login($userName,$userPassword)
 	{
-		$condition['userName'] = $userName;
-		$condition['userPassword'] = $userPassword;
-		$tmp = $this->where($condition)->select();
+		$condition['name'] = $userName;
+		$condition['pwd'] = $userPassword;
+		$tmp = $this->where($condition)->find();
 		if (!empty($tmp))
-			return $tmp[0];
+			return $tmp;
 		else
 			return false;
 	}
 	
 	
-	public function selectPtUser(){
-		$condition['auth'] = 'pt';
-		return $this->where($condition)->select();
-	}
-	
-	
-	/**
-	 * 删除普通管理员账户
-	 * @param string $uid 普通管理员id
-	 * @return 数据库返回的结果集，数组大小应为1。外面调用形如$re[0][]
-	 */
-	public function deleteUser($uid){
-
-		$condition="uid=".$uid;
-		$result = $this->where($condition)->delete();
-		return $result;
-	}
-	
-	
-	/**
-	 * 添加普通管理员账户
-	 * @param  $new_user_array 新普通管理员信息数组
-	 * @return 数据库返回的结果集,添加的记录位置
-	 */
-	public function addUser($new_user_array){
-     return $this->add($new_user_array);
-						
-}
-
-	
 	/**
 	 * 得到指定用户的用户信息
-	 * @param	string $name;用户名
-	* @return	array;
-	* 				查询成功返回用户所有字段的数组
-	* 				没查到返回null
-	* 				查询错误返回false
-	*/
-	public function getUserInfo($name)
+	 * @param	string $uid
+	 * @return	array[];
+	 * 				查询成功返回用户所有字段的数组
+	 * 				没查到null、false查询错误返回false
+	 */
+	public function getUserInfo($uid)
 	{
-		$tmp = $this->where("userName=\"".$name."\"")->select();
-		if ( ($tmp === false) || ($tmp === null) )
+		$tmp = $this->where(array("uid"=>$uid))->find();
+		if (!empty($tmp))
 			return $tmp;
 		else
-			return $tmp[0];
+			return false;
 	}
-	public function getUserInfoById($id)
-	{
-		$tmp = $this->where("uid=\"".$id."\"")->select();
-		if ( ($tmp === false) || ($tmp === null) )
-			return $tmp;
-		else
-			return $tmp[0];
-	}
-	
 	
 }
 ?>

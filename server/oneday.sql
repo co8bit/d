@@ -1,8 +1,7 @@
-/*创建用户及对应数据库，用户对对应的数据库享有所有权限*/
-CREATE USER 'oneday'@'localhost' IDENTIFIED BY "oneday";
-GRANT USAGE ON * . * TO 'oneday'@'localhost' IDENTIFIED BY "oneday" WITH MAX_QUERIES_PER_HOUR 0 MAX_CONNECTIONS_PER_HOUR 0 MAX_UPDATES_PER_HOUR 0 MAX_USER_CONNECTIONS 0 ;
-CREATE DATABASE IF NOT EXISTS `oneday` ;
-GRANT ALL PRIVILEGES ON `oneday` . * TO 'oneday'@'localhost';
+CREATE USER 'onedayt54w'@'localhost' IDENTIFIED BY 'onedaysfkl76jk';
+GRANT USAGE ON *.* TO 'onedayt54w'@'localhost' IDENTIFIED BY 'onedaysfkl76jk' WITH MAX_QUERIES_PER_HOUR 0 MAX_CONNECTIONS_PER_HOUR 0 MAX_UPDATES_PER_HOUR 0 MAX_USER_CONNECTIONS 0;
+CREATE DATABASE IF NOT EXISTS `oneday`;
+GRANT ALL PRIVILEGES ON `oneday`.* TO 'onedayt54w'@'localhost';
 
 /*使用数据库*/
 use oneday;

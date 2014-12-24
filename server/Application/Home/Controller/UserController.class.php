@@ -33,8 +33,8 @@ class UserController extends Controller
        // {
             $userName           =       I('param.userName');
             $userPassword       =       I('param.userPassword');
-            empty($userName) && $this->error("错误：用户名不能为空");
-            empty($userPassword) && $this->error("错误：密码不能为空");
+            empty($userName) && exit("错误：用户名不能为空");
+            empty($userPassword) && exit("错误：密码不能为空");
             
             if ( $result = D("User")->login($userName,$userPassword) )
             {
@@ -59,7 +59,7 @@ class UserController extends Controller
         //判断session是否存在
         if (!session('?uid'))
         {
-            echo "error";
+            exit("error");
         }
     
         //删除session
@@ -85,12 +85,12 @@ class UserController extends Controller
         $dbUser = D("User");
         $data["name"]      =       I('param.userName');
         $data["pwd"]       =       I('param.userPassword');
-        empty($data["name"]) && $this->error("错误：用户名不能为空");
-        empty($data["pwd"]) && $this->error("错误：密码不能为空");
+        empty($data["name"]) && exit("错误：用户名不能为空");
+        empty($data["pwd"]) && exit("错误：密码不能为空");
 
         //判断用户名是否重复
         if ( !empty($dbUser->where(array("name"=>$data["name"]))->find()) )
-            echo "error";
+            exit("error");
 
         $userId = $dbUser->add($data);
         if(empty($userId))//添加失败
