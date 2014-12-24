@@ -6,13 +6,24 @@ class UserController extends Controller
 {
 	protected function _initialize() 
     {
-        parent::_initialize();
+        //parent::_initialize();
     }
     
+
+    /**
+     * 登录好后设置session
+     * @param array $data 要设置session所需要的信息数组
+     */
+    protected function setSession($data)
+    {
+        session('userName',$data['name']);
+        session("uid",$data["uid"]);
+    }
+
     /**
      * 用户登录函数
      * @param string $userName 用户名
-     * @param string $userPassword 密码
+     * @param string  密码
      * @return bool"" 是否成功
      */
     public function login() 
@@ -27,8 +38,7 @@ class UserController extends Controller
             if ( $result = D("User")->login($userName,$userPassword) )
             {
                 //设置session
-                session('userName',$result['name']);
-                session("uid",$result["uid"]);
+                $this->setSession($result);
                 echo "true";
             }
             else
@@ -60,5 +70,37 @@ class UserController extends Controller
             echo "error";
         else
             echo "true";
+    }
+
+    /**
+     * 注册函数
+     * @param string $userName 用户名
+     * @param string $userPassword 密码
+     * @return bool "" 是否成功
+     *         "error" 用户名已存在
+     */
+    public function sign()
+    {
+        $dbUser = D("User");
+        $data["name"]      =       I('param.userName');
+        $data["pwd"]       =       I('param.userPassword');
+        empty($data["name"]) && $this->error("错误：用户名不能为空");
+        empty($data["pwd"]) && $this->error("错误：密码不能为空");
+
+        //判断用户名是否重复
+        if ( !empty($dbUser->where(array("name"=>$data["name"]))->find()) )
+            echo "error";
+
+        $userId = $dbUser->add($data);
+        if(empty($userId))//添加失败
+        {
+            echo "false";
+        }
+        else
+        {
+            $data["uid"]    =   $userId;
+            $this->setSession($data);
+            echo "true";
+        }
     }
 }

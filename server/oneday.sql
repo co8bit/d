@@ -10,7 +10,7 @@ use oneday;
 /*创建表*/
 create table user(
 	uid bigint NOT NULL AUTO_INCREMENT,
-	name varchar(100) NOT NULL,/*TODO：主键或者唯一*/
+	name varchar(100) NOT NULL,/*TODO：唯一*/
 	pwd varchar(100) NOT NULL,
 
 	primary key(uid)
