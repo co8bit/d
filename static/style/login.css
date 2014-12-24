@@ -10,18 +10,18 @@ canvas{position: absolute;top: 0;z-index: 1}
 .container-top-login{margin-left: 65px;position: relative;z-index: 2}
 .container-top-logo{margin: 0 20px;position: relative;z-index: 4}
 .container-top-register{position: relative;z-index: 2}
-.container-login{overflow: hidden;width: 320px;margin: 16px auto;color: #adadad;margin-bottom: 50px}
+.container-login{overflow: hidden;width: 320px;margin: 16px auto;color: #adadad;margin-bottom: 20px}
 .container-register{display: none}
 .container-login img{vertical-align: -4px;margin-right: 3px}
 .container-login div.right{cursor: pointer}
 .container-content{clear: both;text-align: center;background: #fcfcfb;border: 1px solid #c7c5c4;border-radius: 8px;position: relative;top:-60px;padding-top: 60px;z-index: 3}
-.container-content h1{font-size: 30px;font-weight: normal;color: #746f6f;margin-top: 20px}
-.container-content-shejiao{width: 320px;height: 38px;background: #91d2ff;margin: 30px auto;margin-bottom: 0;border-radius: 5px;text-align: left;padding-top: 12px;}
+.container-content h1{font-size: 30px;font-weight: normal;color: #746f6f;margin-top:10px}
+.container-content-shejiao{width: 320px;height: 38px;background: #91d2ff;margin: 20px auto;margin-bottom: 0;border-radius: 5px;text-align: left;padding-top: 12px;}
 .container-content-shejiao span{margin-left: 23px;font-size: 20px;color: #ffffff;margin-right: 32px}
 .container-content-shejiao img{margin: 0 8px}
-.container-content h2{font-size: 20px;font-weight: normal;margin: 20px 0}
-.container-content input{width: 318px;height: 48px;border: 1px solid #c9c9c9;border-radius: 5px;margin-bottom: 18px;color: #746f6f;font-size: 20px;text-indent:20px}
+.container-content h2{font-size: 20px;font-weight: normal;margin: 10px 0}
+.container-content input{width: 318px;height: 48px;border: 1px solid #c9c9c9;border-radius: 5px;margin-bottom: 10px;color: #746f6f;font-size: 20px;text-indent:20px}
 .container-content-register,.container-content-login{cursor:pointer;width: 320px;background: #f4a8a3;height: 50px;margin: 0 auto;border-radius: 5px;color: #ffffff;line-height: 50px;font-size: 24px}
-.container-content-login{margin-bottom: 15px}
+.container-content-login{margin-bottom: 10px}
 .container-content h3{margin-top: 20px;color: #b1b1b1;font-weight: normal;margin-bottom: 60px}
 .container-content h3 b{text-decoration: underline;cursor: pointer}

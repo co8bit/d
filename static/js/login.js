@@ -3,6 +3,10 @@
  */
 $(document).ready(function(){
     /*$('#black').css('width',$(window).width()).css('height',$(window).height());*/
+    var apiBaseUrl='../server/index.php/schedule/query/sid/1';
+    $.getJSON(apiBaseUrl,function(data){
+        alert(data);
+    })
     var width=$(window).width();
     var height=$(document).height();
     $('.container-content-email input').focus(function(){

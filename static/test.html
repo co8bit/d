@@ -4,13 +4,30 @@
     <meta charset="UTF-8">
     <title></title>
     <link href="style/test.css" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" type="text/css" href="style/font-awesome.css" />
+    <link rel="stylesheet" type="text/css" href="style/simditor.css" />
     <script src="js/jquery-1.10.2.js"></script>
-    <script src="js/1.js"></script>
+    <script src="js/simditor-all.js"></script>
     <script>
-        window.onload=function(){
-        }
+        $(document).ready(function(){
+            var toolbar;
+            toolbar = ['bold', 'italic', 'underline', 'strikethrough', 'color', '|', 'ol', 'ul', 'blockquote', 'code', 'table', '|', 'link', 'image', 'hr', '|', 'indent', 'outdent'];
+            editor = new Simditor({
+                textarea: $('#container'),
+                placeholder: '',
+                tabIndent: false,
+                pasteImage: true,
+                toolbar: toolbar
+            });
+            $('.simditor-toolbar ul').css('height','50px').css('line-height','50px');
+            $('.simditor-body').css('color','#666');
+        })
+
     </script>
 </head>
 <body>
+    <textarea id="container" style="width: 200px;height: 400px;border: 1px solid #000">
+
+    </textarea>
 </body>
 </html>

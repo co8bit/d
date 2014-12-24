@@ -18,7 +18,7 @@ body{background: url("../image/background.jpg");background-size:cover;overflow-x
 .column1-tag{height: 45px;width: 100%;line-height: 45px;border-bottom: 1px solid #e5e5e4;cursor: pointer}
 .column1-tag-label{width: 100px;margin-left: 20px}
 .column1-tag img{margin-right: 20px}
-.column2{width: 55%;margin: 0 1%;overflow: hidden;height: 100%}
+.column2{width: 52%;margin: 0 1%;overflow: hidden;height: 100%}
 .column2-date{height: 45px;background: white;border-radius: 5px;overflow: hidden}
 .column2-date-calender{width: 45px; height:45px;cursor: pointer;background: url("../image/oneday-calender.jpg")}
 .column2-divider{width: 1px;height: 100%;background: #e6e6e5}
@@ -28,22 +28,43 @@ body{background: url("../image/background.jpg");background-size:cover;overflow-x
 .column2-arrawdivider{width: 1px;height: 22px;background:#e6e6e5;margin-top: 11px }
 .column2-arrows-right{width:30px;height:45px;background:url("../image/oneday-rightarrow.jpg");cursor: pointer}
 .column2-cal{width:45px;height:45px;background:url("../image/oneday-calcu.jpg");cursor: pointer}
-.column2-bottom{width: 100%;background: white;height: 90%;margin-top:2%;overflow:hidden;border-radius: 5px;position: relative;background: url("../image/oneday-dayview-bg.png");background-size: 100%}
+.column2-bottom{width: 100%;background: #f8f7f6;height: 90%;margin-top:2%;overflow:hidden;border-radius: 5px;position: relative;background: url("../image/oneday-dayview-bg.png");background-size: 100%}
 .column2-bottom-addbutton{font-size: 16px;color: #dddddd;text-align: center;padding: 12px;border: 1px solid #dddddd;border-radius: 5px;width: 70%;margin-left: 15%;margin-top: 10px;text-align: left;cursor: pointer}
 .item{height: 65px;margin: 10px 0;}
+.column2-bottom-activity-item{width: 302px;height: 243px;background: #ffffff;padding-left: 20px;overflow: hidden;margin-left: 27px;margin-top: 30px;cursor: pointer}
+.column2-bottom-activity-item h1{font-size: 19px;font-weight: normal;margin-top: 20px;margin-bottom: 20px}
 .item-container-time{font-size: 20px;color: #15130f;font-family: fzzxh;margin-left: 1%;margin-top: 20px;width: 7.75%;margin-right: 1%;text-align: center}
 .item-container-circle{background: white;width: 18px;height: 18px;border-radius: 50%;position:relative;left:0;line-height: 65px;margin-top: 20px}
 .item-cotainer-border{border: 3px solid #f7c4b1;text-align: left;margin-left: 12px;width: 85%;height: 60px;line-height: 60px;font-size: 34px;background: white}
 .item-cotainer-content{width: 40%;background: #f7c4b1;text-indent: 20px;color: white}
 .item-container-con{background: url("../image/oneday-item-bg.png");overflow: hidden;cursor: pointer}
-.column3{width: 22%;height: 100%}
+.column3{width: 25%;height: 100%}
 .column3-top{width: 100%;height: 45px;background: white;border-radius: 5px;overflow: hidden}
 .column3-add{width: 45px;height: 45px;background: url("../image/oneday-add.jpg")}
 .column3-rubbish{width: 45px;height: 45px;background: url("../image/oneday-rubbish.jpg")}
 .column3-page{width: 45px;height: 45px;background: url("../image/oneday-page.jpg")}
 .column3-setting{width: 45px;height: 45px;background: url("../image/oneday-setting.jpg")}
 .column3-divider{height: 100%;width: 1px;background: #e3e3e2}
+.column3-bottom-taskdetail{height: 100%;}
 .column3-bottom{height: 90%;margin-top: 5%;width: 100%;background: white;border-radius: 5px;overflow: hidden}
+.column3-bottom-taskdetail-bottom{position: relative;top: 50%}
+.column3-bottom-taskdetail-left{padding-top:20px;height: 200px;width: 45px;background: #2e3540;position: absolute;top: 0px;float: left}
+.column3-bottom-taskdetail-left img{cursor: pointer}
+.column3-bottom-taskdetail-bottom-buttons{clear: both;margin-right: 20px;padding-top:20px}
+.column3-bottom-taskdetail-bottom-button{cursor:pointer;width: 58px;height: 22px;float: right;text-align: center;line-height: 22px;font-size: 13px;color: #ffffff}
+#column3-bottom-taskdetail-bottom-buttons-confirm{background: #ed7a72}
+#column3-bottom-taskdetail-bottom-buttons-cancel{background: #abaaaa;margin-right: 25px}
+.column3-bottom-taskdetail-header{height: 45px;width: 100%;background: #2e3540;color: #ffffff}
+.column3-bottom-taskdetail-header img.rightarrow{margin-top: 15px;margin-left: 15px}
+.column3-bottom-taskdetail-header img.confirm{float: right;margin-top: 10px;margin-right: 20px}
+.column3-bottom-taskdetail-header-title{font-size: 16px}
+.column3-bottom-taskdetail-header-ddl{color: #79797b;font-size: 12px;margin-left: 20px}
+.column3-bottom-taskdetail-content{font-size: 1.5em;color: #a19e99;margin-top: 5%;margin-left: 16%}
+.column3-bottom-activity-title{font-size: 18px;background: #2e3540;height: 45px;width: 100%;color: #ffffff;line-height: 45px}
+.column3-bottom-activity-title img{margin-left: 20px;margin-right: 20px}
+.column3-bottom-activity-item{margin-top: 15px}
+.column3-bottom-activity-item img{margin-left: 15px;margin-right: 5px}
+.column3-bottom-activity-item span{vertical-align: 15px;font-size: 16px}
 .column3-bottom-title{height: 48px;width:100%;background: #ed7a72;border-radius: 5px 5px 0 0;color: white;font-size: 18px;line-height: 48px;overflow: hidden}
 .column3-bottom-title div{margin: 0 18px}
 .column3-bottom-input{margin-top:20px;margin-left: 8px;color: #a9a9a9;margin-right: 20px}
