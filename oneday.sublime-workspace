@@ -1,0 +1,353 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "/C/Users/8bit/Documents/cocos/CocosLuaGame/frameworks/cocos2d-x/tools/tolua/genbindings.py",
+			"settings":
+			{
+				"buffer_size": 5954,
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "",
+	"command_palette":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"console":
+	{
+		"height": 0.0,
+		"history":
+		[
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/C/wamp/www/onethink1.1",
+		"/C/wamp/www/onethink1.1/wwwroot",
+		"/C/wamp/www/onethink1.1/wwwroot/Application",
+		"/C/wamp/www/onethink1.1/wwwroot/Application/Admin",
+		"/C/wamp/www/onethink1.1/wwwroot/Application/Admin/Common",
+		"/C/wamp/www/onethink1.1/wwwroot/Application/Admin/Controller"
+	],
+	"file_history":
+	[
+		"/C/Users/8bit/Documents/cocos/CocosLuaGame/frameworks/cocos2d-x/tools/tolua/MyClass.ini",
+		"/C/Users/8bit/Documents/cocos/CocosLuaGame/frameworks/cocos2d-x/tools/tolua/cocos2dx_spine.ini",
+		"/C/Users/8bit/Desktop/cocos2d-x-3.3/tests/lua-empty-test/src/hello.lua",
+		"/C/Users/8bit/Desktop/cocos2d-x-3.3/tools/tolua/genbindings.py",
+		"/C/Users/8bit/Documents/Cocos/CocosLuaGame/frameworks/runtime-src/Classes/AppDelegate.cpp",
+		"/C/cocos/cocos2d-x-3.2/cocos2d-x-3.2/setup.py",
+		"/D/wbx/zju/course/2012-2013秋冬（大二上）/arduino/R2 DEC Arduino2012挑战赛提交版/R2 DEC/源代码/R2DECMain.ino",
+		"/C/wamp/www/tms/tms/Lib/Action/BaseAction.class.php",
+		"/C/wamp/www/oneday/server/oneday.sql",
+		"/C/wamp/www/oneday/server/Application/Home/Controller/IndexController.class.php",
+		"/C/wamp/www/oneday/server/Application/Home/Controller/ScheduleController.class.php",
+		"/C/Users/8bit/Desktop/onethink1.1/wwwroot/admin.php",
+		"/C/Users/8bit/Desktop/onethink1.1/README.md",
+		"/C/Users/8bit/AppData/Local/Temp/360zip$Temp/360$0/README.md",
+		"/C/wamp/www/loveServer/loveSql.sql",
+		"/C/wamp/www/oneday/server/Application/Home/Controller/index.html",
+		"/C/wamp/www/tms/sql/a6_tms.sql",
+		"/C/Users/8bit/AppData/Local/Temp/user.sql",
+		"/C/Users/8bit/Desktop/oneday1.0/oneday/yindao.html",
+		"/C/Users/8bit/Desktop/oneday1.0/oneday/js/yindao.js",
+		"/C/wamp/www/topic/App/Conf/config.php",
+		"/C/wamp/www/talkpiece 1.0 beta/index.php",
+		"/C/wamp/www/topic/App/Runtime/Data/install/install.sql",
+		"/C/wamp/www/oneday/server/Application/Common/Conf/config.php",
+		"/C/Users/8bit/Desktop/thinkphp_3.2.2_full/index.php",
+		"/C/Users/8bit/Desktop/thinkphp_3.2.2_full/composer.json",
+		"/C/Users/8bit/Desktop/thinkphp_3.2.2_full/README.md",
+		"/C/Users/8bit/Desktop/thinkphp_3.2.2_full/Public/README.md",
+		"/C/Users/8bit/Desktop/thinkphp_3.2.2_full/Application/README.md",
+		"/H/软件安装程序/office/2013/注：用win8.1破解的那个程序破解.20140604",
+		"/C/Users/8bit/Desktop/准.txt",
+		"/D/wbx/zju/course/计算机图形学/a5/a5_wbx/a5/a3.cpp",
+		"/D/wbx/zju/course/计算机图形学/a6/a6/a3.cpp",
+		"/C/Users/8bit/Desktop/cocktail/scripter/jquery-1.9.1.js",
+		"/C/Users/8bit/Desktop/cocktail/index.html",
+		"/C/Users/8bit/Desktop/shujia/a.sql",
+		"/C/Users/8bit/Desktop/asdas.html",
+		"/D/wbx/zju/course/2012-2013秋冬（大二上）/s数据结构基础/bonus/hqm_3110000201_02.cpp",
+		"/D/wbx/zju/course/2012-2013秋冬（大二上）/s数据结构基础/bonus/hqm_3110000201_01.c",
+		"/C/Users/8bit/AppData/Local/Temp/360zip$Temp/360$1/a3.cpp",
+		"/C/Users/8bit/Desktop/a4/实验四/A4/A4/glutEx5.cpp",
+		"/C/Users/8bit/Desktop/a4/实验四/A4/A4/stanford_bunny.cpp",
+		"/C/wamp/www/svn/aqyh/1/ThinkPHP/Tpl/default_index.tpl",
+		"/D/wbx/zju/course/计算机图形学/刘大名/刘大名_3110000364_A3/GraphicsLab2/GraphicsLab2/GraphicsLab2.cpp",
+		"/C/Users/8bit/Desktop/感想/导师感想.txt",
+		"/C/Users/8bit/Desktop/实习",
+		"/C/Users/8bit/Desktop/导师感谢（吴飞）",
+		"/D/wbx/zju/course/计算机图形学/a1/实验一/实验一/实验一/Ex1/glutEx1/glutEx1.cpp",
+		"/D/wbx/zju/course/计算机图形学/hbx/胡蓓欣_3120103959_A1/starflag.cpp",
+		"/C/Users/8bit/AppData/Local/Temp/360zip$Temp/360$2/starflag.cpp",
+		"/C/Users/8bit/Desktop/index.php",
+		"/C/Users/Public/Thunder Network/XMP4/ProgramData/Subtitle/Online/432383675297169037B5F8CEAB7101B8B0346175/432383675297169037B5F8CEAB7101B8B0346175.7201339611444C34F83B40C5B740AA44481E8605.srt",
+		"/C/Users/Public/Thunder Network/XMP4/ProgramData/Subtitle/Online/432383675297169037B5F8CEAB7101B8B0346175/432383675297169037B5F8CEAB7101B8B0346175.D37A9A0DF87E1BD43B57DE47215C46C04153E249.srt",
+		"/C/Users/8bit/AppData/Local/Temp/bill.sql",
+		"/D/wbx/youxi/FireFly Studios/stronghold3/bin/win32_release/config——backwbx.xml",
+		"/D/wbx/youxi/FireFly Studios/stronghold3/bin/win32_release/config.xml",
+		"/D/wbx/youxi/FireFly Studios/stronghold3/bin/win32_release/MapEditor.exe.config",
+		"/D/wbx/youxi/FireFly Studios/stronghold3/assets/essentials.xml",
+		"/D/wbx/youxi/Stronghold 3/Stronghold 3/bin/win32_release/config.xml",
+		"/C/Users/8bit/Desktop/餐饮美工一流kse73@3v3.cc/新建文件夹/food.html",
+		"/C/wamp/www/a.html",
+		"/C/wamp/www/welcome.php",
+		"/C/wamp/www/svn/loveserver/1/Lib/Action/RuleAction.class.php",
+		"/C/Users/8bit/Desktop/assets/loc.v",
+		"/C/Users/8bit/Desktop/assets/update2.v",
+		"/C/Users/8bit/Desktop/餐饮美工一流kse73@3v3.cc/新建文件夹/index.html",
+		"/C/Users/8bit/Desktop/新建文件夹/style.css",
+		"/G/胡蓓欣备份/餐饮美工一流kse73@3v3.cc/新建文件夹/style.css",
+		"/C/Users/8bit/Desktop/新建文件夹/index.html",
+		"/C/Users/8bit/Desktop/餐饮美工一流kse73@3v3.cc/新建文件夹/style.css",
+		"/C/Users/8bit/Desktop/a.html",
+		"/C/Users/8bit/Desktop/welcome.php",
+		"/C/wamp/www/loveServer/.git/config",
+		"/C/Users/8bit/Desktop/andriod/20140408华为a199备份/Sms_QQPhoneManager(2014-04-06).xml",
+		"/C/Users/8bit/Desktop/andriod/back/Sms_QQPhoneManager(2013-08-07).xml",
+		"/C/Users/8bit/Desktop/run/SdA.py",
+		"/C/Users/8bit/Desktop/研究生的邮件",
+		"/C/Users/8bit/Desktop/distribute_setup.py",
+		"/C/Users/8bit/Desktop/dA.py",
+		"/C/Users/8bit/Desktop/SdA (2).py",
+		"/C/Users/8bit/Desktop/mlp.py",
+		"/C/Users/8bit/Desktop/sim_sda.py",
+		"/C/Users/8bit/Desktop/SdA.py",
+		"/C/Users/8bit/Desktop/sim_da.py",
+		"/C/Users/8bit/Desktop/logistic_sgd.py",
+		"/C/Users/8bit/Desktop/ppt/完整版注释代码/mlp.py",
+		"/C/Users/8bit/dA.pyc",
+		"/C/Users/8bit/Desktop/sim_da",
+		"/C/Users/8bit/Desktop/pycuda-2013.1.1/siteconf.py",
+		"/C/Users/8bit/AppData/Local/Blizzard Entertainment/System Survey/ProductData/S2/Game/vars.json",
+		"/C/Users/8bit/AppData/Roaming/Battle.net/Battle.net.config",
+		"/C/Users/8bit/utils.py",
+		"/C/Users/8bit/logistic_sgd.py",
+		"/C/Users/8bit/Desktop/hebel-master/examples/mnist_neural_net_deep_script.py",
+		"/C/Users/8bit/Desktop/dl/mnist.pkl/mnist.pkl",
+		"/C/Users/8bit/Desktop/hebel-master/README.md",
+		"/C/Users/8bit/Desktop/hebel-master/setup.py",
+		"/C/Users/8bit/Desktop/pycuda-2013.1.1/configure.py",
+		"/C/Users/8bit/Desktop/pycuda-2013.1.1/aksetup_helper.py",
+		"/C/Windows/System32/drivers/etc/hosts",
+		"/C/Users/8bit/Desktop/get-pip.py",
+		"/C/Users/8bit/Desktop/DiandianWeb-master/bin/less_compiler.js",
+		"/C/Users/8bit/Desktop/rockwithandroid-master/README.md",
+		"/C/Program Files (x86)/易玩通/“易玩通”娱乐平台/XML/GameList.xml",
+		"/C/Users/8bit/Desktop/DiandianWeb-master/zh.js",
+		"/C/Users/8bit/Desktop/DiandianWeb-master/app.js",
+		"/C/Users/8bit/Desktop/DiandianWeb-master/ws/websocket.js",
+		"/C/Users/8bit/Desktop/DiandianWeb-master/views/shop_desk_add.html",
+		"/C/Users/8bit/Desktop/DiandianWeb-master/routes/index.js",
+		"/C/Users/8bit/Desktop/DiandianWeb-master/modules/mod_desk.js",
+		"/C/Users/8bit/Desktop/DiandianWeb-master/modules/mod_item.js",
+		"/C/Users/8bit/Desktop/DiandianWeb-master/core/dimg.js",
+		"/C/Users/8bit/Desktop/DiandianWeb-master/controllers/ctrl_printer.js",
+		"/C/Users/8bit/Desktop/DiandianWeb-master/controllers/ctrl_order.js",
+		"/C/Users/8bit/Desktop/DiandianWeb-master/config/default.js",
+		"/C/Users/8bit/Desktop/DiandianWeb-master/config/log4js.json",
+		"/C/Users/8bit/Desktop/DiandianWeb-master/config/runtime.json",
+		"/C/Users/8bit/Desktop/DiandianWeb-master/bin/init_default_user.js",
+		"/C/Users/8bit/Desktop/DiandianWeb-master/bin/command.js",
+		"/C/Users/8bit/Desktop/DiandianWeb-master/core/lock.js",
+		"/E/k/8/1.c",
+		"/C/Users/8bit/Desktop/index.html",
+		"/C/Users/8bit/Desktop/jzb代码/php/php/Connections/conn.php",
+		"/C/Users/8bit/Desktop/hebel-master/docs/Makefile",
+		"/C/Users/8bit/Desktop/hebel-master/hebel/__init__.py",
+		"/C/Users/8bit/Desktop/hebel-master/hebel/version.py",
+		"/C/Users/8bit/Desktop/hebel-master/CHANGES.md",
+		"/C/Users/8bit/Desktop/hebel-master/MANIFEST.in"
+	],
+	"find":
+	{
+		"height": 35.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"handDown",
+			"MTurnLeft",
+			"MTurnLeftOrign",
+			"isEditFromID",
+			"浙大",
+			"  ",
+			"nav",
+			"15355494740",
+			"18768187922",
+			"training_epochs",
+			"iter",
+			"finetune_lr",
+			"self.errors",
+			"corruption_level",
+			"corruption",
+			"theano_rng",
+			"numpy",
+			"numpy_rng",
+			"numpy_rng.uniform",
+			"zip",
+			"pcduino_hello_init",
+			"9",
+			"foreign"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			""
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 0,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "/C/Users/8bit/Documents/cocos/CocosLuaGame/frameworks/cocos2d-x/tools/tolua/genbindings.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 5954,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								4877,
+								4877
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 2052.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 27.0
+	},
+	"input":
+	{
+		"height": 0.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"project": "oneday.sublime-project",
+	"replace":
+	{
+		"height": 64.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": true,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 261.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}
