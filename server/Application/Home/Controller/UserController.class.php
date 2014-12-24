@@ -4,9 +4,10 @@ use Think\Controller;
 
 class UserController extends Controller
 {
-	protected function _initialize() 
+    protected function _initialize()
     {
         //parent::_initialize();
+        header("Content-Type:text/html; charset=utf-8");
     }
     
 
@@ -28,8 +29,8 @@ class UserController extends Controller
      */
     public function login() 
     {
-        if (IS_POST)
-        {
+        //if (IS_POST)
+       // {
             $userName           =       I('param.userName');
             $userPassword       =       I('param.userPassword');
             empty($userName) && $this->error("错误：用户名不能为空");
@@ -45,7 +46,7 @@ class UserController extends Controller
             {
                 echo "false";
             }
-        }
+       // }
     }
     
     /**
