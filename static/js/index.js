@@ -37,7 +37,11 @@ $(document).ready(function(){
 
 
 
-
+    $('#test').click(function(){
+        $.get('../server/index.php/Schedule/query',{sid:1},function(data){
+            alert(JSON.stringify(data));
+        })
+    })
     //页面变换主逻辑
     $('.column1-tag').click(function(){
         switch ($(this).find('.column1-tag-label').html()){
@@ -157,12 +161,6 @@ $(document).ready(function(){
                     '<div class="column3-bottom-option">'+
                     '<div class="column3-bottom-option-label left">检查项</div>'+
                     '<div class="column3-bottom-group left">'+
-                    '<div class="option">'+
-                    '<label><input type="checkbox" name="check"/>苹果</label>'+
-                    '</div>'+
-                    '<div class="option">'+
-                    '<label><input type="checkbox" name="check"/>苹果</label>'+
-                    '</div>'+
                     '</div>'+
                     '<div class="column3-bottom-option-new">'+
                     '<div class="column3-bottom-option-input">'+
@@ -264,12 +262,6 @@ $(document).ready(function(){
         '<div class="column3-bottom-option">'+
             '<div class="column3-bottom-option-label left">检查项</div>'+
             '<div class="column3-bottom-group left">'+
-            '<div class="option">'+
-                '<label><input type="checkbox" name="check"/>苹果</label>'+
-            '</div>'+
-            '<div class="option">'+
-            '<label><input type="checkbox" name="check"/>苹果</label>'+
-            '</div>'+
         '</div>'+
             '<div class="column3-bottom-option-new">'+
                 '<div class="column3-bottom-option-input">'+
@@ -355,7 +347,7 @@ $(document).ready(function(){
         var description=$("textarea[name='description']").val();
         if(validatenull($("input[name='title']"))&&validatenull($("input[name='tag']"))&&validatenull($("input[name='destination']"))&&validatenull($("input[name='starttime']"))&&validatenull($("input[name='endtime']"))&&validatenull($("input[name='description']"))){
             if(optionnum){
-                if(description){
+                if(Date.parse(endtime)>Date.parse(starttime)){
                     var checkall=$('.column3-bottom-group .option');
                     $.each(checkall,function(i,d){
                         var checkitem={content:$(d).find('label').attr('value'),state:1};
@@ -363,38 +355,40 @@ $(document).ready(function(){
                     });
                     var checkstr=JSON.stringify(check);
                     $.post("../server/index.php/Schedule/create",
-                        {
-                            title:title,
-                            tag:tag,
-                            location:destination,
-                            startTime:starttime,
-                            endTime:endtime,
-                            content:description,
-                            check:checkstr,
-                            participant:null
-                        },
-                        function (result){
-                            if(result=='true'){
-                                $('.item-container').append(
-                                        '<div class="item">'+
-                                        '<div class="left item-container-time">'+
-                                        starttimeobj['hour']+':'+starttimeobj['minute']+
-                                        '</div>'+
-                                        '<div class="left item-container-circle">'+
-                                        '</div>'+
-                                        '<div class="item-container-con">'+
-                                        '<div class="left item-cotainer-border">'+
-                                        '<div class="item-cotainer-content">'+
-                                        title+
-                                        '</div>'+
-                                        '</div>'+
-                                        '</div>'+
-                                        '</div>'
-                                )
-                            }else{
-                                alert('似乎出了一些问题');
-                            }
-                        });
+                    {
+                        title:title,
+                        tag:tag,
+                        location:destination,
+                        startTime:starttime,
+                        endTime:endtime,
+                        content:description==null?'null':destination,
+                        check:checkstr,
+                        participant:null
+                    },
+                    function (result){
+                        if(result=='true'){
+                            $('.item-container').append(
+                                    '<div class="item">'+
+                                    '<div class="left item-container-time">'+
+                                    starttimeobj['hour']+':'+starttimeobj['minute']+
+                                    '</div>'+
+                                    '<div class="left item-container-circle">'+
+                                    '</div>'+
+                                    '<div class="item-container-con">'+
+                                    '<div class="left item-cotainer-border">'+
+                                    '<div class="item-cotainer-content">'+
+                                    title+
+                                    '</div>'+
+                                    '</div>'+
+                                    '</div>'+
+                                    '</div>'
+                            )
+                        }else{
+                            alert('似乎出了一些问题');
+                        }
+                    });
+                }else{
+                    alert('结束时间要大于开始时间哦');
                 }
             }else{
                 alert('您还没有输入检查项哦');
