@@ -50,7 +50,7 @@ class ScheduleController extends Controller
 
         $dbSchedule->field("sid")->create(I('param.'));
 
-        $result    =   $dbSchedule->where(array("sid"=>$dbSchedule->sid))->find();
+        $result    =   $dbSchedule->where(array("uid"=>$this->uid,"sid"=>$dbSchedule->sid))->find();
         $result["tag"] = json_decode($result["tag"],true);
         $result["check"] = json_decode($result["check"],true);
         $result["participant"] = json_decode($result["participant"],true);
@@ -79,6 +79,7 @@ class ScheduleController extends Controller
         // $data["participant"]   =   I('param.participant');//json
 
         $dbSchedule->field("title,location,startTime,endTime,content")->create(I('param.'));
+        $dbSchedule->uid =  $this->uid;
         $dbSchedule->tag = I('param.tag',"null",false);
         $dbSchedule->check = I('param.check',"null",false);
         $dbSchedule->participant = I('param.participant',"null",false);
@@ -117,6 +118,7 @@ class ScheduleController extends Controller
         $data   =   null;
 
         $dbSchedule->field("sid,title,location,startTime,endTime,content")->create(I('param.'));
+        $dbSchedule->uid = $this->uid;
         $dbSchedule->tag = I('param.tag',"null",false);
         $dbSchedule->check = I('param.check',"null",false);
         $dbSchedule->participant = I('param.participant',"null",false);
@@ -152,7 +154,7 @@ class ScheduleController extends Controller
         $dbSchedule     =   D("Schedule");
 
         $dbSchedule->field("sid")->create(I('param.'));
-        if ($dbSchedule->where(array("sid"=>$dbSchedule->sid))->delete())
+        if ($dbSchedule->where(array("uid"=>$this->uid,"sid"=>$dbSchedule->sid))->delete())
             exit("true");
         else
             exit("false");
@@ -161,19 +163,66 @@ class ScheduleController extends Controller
 
     /**
      * 查询一天日程
-     * @return [type] [description]
+     * @param int date 日期，精确到日
+     * @return error "" 非法操作
+     * @return array[ReturnJson] 一个ReturnJson数组，每一项是一个事项
+     * @return null 当天没有日程
      */
     public function day()
     {
-        // $dbSchedule     =   D("Schedule");
+        $dbSchedule     =   D("Schedule");
 
-        // $date   =   I("param.date","");
-        // $dbSchedule->dateValidateRules($date);
+        $date   =   I("param.date","");
+        $dbSchedule->dateValidateRules($date);
 
-        // $data   =   null;
-        // $data   =   $dbSchedule->where(array("startTime"=>$date.))->select();
-        // $this->ajaxReturn($data);
+        $map["startTime"]   =   array("between",array($date." 00:00:00",$date." 23:59:59"));
+        $data   =   null;
+        $data   =   $dbSchedule->where($map)->where(array("uid"=>$this->uid))->select();
+        foreach ($data as $key1=>$value1)
+        {
+            foreach ($data[$key1] as $key2=>$value2)
+            {
+                if ( ($key2 == "tag") || ($key2 == "check") || ($key2 == "participant") )
+                {
+                    $data[$key1][$key2]     =   json_decode($value2,true);
+                }
+            }
+        }
+        $this->ajaxReturn($data);
     }
+
+
+
+    /**
+     * 查询一周日程
+     * @param int date 日期，精确到日
+     * @return error "" 非法操作
+     * @return array[ReturnJson] 一个ReturnJson数组，每一项是一个事项
+     * @return null 当天没有日程
+     */
+    public function week()
+    {
+        $dbSchedule     =   D("Schedule");
+
+        $date   =   I("param.date","");
+        $dbSchedule->dateValidateRules($date);
+
+        $map["startTime"]   =   array("between",array($date." 00:00:00",$date." 23:59:59"));
+        $data   =   null;
+        $data   =   $dbSchedule->where($map)->where(array("uid"=>$this->uid))->select();
+        foreach ($data as $key1=>$value1)
+        {
+            foreach ($data[$key1] as $key2=>$value2)
+            {
+                if ( ($key2 == "tag") || ($key2 == "check") || ($key2 == "participant") )
+                {
+                    $data[$key1][$key2]     =   json_decode($value2,true);
+                }
+            }
+        }
+        $this->ajaxReturn($data);
+    }
+
 
     /**
      * 添加一项CheckItem
@@ -194,12 +243,12 @@ class ScheduleController extends Controller
         if (!$dbSchedule->checkValidateRules($data))
             exit("error");
 
-        $tmp    =   $dbSchedule->where(array("sid"=>$dbSchedule->sid))->find();
+        $tmp    =   $dbSchedule->where(array("uid"=>$this->uid,"sid"=>$dbSchedule->sid))->find();
         $tmp["check"]   =   json_decode($tmp["check"],true);
         array_push($tmp["check"],array("content"=>$data["content"],"state"=>$data["state"]));
         $tmp2   =   nnull;
         $tmp2   =   json_encode($tmp["check"]);
-        if ($dbSchedule->save(array("sid"=>$dbSchedule->sid,"check"=>$tmp2)))
+        if ($dbSchedule->save(array("uid"=>$this->uid,"sid"=>$dbSchedule->sid,"check"=>$tmp2)))
             exit("true");
         else
             exit("false");
@@ -223,7 +272,7 @@ class ScheduleController extends Controller
         if (!$dbSchedule->checkValidateRules($check))
             exit("error");
 
-        $tmp    =   $dbSchedule->save(array("sid"=>$dbSchedule->sid,"check"=>$check));
+        $tmp    =   $dbSchedule->save(array("uid"=>$this->uid,"sid"=>$dbSchedule->sid,"check"=>$check));
         if ( ($tmp === null) || ($tmp === false) )
             exit("false");
         else
