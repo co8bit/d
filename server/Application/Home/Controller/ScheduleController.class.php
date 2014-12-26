@@ -91,7 +91,8 @@ class ScheduleController extends Controller
         if (!$dbSchedule->participantValidateRules($dbSchedule->participant))
             exit("error");
 
-        if(empty($dbSchedule->add()))//添加失败
+        $tmp    =   $dbSchedule->add();
+        if(empty($tmp))//添加失败
         {
             echo "false";
         }
@@ -160,7 +161,8 @@ class ScheduleController extends Controller
 
 
     /**
-     * 添加一项Check
+     * 添加一项CheckItem
+     * @param int sid
      * @param string content 检查项名称
      * @param bool state 检查项状态
      * @return bool "" 是否成功
@@ -172,7 +174,7 @@ class ScheduleController extends Controller
 
         $dbSchedule->field("sid")->create(I('param.'));
         $data["content"]    =   I("param.content","");
-        $data["state"]      =   (bool)I("param.state","");
+        $data["state"]      =   (int)I("param.state","");
 
         if (!$dbSchedule->checkValidateRules($data))
             exit("error");
@@ -186,5 +188,28 @@ class ScheduleController extends Controller
             exit("true");
         else
             exit("false");
+    }
+
+    /**
+     * 修改全部Check，注意是全部check，因为区分不出来修改第几个check
+     * @param int sid
+     * @param ReturJson_check check 全部check的json
+     * @return bool "" 是否成功
+     * @return error "" 错误
+     */
+    public function editCheck()
+    {
+        $dbSchedule     =   D("Schedule");
+
+        $dbSchedule->field("sid")->create(I('param.'));
+        $check = I('param.check',"null",false);
+        if (!$dbSchedule->checkValidateRules($check))
+            exit("error");
+
+        $tmp    =   $dbSchedule->save(array("sid"=>$dbSchedule->sid,"check"=>$check));
+        if ( ($tmp === null) || ($tmp === false) )
+            exit("false");
+        else
+            exit("true");
     }
 }

@@ -106,4 +106,9 @@ class UserController extends Controller
             echo "true";
         }
     }
+
+    public function getUserInfo()
+    {
+        
+    }
 }
