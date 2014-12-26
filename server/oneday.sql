@@ -21,11 +21,12 @@ create table schedule(
 	title TEXT NOT NULL,
 	tag TEXT NOT NULL,
 	location TEXT not null,
-	startTime datetime NOT NULL,
-	endTIme datetime NOT NULL,
+	startTime TIMESTAMP NOT NULL,
+	endTIme TIMESTAMP NOT NULL,
 	content text not null,
 	`check` text not null,
 	participant text not null,
 
 	primary key(sid)
 ) CHARACTER SET utf8 COLLATE utf8_general_ci;
+INSERT INTO `oneday`.`schedule` (`sid`, `title`, `tag`, `location`, `startTime`, `endTIme`, `content`, `check`, `participant`) VALUES (NULL, 'George', 'pig', 'zju', '2014-12-25 09:25:32', '2014-12-26 15:36:37', '你好吗', '{ "content": "nicaibudao", "state": true }, { "content": "nice", "state": true } }', '[ 321, 67 ] ');
