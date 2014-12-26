@@ -18,6 +18,7 @@ insert user values(NULL,"wbx","wbx");
 
 create table schedule(
 	sid bigint NOT NULL AUTO_INCREMENT,
+	uid bigint NOT NULL,
 	title TEXT NOT NULL,
 	tag TEXT NOT NULL,
 	location TEXT not null,
@@ -29,4 +30,4 @@ create table schedule(
 
 	primary key(sid)
 ) CHARACTER SET utf8 COLLATE utf8_general_ci;
-INSERT INTO `oneday`.`schedule` (`sid`, `title`, `tag`, `location`, `startTime`, `endTIme`, `content`, `check`, `participant`) VALUES (NULL, 'George', 'pig', 'zju', '2014-12-25 09:25:32', '2014-12-26 15:36:37', '你好吗', '{ "content": "nicaibudao", "state": true }, { "content": "nice", "state": true } }', '[ 321, 67 ] ');
+INSERT INTO `oneday`.`schedule` (`sid`, `uid`, `title`, `tag`, `location`, `startTime`, `endTIme`, `content`, `check`, `participant`) VALUES (NULL, `1`, `George', 'pig', 'zju', '2014-12-25 09:25:32', '2014-12-26 15:36:37', '你好吗', '{ "content": "nicaibudao", "state": true }, { "content": "nice", "state": true } }', '[ 321, 67 ] ');
