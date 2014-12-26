@@ -31,5 +31,10 @@ class ScheduleModel extends Model
 		return true;
 	}
 
+	public function dateValidateRules()
+	{
+		return true;
+	}
+
 }
 ?>
