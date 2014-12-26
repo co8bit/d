@@ -92,7 +92,8 @@ class ScheduleController extends Controller
         if (!$dbSchedule->participantValidateRules($dbSchedule->participant))
             exit("error");
 
-        if(empty($dbSchedule->add()))//添加失败
+		$tmp = $dbSchedule->add();
+        if(empty($tmp))//添加失败
         {
             echo "false";
         }

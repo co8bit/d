@@ -2,7 +2,6 @@
     font-family: fzzxh;
     src: url('../font/方正正纤黑简体.TTF');
 }
-
 *{margin: 0;padding: 0;font-family: fzzxh}
 .overflow{overflow: hidden}
 body{background: url("../image/background.jpg");background-size:cover;overflow-x: hidden;width: 100%;height: 100%}
@@ -11,6 +10,7 @@ body{background: url("../image/background.jpg");background-size:cover;overflow-x
 .right{float: right}
 .column1{width: 20%;height: 100%}
 .reverge-tag{cursor: pointer}
+#test{width: 50px;height: 20px;background: #fff}
 .column1-search{height: 45px;background: white;border-radius: 5px;line-height: 45px}
 .column1-search input{outline:none;border: 0;margin-left: 20px;font-family: arial;font-size: 16px;width: 70%;}
 .column1-search img{margin-top:10px;margin-right: 15px;cursor: pointer}
@@ -28,11 +28,14 @@ body{background: url("../image/background.jpg");background-size:cover;overflow-x
 .column2-arrawdivider{width: 1px;height: 22px;background:#e6e6e5;margin-top: 11px }
 .column2-arrows-right{width:30px;height:45px;background:url("../image/oneday-rightarrow.jpg");cursor: pointer}
 .column2-cal{width:45px;height:45px;background:url("../image/oneday-calcu.jpg");cursor: pointer}
-.column2-bottom{width: 100%;background: #f8f7f6;height: 90%;margin-top:2%;overflow:hidden;border-radius: 5px;position: relative;/*background: url("../image/oneday-dayview-bg.png");*/background-size: 100%}
-.column2-bottom-calender{}
+.column2-bottom{width: 100%;background: #f8f7f6;height: 90%;margin-top:2%;overflow:hidden;border-radius: 5px;position: relative;background: url("../image/oneday-dayview-bg.png");/**/background-size: 100%}
+.column2-bottom-calender{width: 100%;height: 100%}
+.column2-bottom-calender-title{width: 100%;background: #a7a6a7;height: 6%;color: #ffffff;border-radius: 5px}
+.column2-bottom-calender-container{height: 11%}
+.column2-bottom-calender-container td{width: 14%;background: #ffffff;border: 2px solid #ebebeb;}
 .column2-bottom-addbutton{font-size: 16px;color: #dddddd;text-align: center;padding: 12px;border: 1px solid #dddddd;border-radius: 5px;width: 70%;margin-left: 15%;margin-top: 10px;text-align: left;cursor: pointer}
 .item{height: 65px;margin: 10px 0;}
-.column2-bottom-activity-item{width: 302px;height: 243px;background: #ffffff;padding-left: 20px;overflow: hidden;margin-left: 27px;margin-top: 30px;cursor: pointer}
+.column2-bottom-activity-item{width: 45%;background: #ffffff;overflow: hidden;margin-left: 3%;margin-top: 30px;cursor: pointer;text-align: center;padding-bottom: 10px}
 .column2-bottom-activity-item h1{font-size: 19px;font-weight: normal;margin-top: 20px;margin-bottom: 20px}
 .item-container-time{font-size: 20px;color: #15130f;font-family: fzzxh;margin-left: 1%;margin-top: 20px;width: 7.75%;margin-right: 1%;text-align: center}
 .item-container-circle{background: white;width: 18px;height: 18px;border-radius: 50%;position:relative;left:0;line-height: 65px;margin-top: 20px}
@@ -47,7 +50,7 @@ body{background: url("../image/background.jpg");background-size:cover;overflow-x
 .column3-setting{width: 45px;height: 45px;background: url("../image/oneday-setting.jpg")}
 .column3-divider{height: 100%;width: 1px;background: #e3e3e2}
 .column3-bottom-taskdetail{height: 100%;}
-.column3-bottom{height: 90%;margin-top: 5%;width: 100%;background: white;border-radius: 5px;overflow: hidden}
+.column3-bottom{height: 90%;margin-top: 5%;width: 100%;background: white;border-radius: 5px;overflow-y:auto}
 .column3-bottom-taskdetail-bottom{position: relative;top: 50%}
 .column3-bottom-taskdetail-left{padding-top:20px;height: 200px;width: 45px;background: #2e3540;position: absolute;top: 0px;float: left}
 .column3-bottom-taskdetail-left img{cursor: pointer}
@@ -87,4 +90,4 @@ body{background: url("../image/background.jpg");background-size:cover;overflow-x
 .column3-bottom-person-img{padding-top: 30px;width: 220px;cursor: pointer}
 .column3-bottom-person-img img{margin-right: 10px}
 .column3-bottom-cancel{width: 72px;height: 27px;background: #abaaa9;text-align: center;line-height: 27px;margin-left: 60px;margin-top: 40px;color: #ffffff;cursor: pointer}
-.column3-bottom-confirm{width: 72px;height: 27px;background: #ed7a72;text-align: center;line-height: 27px;margin-left: 26px;margin-top: 40px;color: #ffffff;cursor: pointer}
+.column3-bottom-confirm{width: 72px;height: 27px;background: #ed7a72;text-align: center;line-height: 27px;margin-left: 26px;margin-top: 40px;color: #ffffff;cursor: pointer;margin-bottom: 40px}
