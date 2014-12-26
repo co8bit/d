@@ -28,7 +28,8 @@ body{background: url("../image/background.jpg");background-size:cover;overflow-x
 .column2-arrawdivider{width: 1px;height: 22px;background:#e6e6e5;margin-top: 11px }
 .column2-arrows-right{width:30px;height:45px;background:url("../image/oneday-rightarrow.jpg");cursor: pointer}
 .column2-cal{width:45px;height:45px;background:url("../image/oneday-calcu.jpg");cursor: pointer}
-.column2-bottom{width: 100%;background: #f8f7f6;height: 90%;margin-top:2%;overflow:hidden;border-radius: 5px;position: relative;background: url("../image/oneday-dayview-bg.png");background-size: 100%}
+.column2-bottom{width: 100%;background: #f8f7f6;height: 90%;margin-top:2%;overflow:hidden;border-radius: 5px;position: relative;/*background: url("../image/oneday-dayview-bg.png");*/background-size: 100%}
+.column2-bottom-calender{}
 .column2-bottom-addbutton{font-size: 16px;color: #dddddd;text-align: center;padding: 12px;border: 1px solid #dddddd;border-radius: 5px;width: 70%;margin-left: 15%;margin-top: 10px;text-align: left;cursor: pointer}
 .item{height: 65px;margin: 10px 0;}
 .column2-bottom-activity-item{width: 302px;height: 243px;background: #ffffff;padding-left: 20px;overflow: hidden;margin-left: 27px;margin-top: 30px;cursor: pointer}

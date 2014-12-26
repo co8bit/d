@@ -209,17 +209,78 @@ $(document).ready(function(){
     $("input[name='endtime']").datetimepicker();
     $('.column2-bottom-addbutton').click(function(){
     });
-    $('.column3-bottom-option-new-confirm').click(function(){
+    $('body').on('click','.column3-bottom-option-new-confirm',function(){
         if(validatenull($('input[name=checkoption]'))){
             var option=$('input[name=checkoption]').val();
             $('.column3-bottom-group').append(
                 '<div class="option">'+
-                    '<label><input type="checkbox" name="check"/>'+option+'</label>'+
+                '<label><input type="checkbox" name="check"/>'+option+'</label>'+
                 '</div>'
             )
         }
         optionnum++;
     })
+    $('body').on('click','.column2-bottom-addbutton',function(){
+        $('.column3-bottom').html('<div class="column3-bottom-title">'+
+            '<div class="left"><img src="image/oneday-rightarrow.png"></div>'+
+        '正在创建新任务'+
+        '</div>'+
+        '<form id="newtask">'+
+            '<div class="column3-bottom-input">'+
+                '<label>标题<input type="text" name="title" placeholder="在此输入标题"/></label>'+
+            '</div>'+
+            '<div class="column3-bottom-input">'+
+                '<label>标签<input type="text"  name="tag"placeholder="添加标签"/></label>'+
+            '</div>'+
+            '<div class="column3-bottom-input">'+
+                '<label>地点<input type="text"  name="destination" placeholder="在此输入地点"/></label>'+
+            '</div>'+
+            '<div class="column3-bottom-inputtime">'+
+                '<div class="label left">时间</div>'+
+                '<div class="left">'+
+                    '<div class="overflow">'+
+                        '<label class="left">始于<input type="text" name="starttime"/></label>'+
+                    '</div>'+
+                    '<div class="overflow">'+
+                        '<label class="left">止于<input type="text" name="endtime"/></label>'+
+                    '</div>'+
+                '</div>'+
+            '</div>'+
+            '<div class="column3-bottom-input">'+
+                '<label>描述<textarea name="description"/></textarea></label>'+
+        '</div>'+
+        '<div class="column3-bottom-option">'+
+            '<div class="column3-bottom-option-label left">检查项</div>'+
+            '<div class="column3-bottom-group left">'+
+            '<div class="option">'+
+                '<label><input type="checkbox" name="check"/>苹果</label>'+
+            '</div>'+
+            '<div class="option">'+
+            '<label><input type="checkbox" name="check"/>苹果</label>'+
+            '</div>'+
+        '</div>'+
+            '<div class="column3-bottom-option-new">'+
+                '<div class="column3-bottom-option-input">'+
+                    '<input type="text" placeholder="输入检查项内容" name="checkoption"/>'+
+                '</div>'+
+                '<div class="column3-bottom-option-new-confirm left">添 加</div>'+
+                '<div class="column3-bottom-option-new-cancel left">取 消</div>'+
+            '</div>'+
+        '</div>'+
+        '</form>'+
+        '<div class="column3-bottom-person overflow">'+
+            '<div class="column3-bottom-person-label left">参与者</div>'+
+            '<div class="column3-bottom-person-img left">'+
+                '<img src="image/oneday-addperson.png" width="50px" height="50px"/>'+
+                '<img src="image/oneday-addperson.png" width="50px" height="50px"/>'+
+                '<img src="image/oneday-addperson.png" width="50px" height="50px"/>'+
+            '</div>'+
+            '<div id="addperson">'+
+            '</div>'+
+        '</div>'+
+        '<div class="column3-bottom-cancel left">取 消</div>'+
+        '<div class="column3-bottom-confirm left">确 认</div>');
+    });
     $('body').on('click','.item-cotainer-content',function(){
         $('.column3-bottom').html('<div class="column3-bottom-taskdetail">'+
             '<div class="column3-bottom-taskdetail-header">'+
@@ -267,9 +328,8 @@ $(document).ready(function(){
             });
             $('table.edui-default').css('display','none');/**/
         }
-
     })
-    $('.column3-bottom-confirm').click(function(){
+    $('body').on('click','.column3-bottom-confirm',function(){
         var title=$("input[name='title']").val();
         var tag=$("input[name='tag']").val();
         var destination=$("input[name='destination']").val();
