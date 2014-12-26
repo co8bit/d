@@ -50,7 +50,7 @@ class ScheduleController extends Controller
 
         $dbSchedule->field("sid")->create(I('param.'));
 
-        $result    =   $dbSchedule->where(array("sid"=>$sid))->find();
+        $result    =   $dbSchedule->where(array("sid"=>$dbSchedule->sid))->find();
         $result["tag"] = json_decode($result["tag"],true);
         $result["check"] = json_decode($result["check"],true);
         $result["participant"] = json_decode($result["participant"],true);
@@ -158,6 +158,21 @@ class ScheduleController extends Controller
     }
 
 
+    /**
+     * 查询一天日程
+     * @return [type] [description]
+     */
+    public function day()
+    {
+        // $dbSchedule     =   D("Schedule");
+
+        // $date   =   I("param.date","");
+        // $dbSchedule->dateValidateRules($date);
+
+        // $data   =   null;
+        // $data   =   $dbSchedule->where(array("startTime"=>$date.))->select();
+        // $this->ajaxReturn($data);
+    }
 
     /**
      * 添加一项CheckItem
