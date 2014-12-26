@@ -4,8 +4,6 @@ use Think\Controller;
 
 class ScheduleController extends Controller
 {
-	protected $uid = null;
-
     /*returnJson:
      {
        "title": "George",
@@ -31,6 +29,8 @@ class ScheduleController extends Controller
      }
      */
     
+	protected $uid = null;
+
 	protected function _initialize()
     {
         header("Content-Type:text/html; charset=utf-8");
@@ -68,16 +68,18 @@ class ScheduleController extends Controller
         $dbSchedule     =   D("Schedule");
         $data   =   null;
 
-        // $data["title"]   =   I('param.');
-        // $data["tag"]   =   I('param.');
-        // $data["location"]   =   I('param.');
-        // $data["startTime"]   =   I('param.');
-        // $data["endTime"]   =   I('param.');
-        // $data["content"]   =   I('param.');
-        // $data["check"]   =   I('param.');//json
-        // $data["participant"]   =   I('param.');//json
+        // $data["title"]   =   I('param.title');
+        // $data["tag"]   =   I('param.tag');
+        // $data["location"]   =   I('param.location');
+        // $data["startTime"]   =   I('param.startTime');
+        // $data["endTime"]   =   I('param.endTime');
+        // $data["content"]   =   I('param.content');
+        // $data["check"]   =   I('param.check');//json
+        // $data["participant"]   =   I('param.participant');//json
 
-        $dbSchedule->create();
+        $data = $dbSchedule->create(I('param.'));
+        // echo $dbSchedule->getError();
+        // dump($data);
         //TODO:自动补全和验证
 
         if(empty($dbSchedule->add()))//添加失败
