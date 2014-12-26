@@ -61,7 +61,9 @@ class ScheduleController extends Controller
     /**
      * 创建一个日程
      * @param 多个参数，名称参考returnJson
-     * @return bool "" 是否成功
+     * @return true "" 成功
+     *         其他任何东西 "" 失败
+     *         error "" 非法操作
      */
     public function create()
     {
@@ -77,10 +79,18 @@ class ScheduleController extends Controller
         // $data["check"]   =   I('param.check');//json
         // $data["participant"]   =   I('param.participant');//json
 
-        $data = $dbSchedule->create(I('param.'));
-        // echo $dbSchedule->getError();
-        // dump($data);
+        $dbSchedule->field("title,location,startTime,endTime,content")->create(I('param.'));
+        $dbSchedule->tag = I('param.tag',"null",false);
+        $dbSchedule->check = I('param.check',"null",false);
+        $dbSchedule->participant = I('param.participant',"null",false);
+
         //TODO:自动补全和验证
+        if (!$dbSchedule->tagValidateRules($dbSchedule->tag))
+            exit("error");
+        if (!$dbSchedule->checkValidateRules($dbSchedule->check))
+            exit("error");
+        if (!$dbSchedule->participantValidateRules($dbSchedule->participant))
+            exit("error");
 
         if(empty($dbSchedule->add()))//添加失败
         {
@@ -95,9 +105,10 @@ class ScheduleController extends Controller
     public function addCheck()
     {
         $dbSchedule     =   D("Schedule");
-        $data = $dbSchedule->create();
+        // $data = $dbSchedule->field("sid,check")->create(I("param."));
+        $data = I("param.check","null",false);
         dump($data);
-        echo $dbSchedule->check;
+        // echo $dbSchedule->check;
         dump(json_decode($dbSchedule->check,true));
         //$dbSchedule->data   =   json_encode($dbSchedule->data);
         // $dbSchedule->add();
