@@ -13,6 +13,7 @@ class ScheduleModel extends Model
 	// 		array('userPassword','userPassword2','两次输入的密码不一样',0,'confirm',Model::MODEL_BOTH), // 验证确认密码是否和密码一致
 	// );
 	// sid要在范围内且不为空
+	// uid要在范围内
 
 	public function tagValidateRules()
 	{

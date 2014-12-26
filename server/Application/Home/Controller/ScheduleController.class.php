@@ -163,9 +163,9 @@ class ScheduleController extends Controller
 
     /**
      * 查询一天日程
-     * @param int date 日期，精确到日
+     * @param int date 选择的日期，精确到日,格式如Y-m-d
      * @return error "" 非法操作
-     * @return array[ReturnJson] 一个ReturnJson数组，每一项是一个事项
+     * @return array[ReturnJson] 一个ReturnJson数组，每一项是一个日程
      * @return null 当天没有日程
      */
     public function day()
@@ -195,9 +195,9 @@ class ScheduleController extends Controller
 
     /**
      * 查询一周日程
-     * @param int date 日期，精确到日
+     * @param int date 选择的日期，精确到日,格式如Y-m-d
      * @return error "" 非法操作
-     * @return array[ReturnJson] 一个ReturnJson数组，每一项是一个事项
+     * @return array[ReturnJson] 一个ReturnJson数组，每一项是一个日程
      * @return null 当周没有日程
      */
     public function week()
@@ -230,11 +230,28 @@ class ScheduleController extends Controller
     }
 
 
+
+    /**
+     * 获取指定日期所在月的开始日期与结束日期
+     * @param  string $date 选择的日期，格式如Y-m-d
+     * @return array["sdate"] 开始时间
+     * @return array["edate"] 结束时间
+     */
+    private function getMonthRange($date){
+        $ret    =   array();
+        $timestamp  =    strtotime($date);
+        $mdays=date('t',$timestamp);
+        $ret['sdate']=date('Y-m-1 00:00:00',$timestamp);
+        $ret['edate']=date('Y-m-'.$mdays.' 23:59:59',$timestamp);
+        return $ret;
+    }
+
+
     /**
      * 查询一月日程
-     * @param int date 日期，精确到日
+     * @param int date 选择的日期，精确到日,格式如Y-m-d
      * @return error "" 非法操作
-     * @return array[ReturnJson] 一个ReturnJson数组，每一项是一个事项
+     * @return array[ReturnJson] 一个ReturnJson数组，每一项是一个日程
      * @return null 当月没有日程
      */
     public function month()
@@ -244,13 +261,9 @@ class ScheduleController extends Controller
         $date   =   I("param.date","");
         $dbSchedule->dateValidateRules($date);
 
-        if (date("N",strtotime($date)) == 7)
-            $startDate =   strtotime("Sunday",strtotime($date));
-        else
-            $startDate =   strtotime("last Sunday",strtotime($date));
-        $endDate   =   strtotime("Saturday",strtotime($date));
+        $pairDate  =   $this->getMonthRange($date);
 
-        $map["startTime"]   =   array("between",array(date("Y-m-d",$startDate)." 00:00:00",date("Y-m-d",$endDate)." 23:59:59"));
+        $map["startTime"]   =   array("between",array($pairDate["sdate"],$pairDate["edate"]));
         $data   =   null;
         $data   =   $dbSchedule->where($map)->where(array("uid"=>$this->uid))->select();
         foreach ($data as $key1=>$value1)
@@ -288,13 +301,18 @@ class ScheduleController extends Controller
 
         $tmp    =   $dbSchedule->where(array("uid"=>$this->uid,"sid"=>$dbSchedule->sid))->find();
         $tmp["check"]   =   json_decode($tmp["check"],true);
-        array_push($tmp["check"],array("content"=>$data["content"],"state"=>$data["state"]));
+        if ($tmp["check"] === null)
+            $tmp["check"] = array(array("content"=>$data["content"],"state"=>$data["state"]));
+        else
+            array_push($tmp["check"],array("content"=>$data["content"],"state"=>$data["state"]));
         $tmp2   =   nnull;
         $tmp2   =   json_encode($tmp["check"]);
-        if ($dbSchedule->save(array("uid"=>$this->uid,"sid"=>$dbSchedule->sid,"check"=>$tmp2)))
-            exit("true");
-        else
+
+        $tmp3   =   $dbSchedule->save(array("uid"=>$this->uid,"sid"=>$dbSchedule->sid,"check"=>$tmp2));
+        if ( ($tmp3 === null) || ($tmp3 === false) )
             exit("false");
+        else
+            exit("true");
     }
 
 
@@ -321,4 +339,118 @@ class ScheduleController extends Controller
         else
             exit("true");
     }
+
+
+    /**
+     * 给当前用户的当前事项添加一个参与者
+     * @param int sid
+     * @param int uid 被添加的用户
+     * @return bool "" 是否成功
+     */
+    public function addParticipant()
+    {
+        $dbSchedule     =   D("Schedule");
+
+        $dbSchedule->field("sid,uid")->create(I('param.'));
+        $newUid     =   (int)$dbSchedule->uid;//TODO:去除重复uid的检查
+        $tmp    =   $dbSchedule->where(array("uid"=>$this->uid,"sid"=>$dbSchedule->sid))->find();
+        $tmp["participant"]   =   json_decode($tmp["participant"],true);
+        if ($tmp["participant"] === null)
+            $tmp["participant"] = array($newUid);
+        else
+            array_push($tmp["participant"],$newUid);
+        $tmp2   =   nnull;
+        $tmp2   =   json_encode($tmp["participant"]);
+
+        $tmp3   =   $dbSchedule->save(array("uid"=>$this->uid,"sid"=>$dbSchedule->sid,"participant"=>$tmp2));
+        if ( ($tmp3 === null) || ($tmp3 === false) )
+            exit("false");
+        else
+            exit("true");
+    }
+
+
+
+    /**
+     * 当前用户的当前事项更新参与者列表
+     * @param int sid
+     * @param ReturnJson_participant participant 全部的参与者列表
+     * @return bool "" 是否成功
+     * @return error "" 出错
+     */
+    public function editParticipant()
+    {
+        $dbSchedule     =   D("Schedule");
+
+        $dbSchedule->field("sid")->create(I('param.'));
+        $dbSchedule->participant = I('param.participant',"null",false);
+        if (!$dbSchedule->participantValidateRules($dbSchedule->participant))
+            exit("error");
+
+        $tmp    =   $dbSchedule->save(array("uid"=>$this->uid,"sid"=>$dbSchedule->sid,"participant"=>$dbSchedule->participant));
+        if ( ($tmp === null) || ($tmp === false) )
+            exit("false");
+        else
+            exit("true");
+    }
+
+
+
+    /**
+     * 给当前用户的当前事项添加一个标签
+     * @param int sid
+     * @param string tag 新增的标签
+     * @return bool "" 是否成功
+     */
+    public function addTag()
+    {
+        $dbSchedule     =   D("Schedule");
+
+        $dbSchedule->field("sid")->create(I('param.'));
+        $data["tag"]      =   I("param.tag",null);
+
+        if (!$dbSchedule->tagValidateRules($data))//TODO:去除重复tag的检查
+            exit("error");
+
+        
+        $tmp    =   $dbSchedule->where(array("uid"=>$this->uid,"sid"=>$dbSchedule->sid))->find();
+        $tmp["tag"]   =   json_decode($tmp["tag"],true);
+        if ($tmp["tag"] === null)
+            $tmp["tag"] = array($data["tag"]);
+        else
+            array_push($tmp["tag"],$data["tag"]);
+        $tmp2   =   nnull;
+        $tmp2   =   json_encode($tmp["tag"]);
+
+        $tmp3   =   $dbSchedule->save(array("uid"=>$this->uid,"sid"=>$dbSchedule->sid,"tag"=>$tmp2));
+        if ( ($tmp3 === null) || ($tmp3 === false) )
+            exit("false");
+        else
+            exit("true");
+    }
+
+
+    /**
+     * 当前用户的当前事项修改标签
+     * @param int sid
+     * @param ReturnJson_tag tag 全部的标签列表
+     * @return bool "" 是否成功
+     * @return error "" 出错
+     */
+    public function editTag()
+    {
+        $dbSchedule     =   D("Schedule");
+
+        $dbSchedule->field("sid")->create(I('param.'));
+        $dbSchedule->tag = I('param.tag',"null",false);
+        if (!$dbSchedule->tagValidateRules($dbSchedule->tag))
+            exit("error");
+
+        $tmp    =   $dbSchedule->save(array("uid"=>$this->uid,"sid"=>$dbSchedule->sid,"tag"=>$dbSchedule->tag));
+        if ( ($tmp === null) || ($tmp === false) )
+            exit("false");
+        else
+            exit("true");
+    }
+
 }
