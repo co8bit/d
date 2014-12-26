@@ -107,8 +107,8 @@ class UserController extends Controller
         }
     }
 
-    public function getUserInfo()
+    public function getUid()
     {
-        
+        exit(session("uid"));
     }
 }
