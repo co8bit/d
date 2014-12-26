@@ -14,7 +14,7 @@ create table user(
 
 	primary key(uid)
 ) CHARACTER SET utf8 COLLATE utf8_general_ci;
-insert user values(NULL,"wbx","wbx");
+insert user values(NULL,"wbx@wbx.com","wbx");
 
 create table schedule(
 	sid bigint NOT NULL AUTO_INCREMENT,

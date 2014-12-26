@@ -198,7 +198,7 @@ class ScheduleController extends Controller
      * @param int date 日期，精确到日
      * @return error "" 非法操作
      * @return array[ReturnJson] 一个ReturnJson数组，每一项是一个事项
-     * @return null 当天没有日程
+     * @return null 当周没有日程
      */
     public function week()
     {
@@ -207,7 +207,50 @@ class ScheduleController extends Controller
         $date   =   I("param.date","");
         $dbSchedule->dateValidateRules($date);
 
-        $map["startTime"]   =   array("between",array($date." 00:00:00",$date." 23:59:59"));
+        if (date("N",strtotime($date)) == 7)
+            $startDate =   strtotime("Sunday",strtotime($date));
+        else
+            $startDate =   strtotime("last Sunday",strtotime($date));
+        $endDate   =   strtotime("Saturday",strtotime($date));
+
+        $map["startTime"]   =   array("between",array(date("Y-m-d",$startDate)." 00:00:00",date("Y-m-d",$endDate)." 23:59:59"));
+        $data   =   null;
+        $data   =   $dbSchedule->where($map)->where(array("uid"=>$this->uid))->select();
+        foreach ($data as $key1=>$value1)
+        {
+            foreach ($data[$key1] as $key2=>$value2)
+            {
+                if ( ($key2 == "tag") || ($key2 == "check") || ($key2 == "participant") )
+                {
+                    $data[$key1][$key2]     =   json_decode($value2,true);
+                }
+            }
+        }
+        $this->ajaxReturn($data);
+    }
+
+
+    /**
+     * 查询一月日程
+     * @param int date 日期，精确到日
+     * @return error "" 非法操作
+     * @return array[ReturnJson] 一个ReturnJson数组，每一项是一个事项
+     * @return null 当月没有日程
+     */
+    public function month()
+    {
+        $dbSchedule     =   D("Schedule");
+
+        $date   =   I("param.date","");
+        $dbSchedule->dateValidateRules($date);
+
+        if (date("N",strtotime($date)) == 7)
+            $startDate =   strtotime("Sunday",strtotime($date));
+        else
+            $startDate =   strtotime("last Sunday",strtotime($date));
+        $endDate   =   strtotime("Saturday",strtotime($date));
+
+        $map["startTime"]   =   array("between",array(date("Y-m-d",$startDate)." 00:00:00",date("Y-m-d",$endDate)." 23:59:59"));
         $data   =   null;
         $data   =   $dbSchedule->where($map)->where(array("uid"=>$this->uid))->select();
         foreach ($data as $key1=>$value1)

@@ -107,6 +107,10 @@ class UserController extends Controller
         }
     }
 
+    /**
+     * 获得用户ID
+     * @return int uid
+     */
     public function getUid()
     {
         exit(session("uid"));
