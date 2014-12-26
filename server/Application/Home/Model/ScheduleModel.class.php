@@ -12,12 +12,15 @@ class ScheduleModel extends Model
 	// 		array('userPassword2', 'require', '请输入第二遍密码', 0),
 	// 		array('userPassword','userPassword2','两次输入的密码不一样',0,'confirm',Model::MODEL_BOTH), // 验证确认密码是否和密码一致
 	// );
+	// sid要在范围内且不为空
 
 	public function tagValidateRules()
 	{
 		return true;
 	}
 
+	//**
+	//TODO:单项(array)和json(string)
 	public function checkValidateRules()
 	{
 		return true;

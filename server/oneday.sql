@@ -22,7 +22,7 @@ create table schedule(
 	tag TEXT NOT NULL,
 	location TEXT not null,
 	startTime TIMESTAMP NOT NULL,
-	endTIme TIMESTAMP NOT NULL,
+	endTime TIMESTAMP NOT NULL,
 	content text not null,
 	`check` text not null,
 	participant text not null,

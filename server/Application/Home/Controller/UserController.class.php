@@ -32,8 +32,8 @@ class UserController extends Controller
     {
         //if (IS_POST)
        // {
-            $userName           =       I('param.userName');
-            $userPassword       =       I('param.userPassword');
+            $userName           =       I('param.userName',"");
+            $userPassword       =       I('param.userPassword',"");
             empty($userName) && exit("error");
             empty($userPassword) && exit("error");
             
@@ -84,8 +84,8 @@ class UserController extends Controller
     public function sign()
     {
         $dbUser = D("User");
-        $data["name"]      =       I('param.userName');
-        $data["pwd"]       =       I('param.userPassword');
+        $data["name"]      =       I('param.userName',"");
+        $data["pwd"]       =       I('param.userPassword',"");
         empty($data["name"]) && exit("error");
         empty($data["pwd"]) && exit("error");
 
