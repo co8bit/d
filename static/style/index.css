@@ -32,7 +32,10 @@ body{background: url("../image/background.jpg");background-size:cover;overflow-x
 .column2-bottom-calender{width: 100%;height: 100%}
 .column2-bottom-calender-title{width: 100%;background: #a7a6a7;height: 6%;color: #ffffff;border-radius: 5px}
 .column2-bottom-calender-container{height: 11%}
-.column2-bottom-calender-container td{width: 14%;background: #ffffff;border: 2px solid #ebebeb;}
+.column2-bottom-calender-container td{width: 14%;background: #ffffff;border: 2px solid #ebebeb;vertical-align: top;padding:0;position: relative}
+.column2-bottom-calender-container td .td-day{text-align: right;color: #373836;font-size: 18px;margin-top: 10px;margin-right: 10px}
+.column2-bottom-calender-container td .td-num{text-align: center;color: #373836;font-size: 18px;color: #ffffff;margin-top: 20px;position: absolute;top: 15%;left: 20%}
+.column2-bottom-calender-container td .td-num b{font-size: 53px;}
 .column2-bottom-addbutton{font-size: 16px;color: #dddddd;text-align: center;padding: 12px;border: 1px solid #dddddd;border-radius: 5px;width: 70%;margin-left: 15%;margin-top: 10px;text-align: left;cursor: pointer}
 .item{height: 65px;margin: 10px 0;}
 .column2-bottom-activity-item{width: 45%;background: #ffffff;overflow: hidden;margin-left: 3%;margin-top: 30px;cursor: pointer;text-align: center;padding-bottom: 10px}
@@ -40,8 +43,8 @@ body{background: url("../image/background.jpg");background-size:cover;overflow-x
 .item-container-time{font-size: 20px;color: #15130f;font-family: fzzxh;margin-left: 1%;margin-top: 20px;width: 7.75%;margin-right: 1%;text-align: center}
 .item-container-circle{background: white;width: 18px;height: 18px;border-radius: 50%;position:relative;left:0;line-height: 65px;margin-top: 20px}
 .item-cotainer-border{border: 3px solid #f7c4b1;text-align: left;margin-left: 12px;width: 85%;height: 60px;line-height: 60px;font-size: 34px;background: white}
-.item-cotainer-content{width: 40%;background: #f7c4b1;text-indent: 20px;color: white}
-.item-container-con{background: url("../image/oneday-item-bg.png");overflow: hidden;cursor: pointer}
+.item-cotainer-content{width: 40%;background: #f7c4b1;text-indent: 20px;color: white;cursor: pointer}
+.item-container-con{background: url("../image/oneday-item-bg.png");overflow: hidden;}
 .column3{width: 25%;height: 100%}
 .column3-top{width: 100%;height: 45px;background: white;border-radius: 5px;overflow: hidden}
 .column3-add{width: 45px;height: 45px;background: url("../image/oneday-add.jpg")}
