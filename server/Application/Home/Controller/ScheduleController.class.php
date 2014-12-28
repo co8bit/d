@@ -2,6 +2,10 @@
 namespace Home\Controller;
 use Think\Controller;
 
+
+
+
+
 class ScheduleController extends Controller
 {
     /*ReturnJson:
@@ -29,6 +33,20 @@ class ScheduleController extends Controller
      }
      */
     
+    /**
+     * 上传文件的配置数组
+     * @var array
+     */
+    protected $UPLOADCONFIG = array(    
+        'maxSize'    =>    3145728,
+        'rootPath'   =>    './Public/',
+        'savePath'   =>    '/Uploads/',    
+        'saveName'   =>    array('uniqid',''),    
+        'exts'       =>    array('jpg', 'png', 'jpeg'),    
+        'autoSub'    =>    true,    
+        'subName'    =>    array('date','Ymd'),
+    );
+
 	protected $uid = null;
 
 	protected function _initialize()
@@ -60,6 +78,7 @@ class ScheduleController extends Controller
     /**
      * 创建一个日程
      * @param 多个参数，名称参考returnJson,但是形式是post
+     * @param int mode 模式，为0新建日程，为1新建活动
      * @return true "" 成功
      *         其他任何东西 "" 失败
      *         error "" 非法操作
@@ -81,13 +100,39 @@ class ScheduleController extends Controller
         $dbSchedule->field("title,location,startTime,endTime,content")->create(I('param.'));
         $dbSchedule->uid =  $this->uid;
         $dbSchedule->tag = I('param.tag',"null",false);
-        $dbSchedule->check = I('param.check',"null",false);
         $dbSchedule->participant = I('param.participant',"null",false);
+        $dbSchedule->state = 0;
+
+        
+        $mode   =   I("param.mode",0);
+        if ((int)$mode == 1)
+        {
+            $this->templateNo = I("param.templateNo","");
+            $dbSchedule->templateNoValidateRules($this->templateNo);
+
+            // dump($this->UPLOADCONFIG);
+            $upload = new \Think\Upload($this->UPLOADCONFIG);// 实例化上传类
+            $info   =   $upload->upload();
+            if(!$info)
+            {// 上传错误提示错误信息
+                exit($upload->getError());
+            }
+            else
+            {// 上传成功获取上传文件信息    
+                // dump($info);
+                $dbSchedule->logoPic = $info["logoPic"]['savepath'].$info["logoPic"]['savename'];
+            }
+        }
+        else
+        {
+            $dbSchedule->check = I('param.check',"null",false);
+            if (!$dbSchedule->checkValidateRules($dbSchedule->check))
+                exit("error");
+        }
+        
 
         //TODO:自动补全和验证
         if (!$dbSchedule->tagValidateRules($dbSchedule->tag))
-            exit("error");
-        if (!$dbSchedule->checkValidateRules($dbSchedule->check))
             exit("error");
         if (!$dbSchedule->participantValidateRules($dbSchedule->participant))
             exit("error");
@@ -108,6 +153,7 @@ class ScheduleController extends Controller
     /**
      * 修改一个日程
      * @param 多个参数，名称参考returnJson,但是形式是post
+     * @param int mode 模式，为0修改日程，为1修改活动（不改logo），为2是修改活动（改logo）
      * @return true "" 成功
      *         其他任何东西 "" 失败
      *         error "" 非法操作
@@ -117,19 +163,41 @@ class ScheduleController extends Controller
         $dbSchedule     =   D("Schedule");
         $data   =   null;
 
-        $dbSchedule->field("sid,title,location,startTime,endTime,content")->create(I('param.'));
-        $dbSchedule->uid = $this->uid;
+        $dbSchedule->field("sid,title,location,startTime,endTime,content,state")->create(I('param.'));
+        $dbSchedule->uid =  $this->uid;
         $dbSchedule->tag = I('param.tag',"null",false);
-        $dbSchedule->check = I('param.check',"null",false);
         $dbSchedule->participant = I('param.participant',"null",false);
+        
+        $mode   =   I("param.mode",0);
+        if ((int)$mode == 1)
+        {
+            $this->templateNo = I("param.templateNo","");
+            $dbSchedule->templateNoValidateRules($this->templateNo);
+        }
+        elseif ((int)$mode == 2)
+        {
+            $this->templateNo = I("param.templateNo","");
+            $dbSchedule->templateNoValidateRules($this->templateNo);
 
-        //TODO:自动补全和验证
-        if (!$dbSchedule->tagValidateRules($dbSchedule->tag))
-            exit("error");
-        if (!$dbSchedule->checkValidateRules($dbSchedule->check))
-            exit("error");
-        if (!$dbSchedule->participantValidateRules($dbSchedule->participant))
-            exit("error");
+            // dump($this->UPLOADCONFIG);
+            $upload = new \Think\Upload($this->UPLOADCONFIG);// 实例化上传类
+            $info   =   $upload->upload();
+            if(!$info)
+            {// 上传错误提示错误信息
+                exit($upload->getError());
+            }
+            else
+            {// 上传成功获取上传文件信息    
+                // dump($info);
+                $dbSchedule->logoPic = $info["logoPic"]['savepath'].$info["logoPic"]['savename'];
+            }
+        }
+        else
+        {
+            $dbSchedule->check = I('param.check',"null",false);
+            if (!$dbSchedule->checkValidateRules($dbSchedule->check))
+                exit("error");
+        }
 
         $tmp    =   null;
         $tmp = $dbSchedule->save();
