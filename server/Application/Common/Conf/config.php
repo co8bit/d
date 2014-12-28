@@ -11,6 +11,8 @@ return array(
 	'DB_PWD'    => 'onedaysfkl76jk', // 密码
 	'DB_PORT'   => 3306, // 端口
 	'DB_PREFIX' => '', // 数据库表前缀
+
+	'URL_MODEL' => 0,
 	
 	'SESSION_AUTO_START'    => true,    // 是否自动开启Session
 	

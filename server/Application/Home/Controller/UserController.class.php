@@ -89,7 +89,7 @@ class UserController extends Controller
         empty($data["name"]) && exit("error");
         empty($data["pwd"]) && exit("error");
 
-        //判断用户名是否重复 TODO:
+        //判断用户名是否重复 TODO:这么写好么！？添加数据库的唯一标识
         $tmpResult  =   $dbUser->where(array("name"=>$data["name"]))->find();
         if ( !empty($tmpResult) )
             exit("error");
@@ -108,11 +108,64 @@ class UserController extends Controller
     }
 
     /**
-     * 获得用户ID
+     * 获得用户uid
      * @return int uid
      */
     public function getUid()
     {
         exit(session("uid"));
+    }
+
+    /**
+     * 得到用户的真实姓名，如果不存在真实姓名，返回用户名
+     * @return string 用户的真实姓名
+     */
+    public function getUserRealName()
+    {
+        $dbUser     =   D("User");
+
+        $tmp    =   $dbUser->getUserInfo(session("uid"));
+        if (!$tmp)
+            exit("error");
+
+        if (empty($tmp["realName"]))
+            exit($tmp["name"]);
+        else
+            exit($tmp["realName"]);
+    }
+
+
+    /**
+     * 得到用户的用户名
+     * @return string 用户的用户名
+     */
+    public function getUserName()
+    {
+        $dbUser     =   D("User");
+
+        $tmp    =   $dbUser->getUserInfo(session("uid"));
+        if (!$tmp)
+            exit("error");
+
+        exit($tmp["name"]);
+    }
+
+    /**
+     * 得到用户的信息
+     * @param int uid
+     * @return json 用户信息，为数据库中的一行
+     *         如：{"uid":"1","name":"wbx@wbx.com","pwd":"wbx","realName":"","logoPic":"","phone":"","address":""}
+     * @return false "" 失败
+     * @return error "" uid非法
+     */
+    public function getUserInfo()
+    {
+        $dbUser     =   D("User");
+
+        $uid    =   I("param.uid");
+        if (!$dbUser->uidValidateRules($uid))
+            exit("error");
+
+        $this->ajaxReturn($dbUser->getUserInfo($uid));
     }
 }
