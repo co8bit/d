@@ -18,6 +18,14 @@ class UserModel extends Model
 			array('userPassword','userPassword2','两次输入的密码不一样',0,'confirm',Model::MODEL_BOTH), // 验证确认密码是否和密码一致
 	);
 	
+	/**
+	 * 验证uid是否合法
+	 * @return bool 是否合法
+	 */
+	public function uidValidateRules()
+	{
+		return true;
+	}
 	
 	
 	/**
