@@ -2,10 +2,6 @@
 namespace Home\Controller;
 use Think\Controller;
 
-
-include(APP_PATH."/Home/Conf/MyConfigINI.php");
-
-
 class ScheduleController extends Controller
 {
     /*ReturnJson:
@@ -87,7 +83,7 @@ class ScheduleController extends Controller
     /**
      * 创建一个日程
      * @param 多个参数，名称参考returnJson,但是形式是post
-     * @param int mode 模式，为0新建日程，为1新建活动
+     * @param int mode 模式，为0新建日程，为2/3/4，和活动的class一致（需要传活动的aid到日程的aid字段里，代表链接到活动上）
      * @return true "" 成功
      *         其他任何东西 "" 失败
      *         error "" 非法操作
@@ -97,7 +93,7 @@ class ScheduleController extends Controller
         $dbSchedule     =   D("Schedule");
         $data   =   null;
 
-        $dbSchedule->field("title,location,startTime,endTime,content,aid")->create(I('param.'));
+        $dbSchedule->field("title,location,startTime,endTime,content,aid,class")->create(I('param.'));
         $dbSchedule->uid =  $this->uid;
         $dbSchedule->tag = I('param.tag',"null",false);
         $dbSchedule->participant = I('param.participant',"null",false);
@@ -105,11 +101,7 @@ class ScheduleController extends Controller
 
         
         $mode   =   I("param.mode",0);
-        if ((int)$mode == 1)
-        {
-            $dbSchedule->class  =   1;
-        }
-        else
+        if ((int)$mode == 0)
         {
             $dbSchedule->check = I('param.check',"null",false);
             if (!$dbSchedule->checkValidateRules($dbSchedule->check))

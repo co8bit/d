@@ -16,6 +16,8 @@ class ActivityModel extends Model
 	// uid要在范围内
 	// state
 	// brief
+	// templateNo
+	// class
 
 	public function tagValidateRules()
 	{

@@ -2,6 +2,8 @@
 namespace Home\Controller;
 use Think\Controller;
 
+include(APP_PATH."/Home/Conf/MyConfigINI.php");
+
 class ActivityController extends Controller
 {
     /**
@@ -84,12 +86,11 @@ class ActivityController extends Controller
         $dbActivity     =   D("Activity");
         $data   =   null;
 
-        $dbActivity->field("title,location,startTime,endTime,content,brief,templateNo")->create(I('param.'));
+        $dbActivity->field("title,location,startTime,endTime,content,brief,templateNo,class")->create(I('param.'));
         $dbActivity->uid =  $this->uid;
         $dbActivity->tag = I('param.tag',"null",false);
         $dbActivity->participant = I('param.participant',"null",false);
         $dbActivity->state = 0;
-        $dbActivity->class  =   1;
 
         //TODO:自动补全和验证
         if (!$dbActivity->tagValidateRules($dbActivity->tag))
@@ -125,7 +126,7 @@ class ActivityController extends Controller
 
     /**
      * 修改一个活动
-     * @param 多个参数，名称参考returnJson,但是形式是post; class不能修改
+     * @param 多个参数，名称参考returnJson,但是形式是post; 
      * @param int mode 模式，为1修改活动（不改logo），为2是修改活动（改logo）
      * @return true "" 成功
      *         其他任何东西 "" 失败
@@ -136,7 +137,7 @@ class ActivityController extends Controller
         $dbActivity     =   D("Activity");
         $data   =   null;
 
-        $dbActivity->field("aid,title,location,startTime,endTime,content,state,brief,templateNo")->create(I('param.'));
+        $dbActivity->field("aid,title,location,startTime,endTime,content,state,brief,templateNo,class")->create(I('param.'));
         $dbActivity->uid =  $this->uid;
         $dbActivity->tag = I('param.tag',"null",false);
         $dbActivity->participant = I('param.participant',"null",false);
@@ -195,6 +196,7 @@ class ActivityController extends Controller
     /**
      * 查询所有未完成的活动;
      * @param int page 当前的页数
+     * @param int class 活动的类别
      * @return json 活动内容，形如：
      *         {
      *             "pageTotalNum":2,//总页数
@@ -209,14 +211,15 @@ class ActivityController extends Controller
         $dbActivity     =   D("Activity");
 
         $page   =   I("param.page",1);
+        $class  =   I("param.class",4);
 
-        $scheduleCount = $dbActivity->where(array("class"=>1,"state"=>0))->count();
+        $scheduleCount = $dbActivity->where(array("class"=>$class,"state"=>0))->count();
         $scheduleTotalPageNum   =   ceil($scheduleCount / _ACTIVITY_PAGE_NUM);
 
         if ($page > $scheduleTotalPageNum)
             exit("error");
 
-        $resule     =   $dbActivity->where(array("class"=>1,"state"=>0))->order("startTime")->limit(($page-1) * _ACTIVITY_PAGE_NUM,_ACTIVITY_PAGE_NUM)->select();
+        $resule     =   $dbActivity->where(array("class"=>$class,"state"=>0))->order("startTime")->limit(($page-1) * _ACTIVITY_PAGE_NUM,_ACTIVITY_PAGE_NUM)->select();
 
         $tmp    =   null;
         $tmp["pageTotalNum"] = $scheduleTotalPageNum;

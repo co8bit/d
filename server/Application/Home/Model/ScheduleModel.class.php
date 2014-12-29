@@ -16,6 +16,7 @@ class ScheduleModel extends Model
 	// uid要在范围内
 	// state
 	// aid
+	// class
 
 	public function tagValidateRules()
 	{
