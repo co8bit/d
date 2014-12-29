@@ -84,17 +84,19 @@ class ActivityController extends Controller
         $dbActivity     =   D("Activity");
         $data   =   null;
 
-        $dbActivity->field("title,location,startTime,endTime,content,brief")->create(I('param.'));
+        $dbActivity->field("title,location,startTime,endTime,content,brief,templateNo")->create(I('param.'));
         $dbActivity->uid =  $this->uid;
         $dbActivity->tag = I('param.tag',"null",false);
         $dbActivity->participant = I('param.participant',"null",false);
         $dbActivity->state = 0;
         $dbActivity->class  =   1;
-        
-        $this->templateNo = I("param.templateNo","");
-        $dbActivity->templateNoValidateRules($this->templateNo);
 
-        // dump($this->UPLOADCONFIG);
+        //TODO:自动补全和验证
+        if (!$dbActivity->tagValidateRules($dbActivity->tag))
+            exit("error");
+        if (!$dbActivity->participantValidateRules($dbActivity->participant))
+            exit("error");
+
         $upload = new \Think\Upload($this->UPLOADCONFIG);// 实例化上传类
         $info   =   $upload->upload();
         if(!$info)
@@ -107,12 +109,6 @@ class ActivityController extends Controller
             $dbActivity->logoPic = $info["logoPic"]['savepath'].$info["logoPic"]['savename'];
         }
 
-
-        //TODO:自动补全和验证
-        if (!$dbActivity->tagValidateRules($dbActivity->tag))
-            exit("error");
-        if (!$dbActivity->participantValidateRules($dbActivity->participant))
-            exit("error");
 
         $tmp    =   $dbActivity->add();
         if(empty($tmp))//添加失败
@@ -140,23 +136,14 @@ class ActivityController extends Controller
         $dbActivity     =   D("Activity");
         $data   =   null;
 
-        $dbActivity->field("aid,title,location,startTime,endTime,content,state,brief")->create(I('param.'));
+        $dbActivity->field("aid,title,location,startTime,endTime,content,state,brief,templateNo")->create(I('param.'));
         $dbActivity->uid =  $this->uid;
         $dbActivity->tag = I('param.tag',"null",false);
         $dbActivity->participant = I('param.participant',"null",false);
         
         $mode   =   I("param.mode",0);
-        if ((int)$mode == 1)
+        if ((int)$mode == 2)
         {
-            $this->templateNo = I("param.templateNo","");
-            $dbActivity->templateNoValidateRules($this->templateNo);
-        }
-        elseif ((int)$mode == 2)
-        {
-            $this->templateNo = I("param.templateNo","");
-            $dbActivity->templateNoValidateRules($this->templateNo);
-
-            // dump($this->UPLOADCONFIG);
             $upload = new \Think\Upload($this->UPLOADCONFIG);// 实例化上传类
             $info   =   $upload->upload();
             if(!$info)
@@ -169,6 +156,11 @@ class ActivityController extends Controller
                 $dbActivity->logoPic = $info["logoPic"]['savepath'].$info["logoPic"]['savename'];
             }
         }
+
+        if (!$dbActivity->tagValidateRules($dbActivity->tag))
+            exit("error");
+        if (!$dbActivity->participantValidateRules($dbActivity->participant))
+            exit("error");
 
         $tmp    =   null;
         $tmp = $dbActivity->save();

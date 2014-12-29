@@ -141,7 +141,6 @@ class ScheduleController extends Controller
     /**
      * 修改一个日程
      * @param 多个参数，名称参考returnJson,但是形式是post; class、aid不能修改
-     * @param int mode 模式，为0修改日程，为1修改活动（不改logo）
      * @return true "" 成功
      *         其他任何东西 "" 失败
      *         error "" 非法操作
@@ -155,20 +154,15 @@ class ScheduleController extends Controller
         $dbSchedule->uid =  $this->uid;
         $dbSchedule->tag = I('param.tag',"null",false);
         $dbSchedule->participant = I('param.participant',"null",false);
-        
-        $mode   =   I("param.mode",0);
-        if ((int)$mode == 1)
-        {
-            $this->templateNo = I("param.templateNo","");
-            $dbSchedule->templateNoValidateRules($this->templateNo);
-        }
-        else
-        {
-            $dbSchedule->check = I('param.check',"null",false);
-            if (!$dbSchedule->checkValidateRules($dbSchedule->check))
-                exit("error");
-        }
+        $dbSchedule->check = I('param.check',"null",false);
 
+        if (!$dbSchedule->checkValidateRules($dbSchedule->check))
+            exit("error");
+        if (!$dbSchedule->tagValidateRules($dbSchedule->tag))
+            exit("error");
+        if (!$dbSchedule->participantValidateRules($dbSchedule->participant))
+            exit("error");
+        
         $tmp    =   null;
         $tmp = $dbSchedule->save();
         if( ($tmp === null) || ($tmp === false) )
