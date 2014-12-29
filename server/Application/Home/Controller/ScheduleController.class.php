@@ -520,4 +520,24 @@ class ScheduleController extends Controller
             exit("true");
     }
 
+
+    /**
+     * 更改日程的状态
+     * @param int sid
+     * @param int state 日程状态
+     * @return bool "" 是否完成
+     */
+    public function editState()
+    {
+        $dbSchedule     =   D("Schedule");
+
+        $dbSchedule->field("sid,state")->create(I('param.'));
+
+        $tmp    =   $dbSchedule->where(array("sid"=>$dbSchedule->sid,"state"=>$dbSchedule->state))->save();
+        if (empty($tmp))
+            exit("false");
+        else
+            exit("error");
+    }
+
 }
