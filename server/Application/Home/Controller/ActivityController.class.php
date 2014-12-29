@@ -46,7 +46,7 @@ class ActivityController extends Controller
         {
             foreach ($data[$key1] as $key2=>$value2)
             {
-                if ( ($key2 == "tag") || ($key2 == "check") || ($key2 == "participant") )
+                if ( ($key2 == "tag") || ($key2 == "check") || ($key2 == "participant") || ($key2 == "comment") )
                 {
                     $data[$key1][$key2]     =   json_decode($value2,true);
                 }
@@ -268,7 +268,7 @@ class ActivityController extends Controller
             $tmp["participant"] = array($newUid);
         else
             array_push($tmp["participant"],$newUid);
-        $tmp2   =   nnull;
+        $tmp2   =   null;
         $tmp2   =   json_encode($tmp["participant"]);
 
         $tmp3   =   $dbActivity->save(array("uid"=>$this->uid,"aid"=>$dbActivity->aid,"participant"=>$tmp2));
@@ -328,7 +328,7 @@ class ActivityController extends Controller
             $tmp["tag"] = array($data["tag"]);
         else
             array_push($tmp["tag"],$data["tag"]);
-        $tmp2   =   nnull;
+        $tmp2   =   null;
         $tmp2   =   json_encode($tmp["tag"]);
 
         $tmp3   =   $dbActivity->save(array("uid"=>$this->uid,"aid"=>$dbActivity->aid,"tag"=>$tmp2));
@@ -361,5 +361,61 @@ class ActivityController extends Controller
         else
             exit("true");
     }
+
+
+
+    /**
+     * 给当前用户的当前活动添加一个评论
+     * @param int aid
+     * @param string content 内容
+     * @return bool "" 是否成功
+     */
+    public function addComment()
+    {
+        $dbActivity     =   D("Activity");
+
+        $dbActivity->field("aid,content")->create(I('param.'));
+        $data["date"]      =   date("Y-m-d H:i:s");
+
+        $tmp    =   $dbActivity->where(array("aid"=>$dbActivity->aid))->find();
+        $tmp["comment"]   =   json_decode($tmp["comment"],true);
+        if ($tmp["comment"] === null)
+            $tmp["comment"] = array(array("content"=>$dbActivity->content,"date"=>$data["date"]));
+        else
+            array_push($tmp["comment"],array("content"=>$dbActivity->content,"date"=>$data["date"]));
+        $tmp2   =   null;
+        $tmp2   =   json_encode($tmp["comment"]);
+
+        $tmp3   =   $dbActivity->save(array("aid"=>$dbActivity->aid,"comment"=>$tmp2));
+        if ( ($tmp3 === null) || ($tmp3 === false) )
+            exit("false");
+        else
+            exit("true");
+    }
+
+
+    /**
+     * 修改全部评论，注意是全部，因为区分不出来修改第几个评论
+     * @param int aid
+     * @param ReturJson_comment comment 全部评论的json
+     * @return bool "" 是否成功
+     * @return error "" 错误
+     */
+    public function editComment()
+    {
+        $dbActivity     =   D("Activity");
+
+        $dbActivity->field("aid")->create(I('param.'));
+        $comment = I('param.comment',"null",false);
+        if (!$dbActivity->commentValidateRules($check))
+            exit("error");
+
+        $tmp    =   $dbActivity->save(array("aid"=>$dbActivity->aid,"comment"=>$comment));
+        if ( ($tmp === null) || ($tmp === false) )
+            exit("false");
+        else
+            exit("true");
+    }
+
 
 }

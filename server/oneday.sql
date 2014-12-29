@@ -34,6 +34,7 @@ create table schedule(
 	content text not null,
 	participant text not null,
 	state int not null,/*  0:未完成;1:完成*/
+	comment TEXT not null,/*评论*/
 
 	`check` text not null,/*活动的时候为""（空）*/
 
@@ -55,6 +56,7 @@ create table activity(
 	content text not null,
 	participant text not null,
 	state int not null,/*  0:未完成;1:完成*/
+	comment TEXT not null,/*评论*/
 
 	logoPic TEXT NOT NULL,/*日程的时候为""（空）*/
 	templateNo int not null,/*模板编号,日程时为""*/
