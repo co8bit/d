@@ -55,5 +55,15 @@ $(document).ready(function(){
         autoFloatEnabled: true,
         enableAutoSave:true
     });
+    setInterval(function(){
+        var message=$(document.getElementById('iframe').contentWindow.document.body).html();
+        console.log(message);
+        if(message.indexOf('true')!=-1){
+            alert('提交成功');
+            setTimeout(function(){
+                window.location.href='index.html';
+            })
+        }
+    },1000);
     $('.ui-datepicker').css('z-index',100);
 })

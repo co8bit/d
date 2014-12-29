@@ -27,11 +27,6 @@ $(document).ready(function(){
     function geturl(api,m,c,a){
         return api+'m='+m+'&c='+c+'&a='+a;
     }
-    function getUid(){
-        $.post(geturl(apiBaseurl,'Home','User','getUid'),{},function(data){
-            return data;
-        });
-    }
     $("input[name='endtime']").datetimepicker();
     $("input[name='starttime']").datetimepicker();
     var UEDITORFLAG=false;
@@ -51,6 +46,17 @@ $(document).ready(function(){
         }
     }};
     changetime(timenow);
+    //日程完成
+    $('body').on('click','.column3-bottom-taskdetail-header .confirm',function(){
+        var sid=$('.column3-bottom').attr('sid');
+        $.post(geturl(apiBaseurl,'Home','Schedule','editState'),{sid:sid,state:2},function(data){
+            console.log(data);
+            if(data=='true'){
+                $(this).attr('src','../image/oneday-confirm-button-on.png');
+                setTimeout(jiazai,500);
+            }
+        })
+    })
     //设置
     $('#oneday-setting').click(function(){
         $.post(geturl(apiBaseurl,'Home','User','getUid'),{},function(uid){
@@ -205,11 +211,13 @@ $(document).ready(function(){
     $('body').on('click','.column2-bottom-calender-container td',function(){
         timenow=dbtimetojsdate($(this).attr('date'));
         jiazai();
+        changetime(timenow);
     })
     //周视图单元格点击事件
     $('body').on('click','.column2-bottom-week-container .column2-bottom-week-container-item',function(){
         timenow=dbtimetojsdate(($(this).attr('date')).replace(/-/g,'/'));
         jiazai();
+        changetime(timenow);
     })
     //颜色替换
     function fanzhuan(num,length){
@@ -739,7 +747,6 @@ $(document).ready(function(){
                 refresh();
             })
         })
-
     }
     function jiazaishuju() {
         $.post(geturl(apiBaseurl,'Home','User','getUid'),{},function(uid){
