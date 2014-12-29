@@ -16,6 +16,10 @@ function validatepassword(){
 }
 $(document).ready(function(){
     /*$('#black').css('width',$(window).width()).css('height',$(window).height());*/
+    var apiBaseurl='../server/index.php?';
+    function geturl(api,m,c,a){
+        return api+'m='+m+'&c='+c+'&a='+a;
+    }
 
     var width=$(window).width();
     var height=$(document).height();
@@ -28,10 +32,13 @@ $(document).ready(function(){
         if(validateEmail()&&validatepassword()){
             var username=$('.container-content-email input').val();
             var password=$('.container-content-password input').val();
-            $.post("../server/index.php/User/login",
+            $.post(geturl(apiBaseurl,'Home','User','login'),
                 {userName:username,userPassword:password},
                 function (result){
+                    console.log(result);
+                    console.log(geturl(apiBaseurl,'Home','User','login'));
                     if(result=='true'){
+                        console.log(geturl(apiBaseurl,'Home','User','login'));
                         $('.container').animate({opacity:0},500,function(){
                             window.location.href="index.html";
                         });
@@ -45,7 +52,7 @@ $(document).ready(function(){
         if(validateEmail()&&validatepassword()){
             var username=$('.container-content-email input').val();
             var password=$('.container-content-password input').val();
-            $.post("../server/index.php/User/sign",
+            $.post(geturl(apiBaseurl,'Home','User','sign'),
                 {userName:username,userPassword:password},
                 function (result){
                     if(result=='true'){

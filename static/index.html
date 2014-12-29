@@ -21,8 +21,11 @@
     <div id="container">
         <div class="column1 left">
             <div class="column1-search">
-                <input type="text" placeholder="Search"/>
-                <img src="image/oneday-fangda.png" class="right">
+                <div class="left column1-img"><img src="image/touxiang.jpg"></div>
+                <div class="left column1-p">
+                    <p>大尾巴狼</p>
+                    <p>ss_syk@163.com</p>
+                </div>
             </div>
             <div class="column1-tags">
                 <div class="column1-tag">
@@ -252,34 +255,65 @@
                         <span>练练——别在冬天放弃自己</span>
                     </div>
                 </div>-->
+                <!--用户设置
+                <div class="column3-bottom-setting">
+                    <div class="column3-bottom-setting-title">
+                        <img src="image/oneday-rightarrow.png"/>
+                        <span>个人设置</span>
+                    </div>
+                    <form action="" method="post" enctype="multipart/form-data">
+                        <div class="column3-bottom-setting-container">
+                            <div class="column3-bottom-setting-container-input">
+                                <label name="logoPic">上传头像</label>
+                                <input type="file" name="logoPic" id="column3-bottom-setting-file"/>
+                                <div class="column3-bottom-setting-logoPic-zhezhu">
+                                    <img src="image/oneday-weishangchuan.png" width="100px" height="100px"/>
+                                </div>
+                            </div>
+                            <div class="column3-bottom-setting-container-input">
+                                <label name="phone">手&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;机</label>
+                                <input type="text" name="phone"/>
+                            </div>
+                            <div class="column3-bottom-setting-container-input">
+                                <label name="address">地&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;址</label>
+                                <input type="text" name="address"/>
+                            </div>
+                            <div class="column3-bottom-setting-container-input">
+                                <label name="realName">真实姓名</label>
+                                <input type="text" name="realName"/>
+                            </div>
+                            <div class="column3-bottom-setting-container-input">
+                                <label name="submit">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                                <input type="submit" name="realName" value="修改"/>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                -->
                 <!--日视图-->
+                <!---->
                 <div class="column3-bottom-title">
                     <div class="left"><img src="image/oneday-rightarrow.png"></div>
                     正在创建新任务
                 </div>
                 <form id="newtask">
                     <div class="column3-bottom-input">
-                        <label>标题<input type="text" name="title" placeholder="在此输入标题"/></label>
+                        <label>标题</label><input type="text" name="title" placeholder="在此输入标题"/>
                     </div>
                     <div class="column3-bottom-input">
-                        <label>标签<input type="text"  name="tag"placeholder="添加标签"/></label>
+                        <label>标签</label><input type="text"  name="tag"placeholder="添加标签"/>
                     </div>
                     <div class="column3-bottom-input">
-                        <label>地点<input type="text"  name="destination" placeholder="在此输入地点"/></label>
-                    </div>
-                    <div class="column3-bottom-inputtime">
-                        <div class="label left">时间</div>
-                        <div class="left">
-                            <div class="overflow">
-                                <label class="left">始于<input type="text" name="starttime"/></label>
-                            </div>
-                            <div class="overflow">
-                                <label class="left">止于<input type="text" name="endtime"/></label>
-                            </div>
-                        </div>
+                        <label>地点</label><input type="text"  name="destination" placeholder="在此输入地点"/>
                     </div>
                     <div class="column3-bottom-input">
-                        <label>描述<textarea name="description"/></textarea></label>
+                        <label>始于</label><input type="text" name="starttime"/>
+                    </div>
+                    <div class="column3-bottom-input">
+                        <label>止于</label><input type="text" name="endtime"/>
+                    </div>
+                    <div class="column3-bottom-input">
+                        <label>描述</label><textarea name="description"/></textarea>
                     </div>
                     <div class="column3-bottom-option">
                         <div class="column3-bottom-option-label left">检查项</div>
@@ -289,16 +323,16 @@
                             <div class="column3-bottom-option-input">
                                 <input type="text" placeholder="输入检查项内容" name="checkoption"/>
                             </div>
-                            <div class="column3-bottom-option-new-confirm left">添 加</div>
-                            <div class="column3-bottom-option-new-cancel left">取 消</div>
+                            <div class="clear">
+                                <div class="column3-bottom-option-new-confirm left">添 加</div>
+                                <div class="column3-bottom-option-new-cancel left">取 消</div>
+                            </div>
                         </div>
                     </div>
                 </form>
                 <div class="column3-bottom-person overflow">
                     <div class="column3-bottom-person-label left">参与者</div>
                     <div class="column3-bottom-person-img left">
-                        <img src="image/oneday-addperson.png" width="50px" height="50px"/>
-                        <img src="image/oneday-addperson.png" width="50px" height="50px"/>
                         <img src="image/oneday-addperson.png" width="50px" height="50px"/>
                     </div>
                     <div id="addperson">
