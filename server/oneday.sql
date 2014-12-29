@@ -27,6 +27,7 @@ create table schedule(
 	title TEXT NOT NULL,
 	tag TEXT NOT NULL,
 	class int NOT NULL,/*0日程，1是活动*/
+	aid bigint NOT NULL,/*如果是活动的话这里链接到那个活动的aid*/
 	location TEXT not null,
 	startTime TIMESTAMP NOT NULL,
 	endTime TIMESTAMP NOT NULL,
@@ -38,7 +39,7 @@ create table schedule(
 
 	primary key(sid)
 ) CHARACTER SET utf8 COLLATE utf8_general_ci;
-INSERT INTO `oneday`.`schedule` (`sid`, `uid`, `title`, `tag`,'class', `location`, `startTime`, `endTIme`, `content`, `check`, `participant`) VALUES (NULL, 1, 'George', 'null',0 ,'zju', '2014-12-25 09:25:32', '2014-12-26 15:36:37', '你好吗', '{ "content": "nicaibudao", "state": 0 }, { "content": "nice", "state": 1 } }', '[ 321, 67 ] ');
+INSERT INTO `oneday`.`schedule` (`sid`, `uid`, `title`, `tag`,`class`, `location`, `startTime`, `endTIme`, `content`, `check`, `participant`) VALUES (NULL, 1, 'George', 'null',0 ,'zju', '2014-12-25 09:25:32', '2014-12-26 15:36:37', '你好吗', '{ "content": "nicaibudao", "state": 0 }, { "content": "nice", "state": 1 } }', '[ 1 ] ');
 
 
 
@@ -60,6 +61,6 @@ create table activity(
 	breif varchar(200) not null,/*活动的摘要内容 TODO:字数待定*/
 	heat bigint not null,/*热度*/
 
-	primary key(sid)
+	primary key(aid)
 ) CHARACTER SET utf8 COLLATE utf8_general_ci;
-INSERT INTO `oneday`.`schedule` (`sid`, `uid`, `title`, `tag`,'class', `location`, `startTime`, `endTIme`, `content`, `check`, `participant`) VALUES (NULL, 1, 'George', 'null',0 ,'zju', '2014-12-25 09:25:32', '2014-12-26 15:36:37', '这是一个活动', '{ "content": "nicaibudao", "state": 0 }, { "content": "nice", "state": 1 } }', '[ 321, 67 ] ');
+INSERT INTO `oneday`.`activity` (`aid`, `uid`, `title`, `tag`,`class`, `location`, `startTime`, `endTIme`, `content`, `participant`) VALUES (NULL, 1, 'George', 'null',1 ,'zju', '2014-12-25 09:25:32', '2014-12-26 15:36:37', '这是一个活动', '[ 1, 2 ] ');

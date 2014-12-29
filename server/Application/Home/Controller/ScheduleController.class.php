@@ -33,19 +33,6 @@ class ScheduleController extends Controller
      }
      */
     
-    /**
-     * 上传文件的配置数组
-     * @var array
-     */
-    protected $UPLOADCONFIG = array(    
-        'maxSize'    =>    3145728,
-        'rootPath'   =>    './Public/',
-        'savePath'   =>    '/Uploads/',    
-        'saveName'   =>    array('uniqid',''),    
-        'exts'       =>    array('jpg', 'png', 'jpeg'),    
-        'autoSub'    =>    true,    
-        'subName'    =>    array('date','Ymd'),
-    );
 
 	protected $uid = null;
 
@@ -110,16 +97,7 @@ class ScheduleController extends Controller
         $dbSchedule     =   D("Schedule");
         $data   =   null;
 
-        // $data["title"]   =   I('param.title');
-        // $data["tag"]   =   I('param.tag');//json
-        // $data["location"]   =   I('param.location');
-        // $data["startTime"]   =   I('param.startTime');
-        // $data["endTime"]   =   I('param.endTime');
-        // $data["content"]   =   I('param.content');
-        // $data["check"]   =   I('param.check');//json
-        // $data["participant"]   =   I('param.participant');//json
-
-        $dbSchedule->field("title,location,startTime,endTime,content,brief")->create(I('param.'));
+        $dbSchedule->field("title,location,startTime,endTime,content,aid")->create(I('param.'));
         $dbSchedule->uid =  $this->uid;
         $dbSchedule->tag = I('param.tag',"null",false);
         $dbSchedule->participant = I('param.participant',"null",false);
@@ -129,22 +107,6 @@ class ScheduleController extends Controller
         $mode   =   I("param.mode",0);
         if ((int)$mode == 1)
         {
-            $this->templateNo = I("param.templateNo","");
-            $dbSchedule->templateNoValidateRules($this->templateNo);
-
-            // dump($this->UPLOADCONFIG);
-            $upload = new \Think\Upload($this->UPLOADCONFIG);// 实例化上传类
-            $info   =   $upload->upload();
-            if(!$info)
-            {// 上传错误提示错误信息
-                exit($upload->getError());
-            }
-            else
-            {// 上传成功获取上传文件信息    
-                // dump($info);
-                $dbSchedule->logoPic = $info["logoPic"]['savepath'].$info["logoPic"]['savename'];
-            }
-
             $dbSchedule->class  =   1;
         }
         else
@@ -178,8 +140,8 @@ class ScheduleController extends Controller
 
     /**
      * 修改一个日程
-     * @param 多个参数，名称参考returnJson,但是形式是post; class不能修改
-     * @param int mode 模式，为0修改日程，为1修改活动（不改logo），为2是修改活动（改logo）
+     * @param 多个参数，名称参考returnJson,但是形式是post; class、aid不能修改
+     * @param int mode 模式，为0修改日程，为1修改活动（不改logo）
      * @return true "" 成功
      *         其他任何东西 "" 失败
      *         error "" 非法操作
@@ -189,7 +151,7 @@ class ScheduleController extends Controller
         $dbSchedule     =   D("Schedule");
         $data   =   null;
 
-        $dbSchedule->field("sid,title,location,startTime,endTime,content,state,brief")->create(I('param.'));
+        $dbSchedule->field("sid,title,location,startTime,endTime,content,state")->create(I('param.'));
         $dbSchedule->uid =  $this->uid;
         $dbSchedule->tag = I('param.tag',"null",false);
         $dbSchedule->participant = I('param.participant',"null",false);
@@ -199,24 +161,6 @@ class ScheduleController extends Controller
         {
             $this->templateNo = I("param.templateNo","");
             $dbSchedule->templateNoValidateRules($this->templateNo);
-        }
-        elseif ((int)$mode == 2)
-        {
-            $this->templateNo = I("param.templateNo","");
-            $dbSchedule->templateNoValidateRules($this->templateNo);
-
-            // dump($this->UPLOADCONFIG);
-            $upload = new \Think\Upload($this->UPLOADCONFIG);// 实例化上传类
-            $info   =   $upload->upload();
-            if(!$info)
-            {// 上传错误提示错误信息
-                exit($upload->getError());
-            }
-            else
-            {// 上传成功获取上传文件信息    
-                // dump($info);
-                $dbSchedule->logoPic = $info["logoPic"]['savepath'].$info["logoPic"]['savename'];
-            }
         }
         else
         {

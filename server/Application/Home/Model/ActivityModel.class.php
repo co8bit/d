@@ -14,15 +14,10 @@ class ActivityModel extends Model
 	// );
 	// sid要在范围内且不为空
 	// uid要在范围内
+	// state
+	// brief
 
 	public function tagValidateRules()
-	{
-		return true;
-	}
-
-	//**
-	//TODO:单项(array)和json(string)
-	public function checkValidateRules()
 	{
 		return true;
 	}
@@ -37,5 +32,14 @@ class ActivityModel extends Model
 		return true;
 	}
 
+	public function templateNoValidateRules()
+	{
+		return true;
+	}
+
+	public function briefValidateRules()
+	{
+		return true;
+	}
 }
 ?>
