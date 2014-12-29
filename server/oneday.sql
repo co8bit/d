@@ -36,6 +36,7 @@ create table schedule(
 
 	`check` text not null,/*活动的时候为""（空）*/
 	logoPic TEXT NOT NULL,/*日程的时候为""（空）*/
+	templateNo int not null,/*模板编号,日程时为""*/
 
 	primary key(sid)
 ) CHARACTER SET utf8 COLLATE utf8_general_ci;
