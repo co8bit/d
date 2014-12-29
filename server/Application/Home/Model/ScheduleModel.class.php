@@ -15,6 +15,7 @@ class ScheduleModel extends Model
 	// sid要在范围内且不为空
 	// uid要在范围内
 	// state
+	// brief
 
 	public function tagValidateRules()
 	{
@@ -39,6 +40,11 @@ class ScheduleModel extends Model
 	}
 
 	public function templateNoValidateRules()
+	{
+		return true;
+	}
+
+	public function briefValidateRules()
 	{
 		return true;
 	}

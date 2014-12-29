@@ -26,7 +26,7 @@ create table schedule(
 	uid bigint NOT NULL,
 	title TEXT NOT NULL,
 	tag TEXT NOT NULL,
-	class TEXT NOT NULL,
+	class int NOT NULL,/*0日程，1是活动*/
 	location TEXT not null,
 	startTime TIMESTAMP NOT NULL,
 	endTime TIMESTAMP NOT NULL,
@@ -35,9 +35,31 @@ create table schedule(
 	state int not null,/*  0:未完成;1:完成*/
 
 	`check` text not null,/*活动的时候为""（空）*/
-	logoPic TEXT NOT NULL,/*日程的时候为""（空）*/
-	templateNo int not null,/*模板编号,日程时为""*/
 
 	primary key(sid)
 ) CHARACTER SET utf8 COLLATE utf8_general_ci;
-INSERT INTO `oneday`.`schedule` (`sid`, `uid`, `title`, `tag`, `location`, `startTime`, `endTIme`, `content`, `check`, `participant`) VALUES (NULL, 1, 'George', 'null', 'zju', '2014-12-25 09:25:32', '2014-12-26 15:36:37', '你好吗', '{ "content": "nicaibudao", "state": 0 }, { "content": "nice", "state": 1 } }', '[ 321, 67 ] ');
+INSERT INTO `oneday`.`schedule` (`sid`, `uid`, `title`, `tag`,'class', `location`, `startTime`, `endTIme`, `content`, `check`, `participant`) VALUES (NULL, 1, 'George', 'null',0 ,'zju', '2014-12-25 09:25:32', '2014-12-26 15:36:37', '你好吗', '{ "content": "nicaibudao", "state": 0 }, { "content": "nice", "state": 1 } }', '[ 321, 67 ] ');
+
+
+
+create table activity(
+	aid bigint NOT NULL AUTO_INCREMENT,
+	uid bigint NOT NULL,
+	title TEXT NOT NULL,
+	tag TEXT NOT NULL,
+	class int NOT NULL,/*0日程，1是活动*/
+	location TEXT not null,
+	startTime TIMESTAMP NOT NULL,
+	endTime TIMESTAMP NOT NULL,
+	content text not null,
+	participant text not null,
+	state int not null,/*  0:未完成;1:完成*/
+
+	logoPic TEXT NOT NULL,/*日程的时候为""（空）*/
+	templateNo int not null,/*模板编号,日程时为""*/
+	breif varchar(200) not null,/*活动的摘要内容 TODO:字数待定*/
+	heat bigint not null,/*热度*/
+
+	primary key(sid)
+) CHARACTER SET utf8 COLLATE utf8_general_ci;
+INSERT INTO `oneday`.`schedule` (`sid`, `uid`, `title`, `tag`,'class', `location`, `startTime`, `endTIme`, `content`, `check`, `participant`) VALUES (NULL, 1, 'George', 'null',0 ,'zju', '2014-12-25 09:25:32', '2014-12-26 15:36:37', '这是一个活动', '{ "content": "nicaibudao", "state": 0 }, { "content": "nice", "state": 1 } }', '[ 321, 67 ] ');
