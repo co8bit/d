@@ -169,22 +169,4 @@ class UserController extends Controller
         $this->ajaxReturn($dbUser->getUserInfo($uid));
     }
 
-    /**
-     * 得到用户的信息
-     * @param int uid
-     * @return json 用户信息，为数据库中的一行
-     *         如：{"uid":"1","name":"wbx@wbx.com","pwd":"wbx","realName":"","logoPic":"","phone":"","address":""}
-     * @return false "" 失败
-     * @return error "" uid非法
-     */
-    public function getUserInfo()
-    {
-        $dbUser     =   D("User");
-
-        $uid    =   I("param.uid");
-        if (!$dbUser->uidValidateRules($uid))
-            exit("error");
-
-        $this->ajaxReturn($dbUser->getUserInfo($uid));
-    }
 }

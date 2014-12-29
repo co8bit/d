@@ -3,7 +3,7 @@ namespace Home\Controller;
 use Think\Controller;
 
 
-
+include(APP_PATH."/Home/Conf/MyConfigINI.php");
 
 
 class ScheduleController extends Controller
@@ -56,6 +56,28 @@ class ScheduleController extends Controller
         empty($this->uid) && $this->error("error",U("Index/login"));
     }
 
+
+    /**
+     * 整理二维数组中的json格式，以使得ajaxReturn可以进行正常的含json嵌套的输出
+     * @param  array[][] $data 要被整理的数据
+     * @return array[][] 整理完成的数据
+     */
+    protected function trimForAjax($data = null)
+    {
+        foreach ($data as $key1=>$value1)
+        {
+            foreach ($data[$key1] as $key2=>$value2)
+            {
+                if ( ($key2 == "tag") || ($key2 == "check") || ($key2 == "participant") )
+                {
+                    $data[$key1][$key2]     =   json_decode($value2,true);
+                }
+            }
+        }
+
+        return $data;
+    }
+
     /**
     *查询某个日程
     *@param int sid
@@ -97,7 +119,7 @@ class ScheduleController extends Controller
         // $data["check"]   =   I('param.check');//json
         // $data["participant"]   =   I('param.participant');//json
 
-        $dbSchedule->field("title,location,startTime,endTime,content")->create(I('param.'));
+        $dbSchedule->field("title,location,startTime,endTime,content,brief")->create(I('param.'));
         $dbSchedule->uid =  $this->uid;
         $dbSchedule->tag = I('param.tag',"null",false);
         $dbSchedule->participant = I('param.participant',"null",false);
@@ -122,12 +144,16 @@ class ScheduleController extends Controller
                 // dump($info);
                 $dbSchedule->logoPic = $info["logoPic"]['savepath'].$info["logoPic"]['savename'];
             }
+
+            $dbSchedule->class  =   1;
         }
         else
         {
             $dbSchedule->check = I('param.check',"null",false);
             if (!$dbSchedule->checkValidateRules($dbSchedule->check))
                 exit("error");
+
+            $dbSchedule->class  =   0;
         }
         
 
@@ -152,7 +178,7 @@ class ScheduleController extends Controller
 
     /**
      * 修改一个日程
-     * @param 多个参数，名称参考returnJson,但是形式是post
+     * @param 多个参数，名称参考returnJson,但是形式是post; class不能修改
      * @param int mode 模式，为0修改日程，为1修改活动（不改logo），为2是修改活动（改logo）
      * @return true "" 成功
      *         其他任何东西 "" 失败
@@ -163,7 +189,7 @@ class ScheduleController extends Controller
         $dbSchedule     =   D("Schedule");
         $data   =   null;
 
-        $dbSchedule->field("sid,title,location,startTime,endTime,content,state")->create(I('param.'));
+        $dbSchedule->field("sid,title,location,startTime,endTime,content,state,brief")->create(I('param.'));
         $dbSchedule->uid =  $this->uid;
         $dbSchedule->tag = I('param.tag',"null",false);
         $dbSchedule->participant = I('param.participant',"null",false);
@@ -246,17 +272,8 @@ class ScheduleController extends Controller
         $map["startTime"]   =   array("between",array($date." 00:00:00",$date." 23:59:59"));
         $data   =   null;
         $data   =   $dbSchedule->where($map)->where(array("uid"=>$this->uid))->select();
-        foreach ($data as $key1=>$value1)
-        {
-            foreach ($data[$key1] as $key2=>$value2)
-            {
-                if ( ($key2 == "tag") || ($key2 == "check") || ($key2 == "participant") )
-                {
-                    $data[$key1][$key2]     =   json_decode($value2,true);
-                }
-            }
-        }
-        $this->ajaxReturn($data);
+        
+        $this->ajaxReturn($this->trimForAjax($data));
     }
 
 
@@ -284,17 +301,8 @@ class ScheduleController extends Controller
         $map["startTime"]   =   array("between",array(date("Y-m-d",$startDate)." 00:00:00",date("Y-m-d",$endDate)." 23:59:59"));
         $data   =   null;
         $data   =   $dbSchedule->where($map)->where(array("uid"=>$this->uid))->select();
-        foreach ($data as $key1=>$value1)
-        {
-            foreach ($data[$key1] as $key2=>$value2)
-            {
-                if ( ($key2 == "tag") || ($key2 == "check") || ($key2 == "participant") )
-                {
-                    $data[$key1][$key2]     =   json_decode($value2,true);
-                }
-            }
-        }
-        $this->ajaxReturn($data);
+        
+        $this->ajaxReturn($this->trimForAjax($data));
     }
 
 
@@ -334,17 +342,7 @@ class ScheduleController extends Controller
         $map["startTime"]   =   array("between",array($pairDate["sdate"],$pairDate["edate"]));
         $data   =   null;
         $data   =   $dbSchedule->where($map)->where(array("uid"=>$this->uid))->select();
-        foreach ($data as $key1=>$value1)
-        {
-            foreach ($data[$key1] as $key2=>$value2)
-            {
-                if ( ($key2 == "tag") || ($key2 == "check") || ($key2 == "participant") )
-                {
-                    $data[$key1][$key2]     =   json_decode($value2,true);
-                }
-            }
-        }
-        $this->ajaxReturn($data);
+        $this->ajaxReturn($this->trimForAjax($data));
     }
 
 
@@ -534,11 +532,11 @@ class ScheduleController extends Controller
 
         $dbSchedule->field("sid,state")->create(I('param.'));
 
-        $tmp    =   $dbSchedule->where(array("sid"=>$dbSchedule->sid,"state"=>$dbSchedule->state))->save();
-        if (empty($tmp))
+        $tmp    =   $dbSchedule->save();
+        if ( ($tmp === false) || ($tmp === null) )
             exit("false");
         else
-            exit("error");
+            exit("true");
     }
 
 }
