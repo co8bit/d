@@ -2,6 +2,10 @@
  * Created by Administrator on 2014/12/29.
  */
 $(document).ready(function(){
+    var apiBaseurl='../server/index.php?';
+    function geturl(api,m,c,a){
+        return api+'m='+m+'&c='+c+'&a='+a;
+    }
     $.datepicker.regional['zh-CN'] = {
         clearText: '清除',
         clearStatus: '清除已选日期',
@@ -57,7 +61,6 @@ $(document).ready(function(){
     });
     setInterval(function(){
         var message=$(document.getElementById('iframe').contentWindow.document.body).html();
-        console.log(message);
         if(message.indexOf('true')!=-1){
             alert('提交成功');
             setTimeout(function(){
@@ -65,5 +68,16 @@ $(document).ready(function(){
             })
         }
     },1000);
+    $.post(geturl(apiBaseurl,'Home','User','getUid'),{},function(uid){
+        $.post(geturl(apiBaseurl,'Home','User','getUserInfo'),{uid:uid},function(data){
+            console.log(data);
+            if(data.logoPic==''){
+                $('.participant-img img').attr('src','image/oneday-weishangchuan.png');
+            }else{
+                $('.participant-img img').attr('src','../server/Public'+data.logoPic);
+            }
+            $('.participant input[name="participant"]').val(uid);
+        })
+    })
     $('.ui-datepicker').css('z-index',100);
 })

@@ -21,7 +21,6 @@ logoPic  ../server/index.php?m=Home&c=Schedule&a=create-->
 <div id="container">
     <iframe name="bushuaxin" id="iframe" style="display: none"></iframe>
         <form target="bushuaxin" id="form" enctype="multipart/form-data" method="post" action="../server/index.php?m=Home&c=Activity&a=create">
-            <input type="hidden" value="1" name="mode"/>
             <div class="title-input input-container">
                 <label>活动名称*:
                     <input name="title" type="text" required="required"/>
@@ -58,7 +57,10 @@ logoPic  ../server/index.php?m=Home&c=Schedule&a=create-->
             </div>
             <div class="participant input-container">
                 <label>&nbsp;&nbsp;&nbsp;参与者:
-                    <input name="participant" type="text" required="required"/>
+                    <input name="participant" type="hidden"/>
+                    <div class="participant-img-container left">
+                        <div class="participant-img"><img src="image/oneday-weishangchuan.png" width="100%"/></div>
+                    </div>
                 </label>
             </div>
             <div class="logoPic input-container">

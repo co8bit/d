@@ -30,7 +30,7 @@ body{background: url("../image/background.jpg");background-size:cover;overflow-x
 .column2-arrawdivider{width: 1px;height: 22px;background:#e6e6e5;margin-top: 11px }
 .column2-arrows-right{width:30px;height:45px;background:url("../image/oneday-rightarrow.jpg");cursor: pointer}
 .column2-cal{width:45px;height:45px;background:url("../image/oneday-calcu.jpg");cursor: pointer}
-.column2-bottom{overflow-y:auto;width: 100%;background: #ffffff;height: 90%;margin-top:2%;border-radius: 5px;position: relative;background: url("../image/oneday-dayview-bg.png");/**/background-size: 100%}
+.column2-bottom{overflow-y:auto;width: 100%;background: #ffffff;height: 90%;margin-top:2%;border-radius: 5px;position: relative;background: url("../image/oneday-dayview-bg.png");background-size: 100%}
 .column2-bottom-calender{width: 100%;height: 100%}
 .column2-bottom-calender-title{width: 100%;background: #a7a6a7;height: 6%;color: #ffffff;border-radius: 5px}
 .column2-bottom-calender-container{height: 11%}
@@ -42,6 +42,29 @@ body{background: url("../image/background.jpg");background-size:cover;overflow-x
 .column2-bottom-week-container td{border-left: 3px solid #e3e3e2;border-right: 3px solid #e3e3e2;vertical-align: top;width: 14%}
 .column2-bottom-week-container-item{cursor:pointer;width: 100%;height: 8%;background: #f3f2f0;margin-bottom: 10px;text-align: center;overflow: hidden}
 .column2-bottom-week-container-item h2{margin-top: 20%;font-weight: normal}
+.column2-bottom-activitydetail-top{position: relative}
+.column2-bottom-activitydetail-top-joinin{position: absolute;top: 20%;left: 60%;width: 20%;cursor: pointer}
+.column2-bottom-activitydetail-author{margin-top: 20px;overflow: hidden}
+.column2-bottom-activitydetail-author-touxiang{width: 7%;margin-left: 2%}
+.column2-bottom-activitydetail-author-title{margin-left: 1%}
+.column2-bottom-activitydetail-author-title h1{font-size: 30px;font-weight: normal;color:#373836}
+.column2-bottom-activitydetail-author-title h2{font-size: 18px;font-weight: normal;color:#d2c9b9;margin-top: 10px}
+.column2-bottom-activitydetail-content{width: 80%;margin-left: 10%;line-height: 30px}
+.column2-bottom-activitydetail-participant{margin-top: 20px;overflow: hidden}
+.column2-bottom-activitydetail-participant-circle{width: 7%;margin-left: 2%}
+.column2-bottom-activitydetail-participant-item{width: 6%;margin-left: 2%;margin-top: 0.5%}
+.column2-bottom-activitydetail-buttons{width: 50%;margin: 100px auto}
+.column2-bottom-activitydetail-button{width: 40%;cursor: pointer}
+.column2-bottom-setting-userinfo{width: 100%;top: 30%;position: absolute}
+.column2-bottom-setting-userinfo-touxiang{width: 16%;margin-left: 4%}
+.column2-bottom-setting-userinfo-info{margin-top: 10%;margin-left: 3%}
+.column2-bottom-setting-userinfo-all{margin-left: 4%;padding-top: 10px}
+.column2-bottom-setting-userinfo-all-name{margin: 25px 0;position: relative}
+#file-value{width: 40%;margin-left: 1%;border: 1px solid #e9e7e3;border-radius: 2px;height: 30px}
+#userinfo-file-input{width: 15%;height: 30px;position: absolute;left: 55%;top: 10%;z-index: 2;opacity: 0}
+.userinfo-file-input-zhezhu{position: absolute;width: 15%;height:30px;background: #e9e7e3;display: inline-block;left: 55%;top: 10%;z-index: 1;text-align: center;line-height: 30px;border-radius: 2px;color: #373836}
+#userinfo-file-input-submit{width: 15%;left: 75%;height: 30px;top: 10%;background: #f4a8a3;border: none;position: absolute;color: #ffffff;border-radius: 2px}
+#column2-bottom-setting-userinfo-submit{width: 20%;margin-left:10%;height: 30px;border: none;background: #f4a8a3;color: #ffffff;border-radius: 4px}
 .column2-bottom-addbutton{font-size: 16px;color: #dddddd;text-align: center;padding: 12px;border: 1px solid #dddddd;border-radius: 5px;width: 70%;margin-left: 15%;margin-top: 10px;text-align: left}
 .item{height: 65px;margin: 10px 0;}
 .column2-bottom-activity-item{width: 45%;background: #ffffff;overflow: hidden;margin-left: 3%;margin-top: 30px;cursor: pointer;text-align: center;padding-bottom: 10px}
@@ -52,11 +75,14 @@ body{background: url("../image/background.jpg");background-size:cover;overflow-x
 .item-cotainer-content{width: 40%;background: #f7c4b1;text-indent: 20px;color: white}
 .item-container-con{background: url("../image/oneday-item-bg.png");overflow: hidden;}
 .column3{width: 25%;height: 100%}
-.column3-top{width: 100%;height: 45px;background: white;border-radius: 5px;overflow: hidden}
+.column3-top{width: 100%;height: 45px;background: white;border-radius: 5px;position: relative}
 .column3-add{width: 45px;height: 45px;background: url("../image/oneday-add.jpg")}
 .column3-rubbish{width: 45px;height: 45px;background: url("../image/oneday-rubbish.jpg")}
 .column3-page{width: 45px;height: 45px;background: url("../image/oneday-page.jpg")}
 .column3-setting{width: 45px;height: 45px;background: url("../image/oneday-setting.jpg")}
+.column3-setting-hover{display:none;box-shadow:-1px 1px 1px #666;clear: both;position: absolute;right: 0;top: 120%;background: #e8e8e8;padding: 10px;border-radius: 5px}
+.column3-setting-item{text-align: right;padding: 0 2px;cursor: pointer}
+.column3-setting-item-divider{width: 100%;height: 1px;background: #373836;margin: 6px 0}
 .column3-divider{height: 100%;width: 1px;background: #e3e3e2}
 .column3-bottom-taskdetail{height: 100%;}
 .column3-bottom{height: 90%;margin-top: 5%;width: 100%;background: white;border-radius: 5px;overflow-y:auto;overflow-x:hidden}
@@ -111,3 +137,16 @@ body{background: url("../image/background.jpg");background-size:cover;overflow-x
 .column3-bottom-person-img img{margin-right: 10px}
 .column3-bottom-cancel{width: 72px;height: 27px;background: #abaaa9;text-align: center;line-height: 27px;margin-left: 60px;margin-top: 40px;color: #ffffff;cursor: pointer}
 .column3-bottom-confirm{width: 72px;height: 27px;background: #ed7a72;text-align: center;line-height: 27px;margin-left: 26px;margin-top: 40px;color: #ffffff;cursor: pointer;margin-bottom: 40px}
+.activity-pinglun-title{width: 100%;height: 45px;background: #2e3540;color: #ffffff;font-size: 20px;line-height: 45px}
+.activity-pinglun-title img{margin-left: 20px}
+.activity-pinglun-container{padding:5%}
+.activity-pinglun-container-item{border-bottom: 1px solid #e3e3e2;overflow: hidden;padding-bottom: 20px}
+.activity-pinglun-container-item-touxiang{width: 20%}
+.activity-pinglun-container-item-content{margin-left:5%}
+.activity-pinglun-container-item-textarea{width: 80%;margin-bottom: 20px;display: none}
+.activity-pinglun-container-item-textarea textarea{width: 99%;resize: none;height: 40px}
+.activity-pinglun-container-item-textarea-submit{padding: 5px 20px;background: #f4a8a3;display: inline-block;color: #ffffff;border-radius: 3px;cursor: pointer}
+.activity-pinglun-container-item-content p{color: #999999}
+.activity-pinglun-container-item-content h6{font-size: 16px;font-weight: normal;margin-top: 15%}
+.activity-pinglun-container-item-button{cursor: pointer}
+.activity-pinglun-container-item-button span{margin-top: 5px;color:#bdc0b9;margin-left: 10px}

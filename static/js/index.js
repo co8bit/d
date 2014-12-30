@@ -20,10 +20,14 @@ $(document).ready(function(){
         }
     })
     var timeout;
+    var timeinter;
     var timenow=new Date();
     var monthtimenow=new Date;
     var itemarray=new Array();
+    var activityarray=new Array();
     var apiBaseurl='../server/index.php?';
+    var pagenow=1;
+    var userinfourl='../server/index.php?m=Home&c=User&a=editUserInfo';
     function geturl(api,m,c,a){
         return api+'m='+m+'&c='+c+'&a='+a;
     }
@@ -46,14 +50,22 @@ $(document).ready(function(){
         }
     }};
     changetime(timenow);
+    jiazai();
     //用户信息载入
     userInfo();
+    //得到图片路径
+    function getLogopicSrc(logoPic){
+        if(logoPic!=''){
+            return '../server/Public'+logoPic;
+        }else{
+            return 'image/oneday-weishangchuan.png';
+        }
+    }
     function userInfo(){
         $.post(geturl(apiBaseurl,'Home','User','getUid'),{},function(uid){
             $.post(geturl(apiBaseurl,'Home','User','getUserInfo'),{uid:uid},function(data){
-                console.log(data);
                 if(data.logoPic){
-                    src=logoPic;
+                    src='../server/Public'+data.logoPic;
                 }else{
                     src='image/oneday-weishangchuan.png';
                 }
@@ -65,6 +77,7 @@ $(document).ready(function(){
                 $('.column1-search img').attr('src',src);
                 $('.column1-p p:first').html(realname);
                 $('.column1-p p:last').html(data.name);
+                $('.column1-search img').css('height',$('.column1-search img').css('width')).css('border-radius','50%');
             })
         })
 
@@ -83,50 +96,87 @@ $(document).ready(function(){
     })
     //设置
     $('#oneday-setting').click(function(){
-        $.post(geturl(apiBaseurl,'Home','User','getUid'),{},function(uid){
-            $.post(geturl(apiBaseurl,'Home','User','getUserInfo'),{uid:uid},function(data){
-                console.log(data);
-                $('.column3-bottom').attr('state','setting').html('<div class="column3-bottom-setting">'+
-                    '<div class="column3-bottom-setting-title">'+
-                    '<img src="image/oneday-rightarrow.png"/>'+
-                    '<span>个人设置</span>'+
-                    '</div>'+
-                    '<form action="test.php" method="post" enctype="multipart/form-data">'+
-                    '<div class="column3-bottom-setting-container">'+
-                    '<div class="column3-bottom-setting-container-input">'+
-                    '<label name="logoPic">上传头像</label>&nbsp;&nbsp;&nbsp;&nbsp;'+
-                    '<input type="file" name="logoPic" id="column3-bottom-setting-file"/>'+
-                    '<div class="column3-bottom-setting-logoPic-zhezhu">'+
-                    '<img src="image/oneday-weishangchuan.png" width="100px" height="100px" id="setting-touxiang"/>'+
-                    '</div>'+
-                    '</div>'+
-                    '<div class="column3-bottom-setting-container-input">'+
-                    '<label name="phone">手&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;机</label>&nbsp;&nbsp;&nbsp;&nbsp;'+
-                    '<input type="text" name="phone" value="'+data.phone+'"/>'+
-                    '</div>'+
-                    '<div class="column3-bottom-setting-container-input">'+
-                    '<label name="address">地&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;址</label>&nbsp;&nbsp;&nbsp;&nbsp;'+
-                    '<input type="text" name="address" value="'+data.address+'"/>'+
-                    '</div>'+
-                    '<div class="column3-bottom-setting-container-input">'+
-                    '<label name="realName">真实姓名</label>&nbsp;&nbsp;&nbsp;&nbsp;'+
-                    '<input type="text" name="realName" value="'+data.realName+'"/>'+
-                    '</div>'+
-                    '<div class="column3-bottom-setting-container-input">'+
-                    '<label name="submit">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>&nbsp;&nbsp;&nbsp;&nbsp;'+
-                    '<input type="submit" value="修改" id="setting-submit"/>'+
-                    '</div>'+
-                    '</div>'+
-                    '</form>'+
-                    '</div>'
-                );
-                if(data.logoPic==''){
-                    $('#setting-touxiang').attr('src','image/oneday-weishangchuan.png');
-                }else{
-                    $('#setting-touxiang').attr('src',data.logoPic);
-                }
-            });
-        });
+       $('.column3-setting-hover').css('display','block');
+    })
+    //
+    $('body').on('change','#userinfo-file-input',function(){
+        $('#file-value').val($(this).val());
+        userinfourl='../server/index.php?m=Home&c=User&a=setUserInfo';
+        $('.column2-bottom form').attr('action',userinfourl);
+    })
+    $('body').on('click','#column2-bottom-setting-userinfo-submit',function(){
+        userinfourl='../server/index.php?m=Home&c=User&a=editUserInfo';
+        setTimeout(function(){$('.column2-bottom form').attr('action',userinfourl);},1000);
+        timeinter=setInterval(function(){
+            var message=$(document.getElementById('userInfoiframe').contentWindow.document.body).html();
+            if(message=='true'){
+                alert('修改成功了哦');
+                jiazai();
+                clearInterval(timeinter);
+            }
+        },500)
+    })
+    $('.column3-setting-item').click(function(){
+        switch($(this).html()){
+            case '个人中心':
+                $.post(geturl(apiBaseurl,'Home','User','getUid'),{},function(id){
+                    $.post(geturl(apiBaseurl,'Home','User','getUserInfo'),{uid:id},function(data){
+                        src=getLogopicSrc(data.logoPic);
+                        $('.column2-bottom').html('<iframe name="bushuaxin" id="userInfoiframe" style="display: none"></iframe>'+
+                            '<form target="bushuaxin" enctype="multipart/form-data" method="post" action="'+userinfourl+'">'+
+                            '<input type="hidden" value="'+data.uid+'" name="uid"/>'+
+                            '<input type="hidden" value="'+data.pwd+'" name="pwd"/>'+
+                            '<div class="column2-bottom-setting-bg">'+
+                            '<img src="image/oneday-setting-bg.png" width="100%"/>'+
+                            '</div>'+
+                            '<div class="column2-bottom-setting-userinfo">'+
+                            '<div class="column2-bottom-setting-userinfo-touxiang left">'+
+                            '<img src="'+src+'" width="100%"/>'+
+                            '</div>'+
+                            '<div class="column2-bottom-setting-userinfo-info left">'+
+                            '<p>'+data.realName+'</p>'+
+                            '<p>'+data.name+'</p>'+
+                            '</div>'+
+                            '<div class="column2-bottom-setting-userinfo-all clear">'+
+                            '<div class="column2-bottom-setting-userinfo-all-name">'+
+                            '真实姓名: <input type="text" name="realName" value="'+data.realName+'"/>'+
+                            '</div>'+
+                            '<div class="column2-bottom-setting-userinfo-all-name">'+
+                            '我的头像:<input type="text" readonly id="file-value"/>'+
+                            '<input type="file" name="logoPic" id="userinfo-file-input"/>'+
+                            '<div class="userinfo-file-input-zhezhu">浏览</div>'+
+                            '</div>'+
+                            '<div class="column2-bottom-setting-userinfo-all-name">'+
+                            '手&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;机: <input type="text" name="phone" value="'+data.phone+'"/>'+
+                            '</div>'+
+                            '<div class="column2-bottom-setting-userinfo-all-name">'+
+                            '地&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;址: <input type="text" name="address" value="'+data.address+'"/>'+
+                            '</div>'+
+                            '<div class="column2-bottom-setting-userinfo-all-name">'+
+                            '<input type="submit" id="column2-bottom-setting-userinfo-submit"/>'+
+                            '</div>'+
+                            '</div>'+
+                            '</div>').css('background','#fff');
+                        $('.column2-bottom-setting-userinfo-touxiang img').css('height',$('.column2-bottom-setting-userinfo-touxiang img').css('width')).css('border-radius','50%');
+                    })
+                })
+                break;
+            case '退出':
+                $.post(geturl(apiBaseurl,'Home','User','logout'),{},function(data){
+                    if(data=='true'){
+                        var con=confirm('确认要退出吗?')
+                        if(con){
+                            window.location.href='login.html';
+                        }
+                    }
+                })
+                break;
+            case '活动管理':
+                break;
+            case '关于我们':
+                break;
+        }
+        $('.column3-setting-hover').css('display','none');
     })
     //这里测试
     $('#oneday-page').click(function(){
@@ -251,7 +301,6 @@ $(document).ready(function(){
             return (length-num%length)-1;
         }
     }
-    jiazai();
     //月视图点击事件
     $('#oneday-calcu').click(function(){
         var timenow=new Date();
@@ -430,35 +479,8 @@ $(document).ready(function(){
     //页面变换主逻辑
     $('.column1-tag').click(function(){
         switch ($(this).find('.column1-tag-label').html()){
-            case '发现活动':/*$('.column2-bottom').html('<div class="column2-bottom-activity-container">'+
-                '<div class="column2-bottom-activity-item left">'+
-                '<h1>练练——别在冬天放弃自己</h1>'+
-                '<img src="image/OneDay-activity-itemimg.jpg"/>'+
-                '</div>'+
-                '<div class="column2-bottom-activity-item left">'+
-                '<h1>练练——别在冬天放弃自己</h1>'+
-                '<img src="image/OneDay-activity-itemimg.jpg"/>'+
-                '</div>'+
-                '<div class="column2-bottom-activity-item left">'+
-                '<h1>练练——别在冬天放弃自己</h1>'+
-                '<img src="image/OneDay-activity-itemimg.jpg"/>'+
-                '</div>'+
-                '<div class="column2-bottom-activity-item left">'+
-                '<h1>练练——别在冬天放弃自己</h1>'+
-                '<img src="image/OneDay-activity-itemimg.jpg"/>'+
-                '</div>'+
-                '<div class="column2-bottom-activity-item left">'+
-                '<h1>练练——别在冬天放弃自己</h1>'+
-                '<img src="image/OneDay-activity-itemimg.jpg"/>'+
-                '</div>'+
-                '<div class="column2-bottom-activity-item left">'+
-                '<h1>练练——别在冬天放弃自己</h1>'+
-                '<img src="image/OneDay-activity-itemimg.jpg"/>'+
-                '</div>'+
-                '</div>');*/
-                $.post(geturl(apiBaseurl,'Home','Activity','queryAll'),{page:1},function(data){
-                    console.log(data);
-                })
+            case '发现活动':
+                jiazaiActivity(pagenow);
                 $('.column3-bottom').html('<div class="column3-bottom-activity-title"><img src="image/oneday-rightarrow.png"/>最近活动</div>'+
                     '<div class="column3-bottom-activity-container">'+
                     '<div class="column3-bottom-activity-item">'+
@@ -510,9 +532,110 @@ $(document).ready(function(){
         event.stopPropagation();
     })
 
+    //活动单元点击逻辑
+    $('body').on('click','.column2-bottom-activity-item',function(){
+        var uid=$(this).attr('uid');
+        var aid=$(this).attr('aid');
+        $.post(geturl(apiBaseurl,'Home','Activity','queryOne'),{aid:aid},function(data){
+            $.post(geturl(apiBaseurl,'Home','User','getUserInfo'),{uid:uid},function(userinfo){
+                $.post(geturl(apiBaseurl,'Home','User','getUid'),{},function(id){
+                    $('.column2-bottom').html('<div class="column2-bottom-activitydetail-top">'+
+                        '<img src="image/oneday-activitydetail-bg.png" width="100%">'+
+                        '<div class="column2-bottom-activitydetail-top-joinin">'+
+                        '<img src="image/oneday-join-in.png" width="100%"/>'+
+                        '</div>'+
+                        '</div>'+
+                        '<div class="column2-bottom-activitydetail-author">'+
+                        '<div class="column2-bottom-activitydetail-author-touxiang left">'+
+                        '<img src="image/touxiang.jpg" width="100%"/>'+
+                        '</div>'+
+                        '<div class="column2-bottom-activitydetail-author-title left">'+
+                        '<h1>'+data.title+'</h1>'+
+                        '<h2>作者：'+userinfo.name+'&nbsp;&nbsp;|&nbsp;&nbsp;'+data.startTime+'</h2>'+
+                        '</div>'+
+                        '</div>'+
+                        '<div class="column2-bottom-activitydetail-content">'+
+                        '</div>'+
+                        '<div class="column2-bottom-activitydetail-participant">'+
+                        '<div class="left column2-bottom-activitydetail-participant-circle">'+
+                        '<img src="image/oneday-activity-circle.png" width="100%"/>'+
+                        '</div>'+
+                        /*'<div class="left column2-bottom-activitydetail-participant-item">'+
+                        '<img src="image/oneday-activity-circle.png" width="100%"/>'+
+                        '</div>'+
+                        '<div class="left column2-bottom-activitydetail-participant-item">'+
+                        '<img src="image/oneday-activity-circle.png" width="100%"/>'+
+                        '</div>'+
+                        '<div class="left column2-bottom-activitydetail-participant-item">'+
+                        '<img src="image/oneday-activity-circle.png" width="100%"/>'+
+                        '</div>'+
+                        '<div class="left column2-bottom-activitydetail-participant-item">'+
+                        '<img src="image/oneday-activity-circle.png" width="100%"/>'+
+                        '</div>'+*/
+                        '</div>'+
+                        '<div class="column2-bottom-activitydetail-buttons">'+
+                        '<div class="column2-bottom-activitydetail-button left"><img src="image/oneday-activity-zanyixia.jpg" width="100%"></div>'+
+                        '<div class="column2-bottom-activitydetail-button right"><img src="image/oneday-activity-yibanban.jpg" width="100%"></div>'+
+                        '</div>').attr('aid',aid);
+                    $('.column2-bottom-activitydetail-author-touxiang img').css('height',$('.column2-bottom-activitydetail-author-touxiang img').css('width')).css('border-radius','50%');
+                    $('.column2-bottom-activitydetail-content').html(gaihuilai(data.content));
+                    if(userinfo.logoPic!=''){
+                        $('.column2-bottom-activitydetail-author-touxiang img').attr('src','../server/Public'+userinfo.logoPic);
+                    }else{
+                        $('.column2-bottom-activitydetail-author-touxiang img').attr('src','image/oneday-weishangchuan.png');
+                    }
+                    if(inArray(id,data.participant)){
+                        $('.column2-bottom-activitydetail-top-joinin img').attr('src','image/oneday-join-havein.png')
+                    }
+                    for(var i=0;(i<data.participant.length)&&(i<7);i++){
+                        $.post(geturl(apiBaseurl,'Home','User','getUserInfo'),{uid:data.participant[i]},function(userinfo){
+                            console.log(userinfo.logoPic);
+                            if(userinfo.logoPic==''){
+                                var src='image/oneday-weishangchuan.png';
+                            }else{
+                                var src='../server/Public'+userinfo.logoPic;
+                            }
+                            $('.column2-bottom-activitydetail-participant').append('<div class="left column2-bottom-activitydetail-participant-item">'+
+                                '<img src="'+src+'" width="100%"/>'+
+                                '</div>')
+                            $('.column2-bottom-activitydetail-participant-item img').css('height',$('.column2-bottom-activitydetail-participant-item img').css('width')).css('border-radius','50%');
+                        })
+                    }
 
-
-
+                })
+            })
+        })
+    })
+    function inArray(yuansu,array){
+        for(var i=0;i<array.length;i++){
+            if(array[i]==yuansu){
+                return true;
+            }
+        }
+        return false;
+    }
+    //参加点击
+    $('body').on('click','.column2-bottom-activitydetail-top-joinin img',function(){
+        var thisobj=$(this);
+        if(thisobj.attr('src')=='image/oneday-join-havein.png'){
+            alert('已经参加了哦')
+        }else{
+            $.post(geturl(apiBaseurl,'Home','User','getUid'),{},function(uid){
+                $.post(geturl(apiBaseurl,'Home','Activity','addParticipant'),{uid:uid,aid:$('.column2-bottom').attr('aid')},function(data){
+                    if(data=='true'){
+                        alert('报名成功');
+                        thisobj.attr('src','image/oneday-join-havein.png');
+                    }
+                })
+            })
+        }
+    })
+    function gaihuilai(str){
+        str=str.replace(/&lt;/g,'<');
+        str=str.replace(/&gt;/g,'>');
+        str=str.replace(/&quot;/g,'');
+        return str;
+    }
     //搜索栏聚焦事件
     $('.column1-search input').focus(function(){
         $('.column1-search img').attr('src','image/oneday-delete.png');
@@ -521,8 +644,31 @@ $(document).ready(function(){
     $('.column1-search input').blur(function(){
         $('.column1-search img').attr('src','image/oneday-fangda.png');
     })
-
-
+    //获取全部活动并放进activityarray中
+    function getActivityArray(page){
+        $.post(geturl(apiBaseurl,'Home','Activity','queryAll'),{page:pagenow,class:2},function(data2){
+            $.post(geturl(apiBaseurl,'Home','Activity','queryAll'),{page:pagenow,class:3},function(data3){
+                $.post(geturl(apiBaseurl,'Home','Activity','queryAll'),{page:pagenow,class:4},function(data4){
+                    activityarray.splice(0,activityarray.length);
+                    if(data2!='error'){
+                        $.each(data2,function(i,d){
+                            activityarray.push(d);
+                        })
+                    }
+                    if(data3!='error'){
+                        $.each(data3,function(i,d){
+                            activityarray.push(d);
+                        })
+                    }
+                    if(data4!='error'){
+                        $.each(data4,function(i,d){
+                            activityarray.push(d);
+                        })
+                    }
+                })
+            })
+        })
+    }
     /*$('.column2-date-calender').click(function(){
         $(this).css('background','#2e3440').find('img').attr('src','image/oneday-canleder-on.png');
     })*/
@@ -577,6 +723,16 @@ $(document).ready(function(){
             }
         })
     });
+    //评论按钮逻辑
+    $('body').on('click','.activity-pinglun-container-item-button',function(){
+        var thisobj=$(this);
+        $(this).parent().find('.activity-pinglun-container-item-textarea').slideToggle();
+        if(!thisobj.attr('state')){
+            thisobj.attr('state','on').find('img').attr('src','image/oneday-pinglun-tubiao-on.png').end().find('span').css('color','#ed7a72');
+        }else{
+            thisobj.removeAttr('state').find('img').attr('src','image/oneday-pinglun-tubiao.png').end().find('span').css('color','#bdc0b9');
+        }
+    })
     $('body').on('blur','.column2-bottom-addbutton',function(){
         if($(this).val()=='')
             $(this).val('点此快速新建任务');
@@ -725,6 +881,49 @@ $(document).ready(function(){
         }
         timeout=setTimeout(refresh,1000);
     }
+//加载活动全部
+    function jiazaiActivity(pagenow){
+        $.post(geturl(apiBaseurl,'Home','Activity','queryAll'),{page:pagenow,class:2},function(data2){
+            $.post(geturl(apiBaseurl,'Home','Activity','queryAll'),{page:pagenow,class:3},function(data3){
+                $.post(geturl(apiBaseurl,'Home','Activity','queryAll'),{page:pagenow,class:4},function(data4){
+                    initActivity(data2,data3,data4);
+                    drawAcitivtyList()
+                })
+            })
+        })
+    }
+//加载活动数据
+    function initActivity(data2,data3,data4){
+        activityarray.splice(0,activityarray.length);
+        if(data2!='error'){
+            $.each(data2.content,function(i,d){
+                activityarray.push(d);
+            })
+        }
+        if(data3!='error'){
+            $.each(data3.content,function(i,d){
+                activityarray.push(d);
+            })
+        }
+        if(data4!='error'){
+            $.each(data4.content,function(i,d){
+                activityarray.push(d);
+            })
+        }
+
+
+    }
+//画出活动dom
+    function drawAcitivtyList(){
+        $('.column2-bottom').html('<div class="column2-bottom-activity-container"></div>');
+        for(var i=0;i<activityarray.length;i++){
+            $('.column2-bottom-activity-container').append('<div class="column2-bottom-activity-item left" uid="'+activityarray[i].uid+'" aid="'+activityarray[i].aid+'">'+
+                    '<h1>'+activityarray[i].title+'</h1>'+
+                    '<img src="../server/Public'+activityarray[i].logoPic+'"/>'+
+                    '</div>'
+            );
+        }
+    }
 //得到百分比宽度
     function getpercentage(now,start,end){
         if(now.getTime()>end.getTime()){
@@ -779,6 +978,7 @@ $(document).ready(function(){
                 refresh();
             })
         })
+        $('.column2-bottom').css('background','url("image/oneday-dayview-bg.png")').css('background-size','100%');
     }
     function jiazaishuju() {
         $.post(geturl(apiBaseurl,'Home','User','getUid'),{},function(uid){
@@ -920,7 +1120,6 @@ $(document).ready(function(){
         '</div>'+
         '<div class="column3-bottom-cancel left">取 消</div>'+
         '<div class="column3-bottom-confirm left">确 认</div>');
-        $('.column2-bottom').css('background','url("image/oneday-dayview-bg.png")').css('background-size','100%');
     }
     //画月视图框架
     function drawcalcu(){
