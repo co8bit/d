@@ -196,7 +196,8 @@ class ActivityController extends Controller
     /**
      * 查询所有未完成的活动;
      * @param int page 当前的页数
-     * @param int class 活动的类别
+     * @param int class 活动的类别;class=9999,返回所有类别的活动
+     * @return error "" page过大或没有此类活动
      * @return json 活动内容，形如：
      *         {
      *             "pageTotalNum":2,//总页数
@@ -212,14 +213,22 @@ class ActivityController extends Controller
 
         $page   =   I("param.page",1);
         $class  =   I("param.class",4);
+        if ($class == 9999)
+        {
+            $condition  =   "state=0 and (class=2 or class=3 or class=4)";
+        }
+        else
+        {
+            $condition  =   array("class"=>$class,"state"=>0);
+        }
 
-        $scheduleCount = $dbActivity->where(array("class"=>$class,"state"=>0))->count();
+        $scheduleCount = $dbActivity->where($condition)->count();
         $scheduleTotalPageNum   =   ceil($scheduleCount / _ACTIVITY_PAGE_NUM);
 
         if ($page > $scheduleTotalPageNum)
             exit("error");
 
-        $resule     =   $dbActivity->where(array("class"=>$class,"state"=>0))->order("startTime")->limit(($page-1) * _ACTIVITY_PAGE_NUM,_ACTIVITY_PAGE_NUM)->select();
+        $resule     =   $dbActivity->where($condition)->order("startTime")->limit(($page-1) * _ACTIVITY_PAGE_NUM,_ACTIVITY_PAGE_NUM)->select();
 
         $tmp    =   null;
         $tmp["pageTotalNum"] = $scheduleTotalPageNum;
@@ -251,18 +260,35 @@ class ActivityController extends Controller
 
 
     /**
-     * 给当前用户的当前活动添加一个参与者（作为组织者进行，群众用addToSchedule函数）
+     * 给当前用户的当前活动添加一个参与者
+     * @param int mode 改字段不用传入，是服务器代码自己用，不对外开放的字段
+     *     当外部调用时（post）,mode=0：作为组织者，即调用者的uid要为活动创建人的uid
+     *     当内部调用时（服务器端自己）,mode=1：任意uid
      * @param int aid
      * @param int uid 被添加的用户
      * @return bool "" 是否成功
      */
-    public function addParticipant()
+    public function addParticipant($mode = 0,$aid = 0,$uid = 0)
     {
         $dbActivity     =   D("Activity");
 
-        $dbActivity->field("aid,uid")->create(I('param.'));
+        if ($mode == 0)//post
+        {
+            $dbActivity->field("aid,uid")->create(I('param.'));
+
+            $tmp    =   null;
+            $tmp    =   M("Activity")->where(array("aid"=>$dbActivity->aid))->find();
+            if ((int)$this->uid != $tmp["uid"])
+                exit("error");
+        }
+        elseif ($mode == 1)//php
+        {
+            $dbActivity->aid    =   $aid;
+            $dbActivity->uid    =   $uid;
+        }
         $newUid     =   (int)$dbActivity->uid;//TODO:去除重复uid的检查
-        $tmp    =   $dbActivity->where(array("uid"=>$this->uid,"aid"=>$dbActivity->aid))->find();
+        $tmp    =   null;
+        $tmp    =   $dbActivity->where(array("aid"=>$dbActivity->aid))->find();
         $tmp["participant"]   =   json_decode($tmp["participant"],true);
         if ($tmp["participant"] === null)
             $tmp["participant"] = array($newUid);
@@ -271,7 +297,7 @@ class ActivityController extends Controller
         $tmp2   =   null;
         $tmp2   =   json_encode($tmp["participant"]);
 
-        $tmp3   =   $dbActivity->save(array("uid"=>$this->uid,"aid"=>$dbActivity->aid,"participant"=>$tmp2));
+        $tmp3   =   $dbActivity->save(array("aid"=>$dbActivity->aid,"participant"=>$tmp2));
         if ( ($tmp3 === null) || ($tmp3 === false) )
             exit("false");
         else
@@ -417,5 +443,28 @@ class ActivityController extends Controller
             exit("true");
     }
 
+
+
+    /**
+     * 添加活动到日程中去，完成两件事情：
+     *     1.添加aid活动的参与者
+     *     2.添加活动到uid日程中去
+     * @param int uid 将活动添加到uid那个人的日程中
+     * @param int aid 哪个活动
+     * @return bool "" 是否成功
+     */
+    public function addActivityToSchedule()
+    {
+        $dbActivity     =   D("Activity");
+        
+        $dbActivity->field("uid,aid")->create(I("param."));
+        
+        //TODO:一致性？
+        $this->addParticipant(1,$dbActivity->aid,$dbActivity->uid);
+
+        // new ScheduleC
+
+
+    }
 
 }

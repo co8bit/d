@@ -18,6 +18,7 @@ class ActivityModel extends Model
 	// brief
 	// templateNo
 	// class
+	// aid
 
 	public function tagValidateRules()
 	{
