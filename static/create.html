@@ -20,7 +20,7 @@
 logoPic  ../server/index.php?m=Home&c=Schedule&a=create-->
 <div id="container">
     <iframe name="bushuaxin" id="iframe" style="display: none"></iframe>
-        <form target="bushuaxin" id="form" enctype="multipart/form-data" method="post" action="../server/index.php?m=Home&c=Schedule&a=create">
+        <form target="bushuaxin" id="form" enctype="multipart/form-data" method="post" action="../server/index.php?m=Home&c=Activity&a=create">
             <input type="hidden" value="1" name="mode"/>
             <div class="title-input input-container">
                 <label>活动名称*:
@@ -30,8 +30,9 @@ logoPic  ../server/index.php?m=Home&c=Schedule&a=create-->
             <div class="class-input input-container">
                 <label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;类别*:
                     <select form="form" name="class">
-                        <option>社团</option>
-                        <option>兴趣</option>
+                        <option value="2">学校活动</option>
+                        <option value="3">社团活动</option>
+                        <option value="4">兴趣活动</option>
                     </select>
                 </label>
             </div>

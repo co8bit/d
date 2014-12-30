@@ -46,14 +46,38 @@ $(document).ready(function(){
         }
     }};
     changetime(timenow);
+    //用户信息载入
+    userInfo();
+    function userInfo(){
+        $.post(geturl(apiBaseurl,'Home','User','getUid'),{},function(uid){
+            $.post(geturl(apiBaseurl,'Home','User','getUserInfo'),{uid:uid},function(data){
+                console.log(data);
+                if(data.logoPic){
+                    src=logoPic;
+                }else{
+                    src='image/oneday-weishangchuan.png';
+                }
+                if(data.realName){
+                    var realname=data.realName;
+                }else{
+                    var realname='还没有名字'
+                }
+                $('.column1-search img').attr('src',src);
+                $('.column1-p p:first').html(realname);
+                $('.column1-p p:last').html(data.name);
+            })
+        })
+
+    }
     //日程完成
     $('body').on('click','.column3-bottom-taskdetail-header .confirm',function(){
         var sid=$('.column3-bottom').attr('sid');
-        $.post(geturl(apiBaseurl,'Home','Schedule','editState'),{sid:sid,state:2},function(data){
+        $.post(geturl(apiBaseurl,'Home','Schedule','editState'),{sid:sid,state:1},function(data){
             console.log(data);
             if(data=='true'){
-                $(this).attr('src','../image/oneday-confirm-button-on.png');
+                $('.column3-bottom-taskdetail-header .confirm').attr('src','image/oneday-confirm-button-on.png');
                 setTimeout(jiazai,500);
+                setTimeout(drawc3rili,500);
             }
         })
     })
@@ -406,7 +430,7 @@ $(document).ready(function(){
     //页面变换主逻辑
     $('.column1-tag').click(function(){
         switch ($(this).find('.column1-tag-label').html()){
-            case '发现活动':$('.column2-bottom').html('<div class="column2-bottom-activity-container">'+
+            case '发现活动':/*$('.column2-bottom').html('<div class="column2-bottom-activity-container">'+
                 '<div class="column2-bottom-activity-item left">'+
                 '<h1>练练——别在冬天放弃自己</h1>'+
                 '<img src="image/OneDay-activity-itemimg.jpg"/>'+
@@ -431,7 +455,10 @@ $(document).ready(function(){
                 '<h1>练练——别在冬天放弃自己</h1>'+
                 '<img src="image/OneDay-activity-itemimg.jpg"/>'+
                 '</div>'+
-                '</div>');
+                '</div>');*/
+                $.post(geturl(apiBaseurl,'Home','Activity','queryAll'),{page:1},function(data){
+                    console.log(data);
+                })
                 $('.column3-bottom').html('<div class="column3-bottom-activity-title"><img src="image/oneday-rightarrow.png"/>最近活动</div>'+
                     '<div class="column3-bottom-activity-container">'+
                     '<div class="column3-bottom-activity-item">'+
@@ -688,7 +715,13 @@ $(document).ready(function(){
     function refresh(){
         for(var i= 0;i<itemarray.length;i++){
             var now=new Date;
-            $('.item-container').find("[sid='"+itemarray[i].sid+"']").find('.item-cotainer-content').css('width',getpercentage(now,dbtimetojsdate(itemarray[i].startTime),dbtimetojsdate(itemarray[i].endTime)));
+            var width=getpercentage(now,dbtimetojsdate(itemarray[i].startTime),dbtimetojsdate(itemarray[i].endTime));
+            if(width=='100%'||itemarray[i].state!=0){
+                $('.item-container').find("[sid='"+itemarray[i].sid+"']").css('display','none');
+            }else{
+                $('.item-container').find("[sid='"+itemarray[i].sid+"']").find('.item-cotainer-content').css('width',width);
+            }
+
         }
         timeout=setTimeout(refresh,1000);
     }
@@ -715,7 +748,6 @@ $(document).ready(function(){
 //初始化日历界面
     function jiazai(){
         $('.column2-bottom').attr('state','rishitu');
-        $('.column2-bottom').html('');
         $('.column2-bottom').html(
                 '<input class="column2-bottom-addbutton" value="点此快速新建任务"/>'+
                 '<div class="item-container">'+
@@ -786,12 +818,17 @@ $(document).ready(function(){
     }
     //画日视图点击详情
     function drawc3rilidetail(data){
+        if(data.state==1){
+            var src="image/oneday-confirm-button-on.png";
+        }else{
+            var src="image/oneday-confirm-button.png";
+        }
         $('.column3-bottom').attr('sid',data.sid).html('<div class="column3-bottom-taskdetail">'+
             '<div class="column3-bottom-taskdetail-header">'+
             '<img src="image/oneday-rightarrow.png" class="rightarrow"/>'+
             '<span class="column3-bottom-taskdetail-header-title">任务标题</span>'+
             '<span class="column3-bottom-taskdetail-header-ddl">DDL&nbsp12:45a.m</span>'+
-            '<img src="image/oneday-confirm-button.png" class="confirm"/>'+
+            '<img src="'+src+'" class="confirm"/>'+
             '</div>'+
             '<div class="column3-bottom-taskdetail-content">'+
             '<h6>地点&nbsp&nbsp&nbsp'+data.location+'</h6>'+

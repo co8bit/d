@@ -168,8 +168,4 @@ class UserController extends Controller
 
         $this->ajaxReturn($dbUser->getUserInfo($uid));
     }
-<<<<<<< HEAD
-=======
-
->>>>>>> 8617a5401317c0dbd9b95f9248534ca82fc7e16b
 }
