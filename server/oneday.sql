@@ -65,4 +65,4 @@ create table activity(
 
 	primary key(aid)
 ) CHARACTER SET utf8 COLLATE utf8_general_ci;
-INSERT INTO `oneday`.`activity` (`aid`, `uid`, `title`, `tag`,`class`, `location`, `startTime`, `endTIme`, `content`, `participant`) VALUES (NULL, 1, 'George', 'null',1 ,'zju', '2014-12-25 09:25:32', '2014-12-26 15:36:37', '这是一个活动', '[ 1, 2 ] ');
+INSERT INTO `oneday`.`activity` (`aid`, `uid`, `title`, `tag`,`class`, `location`, `startTime`, `endTIme`, `content`, `participant`) VALUES (NULL, 1, 'George', 'null',3 ,'zju', '2014-12-25 09:25:32', '2014-12-26 15:36:37', '这是一个活动', '[ 1, 2 ] ');
