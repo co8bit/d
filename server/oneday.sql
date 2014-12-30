@@ -34,6 +34,7 @@ create table schedule(
 	content text not null,
 	participant text not null,
 	state int not null,/*  0:未完成;1:完成*/
+	comment TEXT not null,/*评论*/
 
 	`check` text not null,/*活动的时候为""（空）*/
 
@@ -48,13 +49,14 @@ create table activity(
 	uid bigint NOT NULL,
 	title TEXT NOT NULL,
 	tag TEXT NOT NULL,
-	class int NOT NULL,/*0日程，1是活动*/
+	class int NOT NULL,/*0，1被日程占用，2是学校活动，3是社团活动，4是兴趣活动*/
 	location TEXT not null,
 	startTime TIMESTAMP NOT NULL,
 	endTime TIMESTAMP NOT NULL,
 	content text not null,
 	participant text not null,
 	state int not null,/*  0:未完成;1:完成*/
+	comment TEXT not null,/*评论*/
 
 	logoPic TEXT NOT NULL,/*日程的时候为""（空）*/
 	templateNo int not null,/*模板编号,日程时为""*/

@@ -2,10 +2,6 @@
 namespace Home\Controller;
 use Think\Controller;
 
-
-include(APP_PATH."/Home/Conf/MyConfigINI.php");
-
-
 class ScheduleController extends Controller
 {
     /*ReturnJson:
@@ -55,7 +51,7 @@ class ScheduleController extends Controller
         {
             foreach ($data[$key1] as $key2=>$value2)
             {
-                if ( ($key2 == "tag") || ($key2 == "check") || ($key2 == "participant") )
+                if ( ($key2 == "tag") || ($key2 == "check") || ($key2 == "participant") || ($key2 == "comment") )
                 {
                     $data[$key1][$key2]     =   json_decode($value2,true);
                 }
@@ -87,7 +83,7 @@ class ScheduleController extends Controller
     /**
      * 创建一个日程
      * @param 多个参数，名称参考returnJson,但是形式是post
-     * @param int mode 模式，为0新建日程，为1新建活动
+     * @param int mode 模式，为0新建日程，为2/3/4，和活动的class一致（需要传活动的aid到日程的aid字段里，代表链接到活动上）
      * @return true "" 成功
      *         其他任何东西 "" 失败
      *         error "" 非法操作
@@ -97,7 +93,7 @@ class ScheduleController extends Controller
         $dbSchedule     =   D("Schedule");
         $data   =   null;
 
-        $dbSchedule->field("title,location,startTime,endTime,content,aid")->create(I('param.'));
+        $dbSchedule->field("title,location,startTime,endTime,content,aid,class")->create(I('param.'));
         $dbSchedule->uid =  $this->uid;
         $dbSchedule->tag = I('param.tag',"null",false);
         $dbSchedule->participant = I('param.participant',"null",false);
@@ -105,11 +101,7 @@ class ScheduleController extends Controller
 
         
         $mode   =   I("param.mode",0);
-        if ((int)$mode == 1)
-        {
-            $dbSchedule->class  =   1;
-        }
-        else
+        if ((int)$mode == 0)
         {
             $dbSchedule->check = I('param.check',"null",false);
             if (!$dbSchedule->checkValidateRules($dbSchedule->check))
@@ -308,7 +300,7 @@ class ScheduleController extends Controller
             $tmp["check"] = array(array("content"=>$data["content"],"state"=>$data["state"]));
         else
             array_push($tmp["check"],array("content"=>$data["content"],"state"=>$data["state"]));
-        $tmp2   =   nnull;
+        $tmp2   =   null;
         $tmp2   =   json_encode($tmp["check"]);
 
         $tmp3   =   $dbSchedule->save(array("uid"=>$this->uid,"sid"=>$dbSchedule->sid,"check"=>$tmp2));
@@ -362,7 +354,7 @@ class ScheduleController extends Controller
             $tmp["participant"] = array($newUid);
         else
             array_push($tmp["participant"],$newUid);
-        $tmp2   =   nnull;
+        $tmp2   =   null;
         $tmp2   =   json_encode($tmp["participant"]);
 
         $tmp3   =   $dbSchedule->save(array("uid"=>$this->uid,"sid"=>$dbSchedule->sid,"participant"=>$tmp2));
@@ -422,7 +414,7 @@ class ScheduleController extends Controller
             $tmp["tag"] = array($data["tag"]);
         else
             array_push($tmp["tag"],$data["tag"]);
-        $tmp2   =   nnull;
+        $tmp2   =   null;
         $tmp2   =   json_encode($tmp["tag"]);
 
         $tmp3   =   $dbSchedule->save(array("uid"=>$this->uid,"sid"=>$dbSchedule->sid,"tag"=>$tmp2));
@@ -471,6 +463,61 @@ class ScheduleController extends Controller
 
         $tmp    =   $dbSchedule->save();
         if ( ($tmp === false) || ($tmp === null) )
+            exit("false");
+        else
+            exit("true");
+    }
+
+
+
+    /**
+     * 给当前用户的当前日程添加一个评论
+     * @param int sid
+     * @param string content 内容
+     * @return bool "" 是否成功
+     */
+    public function addComment()
+    {
+        $dbSchedule     =   D("Schedule");
+
+        $dbSchedule->field("sid,content")->create(I('param.'));
+        $data["date"]      =   date("Y-m-d H:i:s");
+
+        $tmp    =   $dbSchedule->where(array("sid"=>$dbSchedule->sid))->find();
+        $tmp["comment"]   =   json_decode($tmp["comment"],true);
+        if ($tmp["comment"] === null)
+            $tmp["comment"] = array(array("content"=>$dbSchedule->content,"date"=>$data["date"]));
+        else
+            array_push($tmp["comment"],array("content"=>$dbSchedule->content,"date"=>$data["date"]));
+        $tmp2   =   null;
+        $tmp2   =   json_encode($tmp["comment"]);
+
+        $tmp3   =   $dbSchedule->save(array("sid"=>$dbSchedule->sid,"comment"=>$tmp2));
+        if ( ($tmp3 === null) || ($tmp3 === false) )
+            exit("false");
+        else
+            exit("true");
+    }
+
+
+    /**
+     * 修改全部评论，注意是全部，因为区分不出来修改第几个评论
+     * @param int sid
+     * @param ReturJson_comment comment 全部评论的json
+     * @return bool "" 是否成功
+     * @return error "" 错误
+     */
+    public function editComment()
+    {
+        $dbSchedule     =   D("Schedule");
+
+        $dbSchedule->field("sid")->create(I('param.'));
+        $comment = I('param.comment',"null",false);
+        if (!$dbSchedule->commentValidateRules($check))
+            exit("error");
+
+        $tmp    =   $dbSchedule->save(array("sid"=>$dbSchedule->sid,"comment"=>$comment));
+        if ( ($tmp === null) || ($tmp === false) )
             exit("false");
         else
             exit("true");

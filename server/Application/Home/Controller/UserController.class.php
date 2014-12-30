@@ -4,6 +4,20 @@ use Think\Controller;
 
 class UserController extends Controller
 {
+    /**
+     * 上传文件的配置数组
+     * @var array
+     */
+    protected $UPLOADCONFIG = array(    
+        'maxSize'    =>    3145728,
+        'rootPath'   =>    './Public/',
+        'savePath'   =>    '/Uploads/',    
+        'saveName'   =>    array('uniqid',''),    
+        'exts'       =>    array('jpg', 'png', 'jpeg'),    
+        'autoSub'    =>    true,    
+        'subName'    =>    array('date','Ymd'),
+    );
+
     protected function _initialize()
     {
         //parent::_initialize();
@@ -167,5 +181,53 @@ class UserController extends Controller
             exit("error");
 
         $this->ajaxReturn($dbUser->getUserInfo($uid));
+    }
+    /**
+     * 修改用户信息（没有修改头像）
+     * @param json 用户信息，为数据库中的一行；不能修改name
+     *         如：{"uid":"1","pwd":"wbx","realName":"","logoPic":"","phone":"","address":""}
+     * @return bool "" 是否成功
+     * @return error "" uid非法
+     */
+    public function editUserInfo()
+    {
+        $dbUser     =   D("User");
+
+        $dbUser->field("uid,pwd,realName,logoPic,phone,address")->create(I('param.'));
+        if ($dbUser->save())
+            exit("true");
+        else
+            exit("false");
+    }
+
+
+    /**
+     * 设置用户信息（必须同时上传头像）
+     * @param 表单 用户信息，为数据库中的一行；不能修改name
+     *         如：{"uid":"1","pwd":"wbx","realName":"","logoPic":"","phone":"","address":""}
+     * @return bool "" 是否成功
+     * @return error "" uid非法
+     */
+    public function setUserInfo()
+    {
+        $dbUser     =   D("User");
+
+        $dbUser->field("uid,pwd,realName,phone,address")->create(I('param.'));
+
+        $upload = new \Think\Upload($this->UPLOADCONFIG);// 实例化上传类
+        $info   =   $upload->upload();
+        if(!$info)
+        {// 上传错误提示错误信息
+            exit($upload->getError());
+        }
+        else
+        {// 上传成功获取上传文件信息    
+            $dbUser->logoPic = $info["logoPic"]['savepath'].$info["logoPic"]['savename'];
+        }
+
+        if ($dbUser->save())
+            exit("true");
+        else
+            exit("false");
     }
 }
