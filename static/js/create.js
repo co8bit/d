@@ -70,13 +70,14 @@ $(document).ready(function(){
     },1000);
     $.post(geturl(apiBaseurl,'Home','User','getUid'),{},function(uid){
         $.post(geturl(apiBaseurl,'Home','User','getUserInfo'),{uid:uid},function(data){
-            console.log(data);
+            var uidarray=new Array();
+            uidarray[0]=uid;
             if(data.logoPic==''){
                 $('.participant-img img').attr('src','image/oneday-weishangchuan.png');
             }else{
                 $('.participant-img img').attr('src','../server/Public'+data.logoPic);
             }
-            $('.participant input[name="participant"]').val(uid);
+            $('.participant input[name="participant"]').val(JSON.stringify(uidarray));
         })
     })
     $('.ui-datepicker').css('z-index',100);

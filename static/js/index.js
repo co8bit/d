@@ -76,7 +76,6 @@ $(document).ready(function(){
                 }
                 $('.column1-search img').attr('src',src);
                 $('.column1-p p:first').html(realname);
-                $('.column1-p p:last').html(data.name);
                 $('.column1-search img').css('height',$('.column1-search img').css('width')).css('border-radius','50%');
             })
         })
@@ -96,7 +95,7 @@ $(document).ready(function(){
     })
     //设置
     $('#oneday-setting').click(function(){
-       $('.column3-setting-hover').css('display','block');
+       $('.column3-setting-hover').fadeToggle();
     })
     //
     $('body').on('change','#userinfo-file-input',function(){
@@ -172,6 +171,7 @@ $(document).ready(function(){
                 })
                 break;
             case '活动管理':
+                window.open('create.html');
                 break;
             case '关于我们':
                 break;
@@ -372,7 +372,31 @@ $(document).ready(function(){
     }
     //更改时间显示
     function changetime(time){
-        $('.column2-date-time').html((time.getDay()==0?'周日':'周'+time.getDay())+','+(time.getMonth()+1)+'月'+time.getDate()+'日');
+        var str;
+        switch(time.getDay()){
+            case 0:
+                str='周日';
+                break;
+            case 1:
+                str='周一';
+                break;
+            case 2:
+                str='周二'
+                break;
+            case 3:
+                str='周三'
+                break;
+            case 4:
+                str='周四'
+                break;
+            case 5:
+                str='周五'
+                break;
+            case 6:
+                str='周六'
+                break;
+        }
+        $('.column2-date-time').html(str+','+(time.getMonth()+1)+'月'+time.getDate()+'日');
     }
     //判断是否是闰年
     function isrunnian(year){
@@ -451,6 +475,13 @@ $(document).ready(function(){
             timenow=getpreviousweek(timenow.getFullYear(),(timenow.getMonth()+1),timenow.getDate());
             jiazaiweek();
             changetime(timenow);
+        }else if($('.column2-bottom').attr('state')=='huodong'){
+            if(pagenow==1){
+                alert('已经是第一页了');
+            }else{
+                pagenow--;
+                jiazaiActivity(pagenow);
+            }
         }
     })
     //点击得到后
@@ -474,6 +505,9 @@ $(document).ready(function(){
             timenow=getnextweek(timenow.getFullYear(),(timenow.getMonth()+1),timenow.getDate());
             jiazaiweek();
             changetime(timenow);
+        }else if($('.column2-bottom').attr('state')=='huodong'){
+            pagenow++
+            jiazaiActivity(pagenow);
         }
     })
     //页面变换主逻辑
@@ -518,7 +552,7 @@ $(document).ready(function(){
                     '<img src="image/oneday-activity-img.jpg"/>'+
                     '<span>练练——别在冬天放弃自己</span>'+
                     '</div>'+
-                    '</div>')
+                    '</div>');
                 $('.column2-bottom').css('background','#f8f7f6');
                 break;
             case '日历':
@@ -605,6 +639,63 @@ $(document).ready(function(){
                 })
             })
         })
+        $.post(geturl(apiBaseurl,'Home','Activity','queryOne'),{aid:aid},function(data){
+            console.log(data);
+            $('.column3-bottom').attr('state','pinglun').attr('aid',aid).html(
+                '<div class="activity-pinglun-title">'+
+                    '<img src="image/oneday-rightarrow.png"/>'+
+                    '<span>评论</span>'+
+                '</div>'+
+                '<div class="activity-pinglun-container">'+
+                '</div>'+
+                '<div class="activity-pinglun-textarea">'+
+                    '<textarea></textarea>'+
+                    '<div class="activity-pinglun-textarea-button">评论</div>'+
+                '</div>'
+            );
+            var comment=JSON.parse(data.comment);
+            console.log(comment);
+            for(var i=0;i<comment.length;i++){
+                $('.activity-pinglun-container').append('<div class="activity-pinglun-container-item">'+
+                        '<div class="activity-pinglun-container-item-touxiang left">'+
+                        '<img src="image/oneday-weishangchuan.png" width="100%"/>'+
+                        '</div>'+
+                        '<div class="activity-pinglun-container-item-content left">'+
+                        '<p>哈哈哈</p>'+
+                        '<h6>'+decodeURI(gaihuilai(comment[i].content))+'</h6>'+
+                        '</div>'+
+                        '<div class="activity-pinglun-container-item-textarea clear right">'+
+                        '<textarea></textarea>'+
+                        '<div class="activity-pinglun-container-item-textarea-submit right">提交</div>'+
+                        '</div>'+
+                        '<div class="clear activity-pinglun-container-item-button">'+
+                        '<span class="right">评论</span>'+
+                        '<img src="image/oneday-pinglun-tubiao.png" class="right"/>'+
+                        '</div>'+
+                        '</div>'
+                );
+            }
+        })
+    })
+    //评论按钮逻辑
+    /*$('body').on('click','.activity-pinglun-container-item-button',function(){
+        var thisobj=$(this);
+        $(this).parent().find('.activity-pinglun-container-item-textarea').slideToggle();
+        if(!thisobj.attr('state')){
+            thisobj.attr('state','on').find('img').attr('src','image/oneday-pinglun-tubiao-on.png').end().find('span').css('color','#ed7a72');
+        }else{
+            thisobj.removeAttr('state').find('img').attr('src','image/oneday-pinglun-tubiao.png').end().find('span').css('color','#bdc0b9');
+        }
+    })*/
+    $('body').on('click','.activity-pinglun-textarea-button',function(){
+        var aid=$('.column3-bottom').attr('aid')
+        var comment=$('.activity-pinglun-textarea textarea').val();
+        console.log(comment);
+        $.get(geturl(apiBaseurl,'Home','Activity','addComment'),{'aid':aid,'comment':comment},function(data){
+            if(data=='true'){
+                alert('评论成功');
+            }
+        })
     })
     function inArray(yuansu,array){
         for(var i=0;i<array.length;i++){
@@ -621,8 +712,8 @@ $(document).ready(function(){
             alert('已经参加了哦')
         }else{
             $.post(geturl(apiBaseurl,'Home','User','getUid'),{},function(uid){
-                $.post(geturl(apiBaseurl,'Home','Activity','addParticipant'),{uid:uid,aid:$('.column2-bottom').attr('aid')},function(data){
-                    if(data=='true'){
+                $.post(geturl(apiBaseurl,'Home','Activity','addActivityToSchedule'),{uid:uid,aid:$('.column2-bottom').attr('aid')},function(data1){
+                    if(data1=='true'){
                         alert('报名成功');
                         thisobj.attr('src','image/oneday-join-havein.png');
                     }
@@ -723,16 +814,6 @@ $(document).ready(function(){
             }
         })
     });
-    //评论按钮逻辑
-    $('body').on('click','.activity-pinglun-container-item-button',function(){
-        var thisobj=$(this);
-        $(this).parent().find('.activity-pinglun-container-item-textarea').slideToggle();
-        if(!thisobj.attr('state')){
-            thisobj.attr('state','on').find('img').attr('src','image/oneday-pinglun-tubiao-on.png').end().find('span').css('color','#ed7a72');
-        }else{
-            thisobj.removeAttr('state').find('img').attr('src','image/oneday-pinglun-tubiao.png').end().find('span').css('color','#bdc0b9');
-        }
-    })
     $('body').on('blur','.column2-bottom-addbutton',function(){
         if($(this).val()=='')
             $(this).val('点此快速新建任务');
@@ -883,39 +964,23 @@ $(document).ready(function(){
     }
 //加载活动全部
     function jiazaiActivity(pagenow){
-        $.post(geturl(apiBaseurl,'Home','Activity','queryAll'),{page:pagenow,class:2},function(data2){
-            $.post(geturl(apiBaseurl,'Home','Activity','queryAll'),{page:pagenow,class:3},function(data3){
-                $.post(geturl(apiBaseurl,'Home','Activity','queryAll'),{page:pagenow,class:4},function(data4){
-                    initActivity(data2,data3,data4);
-                    drawAcitivtyList()
-                })
-            })
+        $.post(geturl(apiBaseurl,'Home','Activity','queryAll'),{page:pagenow,class:9999},function(data2){
+            initActivity(data2);
+            drawAcitivtyList()
         })
     }
 //加载活动数据
-    function initActivity(data2,data3,data4){
+    function initActivity(data2){
         activityarray.splice(0,activityarray.length);
         if(data2!='error'){
             $.each(data2.content,function(i,d){
                 activityarray.push(d);
             })
         }
-        if(data3!='error'){
-            $.each(data3.content,function(i,d){
-                activityarray.push(d);
-            })
-        }
-        if(data4!='error'){
-            $.each(data4.content,function(i,d){
-                activityarray.push(d);
-            })
-        }
-
-
     }
 //画出活动dom
     function drawAcitivtyList(){
-        $('.column2-bottom').html('<div class="column2-bottom-activity-container"></div>');
+        $('.column2-bottom').html('<div class="column2-bottom-activity-container"></div>').attr('state','huodong');
         for(var i=0;i<activityarray.length;i++){
             $('.column2-bottom-activity-container').append('<div class="column2-bottom-activity-item left" uid="'+activityarray[i].uid+'" aid="'+activityarray[i].aid+'">'+
                     '<h1>'+activityarray[i].title+'</h1>'+
@@ -923,6 +988,7 @@ $(document).ready(function(){
                     '</div>'
             );
         }
+        $('.column2-bottom-activity-item img').css('height',(parseInt($('.column2-bottom-activity-item img').css('width')))*0.6+'px')
     }
 //得到百分比宽度
     function getpercentage(now,start,end){

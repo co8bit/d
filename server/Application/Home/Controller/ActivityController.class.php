@@ -462,7 +462,9 @@ class ActivityController extends Controller
         //TODO:一致性？
         $this->addParticipant(1,$dbActivity->aid,$dbActivity->uid);
 
-        // new ScheduleC
+        $ScheduleAction  =   A("Schedule");
+        $ScheduleAction->create();
+
 
 
     }
