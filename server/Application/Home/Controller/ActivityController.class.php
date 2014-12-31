@@ -456,17 +456,28 @@ class ActivityController extends Controller
     public function addActivityToSchedule()
     {
         $dbActivity     =   D("Activity");
+        $dbSchedule     =   D("Schedule");
+
+        $dbActivity->field("uid,aid")->create(I("param."));//TODO:是否uid已有aid的检查
         
-        $dbActivity->field("uid,aid")->create(I("param."));
-        
+        $tmp    =   M("Activity")->where(array("aid"=>$dbActivity->aid))->find();
+
+        $data   =   $tmp;
+        unset($data["uid"]);
+        unset($data["content"]);
+        unset($data["participant"]);
+        unset($data["comment"]);
+        unset($data["templateNo"]);
+        unset($data["brief"]);
+        unset($data["heat"]);
+        $data["uid"]    =   $this->uid;
+        $data["content"]  =   $tmp["brief"];
+
+        if (!$dbSchedule->add($data))
+            exit("false");
+
         //TODO:一致性？
         $this->addParticipant(1,$dbActivity->aid,$dbActivity->uid);
-
-        $ScheduleAction  =   A("Schedule");
-        $ScheduleAction->create();
-
-
-
     }
 
 }
