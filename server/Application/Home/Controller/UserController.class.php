@@ -233,4 +233,35 @@ class UserController extends Controller
             exit("false");
     }
 
+
+    /**
+     * 设置用户头像（必须上传头像）
+     * @param int uid
+     * @param file 头像文件
+     * @return bool "" 是否成功
+     * @return error "" uid非法
+     */
+    public function setUserInfoLogo()
+    {
+        $dbUser     =   D("User");
+
+        $dbUser->field("uid")->create(I('param.'));
+
+        $upload = new \Think\Upload($this->UPLOADCONFIG);// 实例化上传类
+        $info   =   $upload->upload();
+        if(!$info)
+        {// 上传错误提示错误信息
+            exit($upload->getError());
+        }
+        else
+        {// 上传成功获取上传文件信息    
+            $dbUser->logoPic = $info["logoPic"]['savepath'].$info["logoPic"]['savename'];
+        }
+
+        if ($dbUser->save())
+            exit("true");
+        else
+            exit("false");
+    }
+
 }

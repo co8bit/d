@@ -288,7 +288,7 @@ class ActivityController extends Controller
         }
         $newUid     =   (int)$dbActivity->uid;//TODO:去除重复uid的检查
         $tmp    =   null;
-        $tmp    =   $dbActivity->where(array("aid"=>$dbActivity->aid))->find();
+        $tmp    =   M("Activity")->where(array("aid"=>$dbActivity->aid))->find();
         $tmp["participant"]   =   json_decode($tmp["participant"],true);
         if ($tmp["participant"] === null)
             $tmp["participant"] = array($newUid);
@@ -348,7 +348,7 @@ class ActivityController extends Controller
             exit("error");
 
         
-        $tmp    =   $dbActivity->where(array("uid"=>$this->uid,"aid"=>$dbActivity->aid))->find();
+        $tmp    =   M("Activity")->where(array("uid"=>$this->uid,"aid"=>$dbActivity->aid))->find();
         $tmp["tag"]   =   json_decode($tmp["tag"],true);
         if ($tmp["tag"] === null)
             $tmp["tag"] = array($data["tag"]);
@@ -403,7 +403,7 @@ class ActivityController extends Controller
         $dbActivity->field("aid,content")->create(I('param.'));
         $data["date"]      =   date("Y-m-d H:i:s");
 
-        $tmp    =   $dbActivity->where(array("aid"=>$dbActivity->aid))->find();
+        $tmp    =   M("Activity")->where(array("aid"=>$dbActivity->aid))->find();
         $tmp["comment"]   =   json_decode($tmp["comment"],true);
         if ($tmp["comment"] === null)
             $tmp["comment"] = array(array("content"=>$dbActivity->content,"date"=>$data["date"]));
@@ -462,7 +462,9 @@ class ActivityController extends Controller
         //TODO:一致性？
         $this->addParticipant(1,$dbActivity->aid,$dbActivity->uid);
 
-        // new ScheduleC
+        $ScheduleAction  =   A("Schedule");
+        $ScheduleAction->create();
+
 
 
     }
