@@ -38,6 +38,8 @@ create table schedule(
 
 	`check` text not null,/*活动的时候为""（空）*/
 
+	logoPic TEXT NOT NULL,
+
 	primary key(sid)
 ) CHARACTER SET utf8 COLLATE utf8_general_ci;
 INSERT INTO `oneday`.`schedule` (`sid`, `uid`, `title`, `tag`,`class`, `location`, `startTime`, `endTIme`, `content`, `check`, `participant`) VALUES (NULL, 1, 'George', 'null',0 ,'zju', '2014-12-25 09:25:32', '2014-12-26 15:36:37', '你好吗', '{ "content": "nicaibudao", "state": 0 }, { "content": "nice", "state": 1 } }', '[ 1 ] ');
@@ -58,9 +60,9 @@ create table activity(
 	state int not null,/*  0:未完成;1:完成*/
 	comment TEXT not null,/*评论*/
 
-	logoPic TEXT NOT NULL,/*日程的时候为""（空）*/
-	templateNo int not null,/*模板编号,日程时为""*/
-	breif varchar(200) not null,/*活动的摘要内容 TODO:字数待定*/
+	logoPic TEXT NOT NULL,
+	templateNo int not null,/*模板编号*/
+	brief varchar(200) not null,/*活动的摘要内容 TODO:字数待定*/
 	heat bigint not null,/*热度*/
 
 	primary key(aid)

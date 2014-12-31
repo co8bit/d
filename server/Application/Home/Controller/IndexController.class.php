@@ -37,5 +37,12 @@ class IndexController extends Controller
                 <input type="submit" value="提交" >
             </form><br>
         ';
+        echo '<br>测试User/setUserInfoLogo:
+            <form action="'.U("User/setUserInfoLogo").'" enctype="multipart/form-data" method="post" >
+                uid:<input type="text" name="uid" value="1"/>
+                file:<input type="file" name="logoPic" />
+                <input type="submit" value="提交" >
+            </form><br>
+        ';
     }
 }

@@ -88,7 +88,7 @@ class ScheduleController extends Controller
      *         其他任何东西 "" 失败
      *         error "" 非法操作
      */
-    public function create()
+    public function create($mode = 0)
     {
         $dbSchedule     =   D("Schedule");
         $data   =   null;
@@ -294,7 +294,7 @@ class ScheduleController extends Controller
         if (!$dbSchedule->checkValidateRules($data))
             exit("error");
 
-        $tmp    =   $dbSchedule->where(array("uid"=>$this->uid,"sid"=>$dbSchedule->sid))->find();
+        $tmp    =   M("Schedule")->where(array("uid"=>$this->uid,"sid"=>$dbSchedule->sid))->find();
         $tmp["check"]   =   json_decode($tmp["check"],true);
         if ($tmp["check"] === null)
             $tmp["check"] = array(array("content"=>$data["content"],"state"=>$data["state"]));
@@ -348,7 +348,7 @@ class ScheduleController extends Controller
 
         $dbSchedule->field("sid,uid")->create(I('param.'));
         $newUid     =   (int)$dbSchedule->uid;//TODO:去除重复uid的检查
-        $tmp    =   $dbSchedule->where(array("uid"=>$this->uid,"sid"=>$dbSchedule->sid))->find();
+        $tmp    =   M("Schedule")->where(array("uid"=>$this->uid,"sid"=>$dbSchedule->sid))->find();
         $tmp["participant"]   =   json_decode($tmp["participant"],true);
         if ($tmp["participant"] === null)
             $tmp["participant"] = array($newUid);
@@ -408,7 +408,7 @@ class ScheduleController extends Controller
             exit("error");
 
         
-        $tmp    =   $dbSchedule->where(array("uid"=>$this->uid,"sid"=>$dbSchedule->sid))->find();
+        $tmp    =   M("Schedule")->where(array("uid"=>$this->uid,"sid"=>$dbSchedule->sid))->find();
         $tmp["tag"]   =   json_decode($tmp["tag"],true);
         if ($tmp["tag"] === null)
             $tmp["tag"] = array($data["tag"]);
@@ -483,7 +483,7 @@ class ScheduleController extends Controller
         $dbSchedule->field("sid,content")->create(I('param.'));
         $data["date"]      =   date("Y-m-d H:i:s");
 
-        $tmp    =   $dbSchedule->where(array("sid"=>$dbSchedule->sid))->find();
+        $tmp    =   M("Schedule")->where(array("sid"=>$dbSchedule->sid))->find();
         $tmp["comment"]   =   json_decode($tmp["comment"],true);
         if ($tmp["comment"] === null)
             $tmp["comment"] = array(array("content"=>$dbSchedule->content,"date"=>$data["date"]));
