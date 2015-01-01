@@ -201,6 +201,7 @@ $(document).ready(function(){
             case '活动管理':
                 pagenow=1;
                 $.post(geturl(apiBaseurl,'Home','Activity','queryAll'),{page:pagenow,class:9999},function(data){
+                    console.log(data);
                     $('.column2-bottom').html(
                             '<div class="column2-bottom-actmanager">'+
                             '</div>').attr('state','actmanager');
@@ -549,6 +550,52 @@ $(document).ready(function(){
                 pagenow--;
                 jiazaiActivity(pagenow);
             }
+        }else if($('.column2-bottom').attr('state')=='actmanager'){
+            if(pagenow==1){
+                alert('已经是第一页了');
+            }else{
+                pagenow--;
+                $.post(geturl(apiBaseurl,'Home','Activity','queryAll'),{page:pagenow,class:9999},function(data){
+                    console.log(data);
+                    $('.column2-bottom').html(
+                            '<div class="column2-bottom-actmanager">'+
+                            '</div>').attr('state','actmanager');
+                    for(var i=0;i<data.content.length;i++){
+                        var aid=data.content[i].aid;
+                        var src=getLogopicSrc(data.content[i].logoPic);
+                        var participant='';
+                        $('.column2-bottom-actmanager').append('<div class="column2-bottom-actmanager-item" id="actmanager-item-'+data.content[i].aid+'">'+
+                            '<div class="column2-bottom-actmanager-item-img left">'+
+                            '<img src="'+src+'" width="100%" height="100%"/>'+
+                            '</div>'+
+                            '<div class="column2-bottom-actmanager-item-content left">'+
+                            '<h1>'+data.content[i].title+'</h1>'+
+                            '<h2>'+data.content[i].brief+'</h2>'+
+                            '<div class="column2-bottom-actmanager-item-content-imgcontainer">'+
+                            '参与者:'+
+                            '</div>'+
+                            '</div>'+
+                            '</div>'+
+                            '<div class="column2-bottom-actmanager-action clear" id="actmanager-action-'+data.content[i].aid+'">'+
+                            '<div class="left column2-bottom-actmanager-action-button">修改</div>'+
+                            '<div class="left column2-bottom-actmanager-action-divider"></div>'+
+                            '<div class="left column2-bottom-actmanager-action-button">查看名单</div>'+
+                            '<div class="left column2-bottom-actmanager-action-divider"></div>'+
+                            '<div class="left column2-bottom-actmanager-action-button">删除</div>'+
+                            '</div>');
+                    }
+                    $.each($(".column2-bottom-actmanager-item"),function(i,d){
+                        var aid=($(d).attr('id').split('-'))[2];
+                        $.post(geturl(apiBaseurl,'Home','Activity','queryOne'),{aid:aid},function(data){
+                            for(var j=0;j<data.participant.length;j++){
+                                $.post(geturl(apiBaseurl,'Home','User','getUserInfo'),{uid:data.participant[j]},function(userinfo){
+                                    $(d).find('.column2-bottom-actmanager-item-content-imgcontainer').append('<img width="40px" height="40px" src="'+getLogopicSrc(userinfo.logoPic)+'"/>')
+                                })
+                            }
+                        })
+                    })
+                });
+            }
         }
     })
     //点击得到后
@@ -573,8 +620,50 @@ $(document).ready(function(){
             jiazaiweek();
             changetime(timenow);
         }else if($('.column2-bottom').attr('state')=='huodong'){
-            pagenow++
+            pagenow++;
             jiazaiActivity(pagenow);
+        }else if($('.column2-bottom').attr('state')=='actmanager'){
+            pagenow++;
+            $.post(geturl(apiBaseurl,'Home','Activity','queryAll'),{page:pagenow,class:9999},function(data){
+                console.log(data);
+                $('.column2-bottom').html(
+                        '<div class="column2-bottom-actmanager">'+
+                        '</div>').attr('state','actmanager');
+                for(var i=0;i<data.content.length;i++){
+                    var aid=data.content[i].aid;
+                    var src=getLogopicSrc(data.content[i].logoPic);
+                    var participant='';
+                    $('.column2-bottom-actmanager').append('<div class="column2-bottom-actmanager-item" id="actmanager-item-'+data.content[i].aid+'">'+
+                        '<div class="column2-bottom-actmanager-item-img left">'+
+                        '<img src="'+src+'" width="100%" height="100%"/>'+
+                        '</div>'+
+                        '<div class="column2-bottom-actmanager-item-content left">'+
+                        '<h1>'+data.content[i].title+'</h1>'+
+                        '<h2>'+data.content[i].brief+'</h2>'+
+                        '<div class="column2-bottom-actmanager-item-content-imgcontainer">'+
+                        '参与者:'+
+                        '</div>'+
+                        '</div>'+
+                        '</div>'+
+                        '<div class="column2-bottom-actmanager-action clear" id="actmanager-action-'+data.content[i].aid+'">'+
+                        '<div class="left column2-bottom-actmanager-action-button">修改</div>'+
+                        '<div class="left column2-bottom-actmanager-action-divider"></div>'+
+                        '<div class="left column2-bottom-actmanager-action-button">查看名单</div>'+
+                        '<div class="left column2-bottom-actmanager-action-divider"></div>'+
+                        '<div class="left column2-bottom-actmanager-action-button">删除</div>'+
+                        '</div>');
+                }
+                $.each($(".column2-bottom-actmanager-item"),function(i,d){
+                    var aid=($(d).attr('id').split('-'))[2];
+                    $.post(geturl(apiBaseurl,'Home','Activity','queryOne'),{aid:aid},function(data){
+                        for(var j=0;j<data.participant.length;j++){
+                            $.post(geturl(apiBaseurl,'Home','User','getUserInfo'),{uid:data.participant[j]},function(userinfo){
+                                $(d).find('.column2-bottom-actmanager-item-content-imgcontainer').append('<img width="40px" height="40px" src="'+getLogopicSrc(userinfo.logoPic)+'"/>')
+                            })
+                        }
+                    })
+                })
+            });
         }
     })
     //页面变换主逻辑
