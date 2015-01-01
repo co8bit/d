@@ -284,14 +284,14 @@ class ActivityController extends Controller
 
         // if ($page > $scheduleTotalPageNum)
         //     exit("error");
-        dump($condition);
+        // dump($condition);
         $resule     =   $dbActivity->where($stateSQL)->where($condition)->order("startTime")->limit(($page-1) * _ACTIVITY_PAGE_NUM,_ACTIVITY_PAGE_NUM)->select();
 
         $tmp    =   null;
         $tmp["pageTotalNum"] = $scheduleTotalPageNum;
         $tmp["content"]    =   $this->trimForAjax($resule);
-        dump($tmp);
-        // $this->ajaxReturn($tmp);
+        // dump($tmp);
+        $this->ajaxReturn($tmp);
     }
 
 
