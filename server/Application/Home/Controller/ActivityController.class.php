@@ -196,7 +196,7 @@ class ActivityController extends Controller
     /**
      * 查询所有未完成的活动;
      * @param int page 当前的页数
-     * @param int class 活动的类别;class=9999,返回所有类别的活动
+     * @param int class 活动的类别;不传或传class=9999,返回所有类别的活动
      * @return error "" page过大或没有此类活动
      * @return json 活动内容，形如：
      *         {
@@ -212,7 +212,7 @@ class ActivityController extends Controller
         $dbActivity     =   D("Activity");
 
         $page   =   I("param.page",1);
-        $class  =   I("param.class",4);
+        $class  =   I("param.class",9999);
         if ($class == 9999)
         {
             $condition  =   "state=0 and (class=2 or class=3 or class=4)";
@@ -234,6 +234,64 @@ class ActivityController extends Controller
         $tmp["pageTotalNum"] = $scheduleTotalPageNum;
         $tmp["content"]    =   $this->trimForAjax($resule);
         $this->ajaxReturn($tmp);
+    }
+
+
+
+    /**
+     * 查询所有自己的活动;
+     * @param int page 当前的页数
+     * @param int class 活动的类别;不传此参数或传class=9999,返回所有类别的活动
+     * @param int state 选择要查询的状态，不传此参数或传state=9999，返回所有状态
+     * @return error "" page过大或没有此类活动
+     * @return jsonArray 活动内容，形如：
+     *         [{
+     *             "pageTotalNum":2,//总页数
+     *             "content":[ //具体的内容
+     *                 {},//一个活动
+     *                 {}
+     *             ]
+     *         },
+     *         {...},
+     *         ...
+     *         ]
+     */
+    public function querySelf()
+    {
+        $dbActivity     =   D("Activity");
+
+        $page   =   I("param.page",1);
+        $class  =   I("param.class",9999);
+        $state  =   I("param.state",9999);
+        $state  =   (int)$state;
+
+        if ($state != 9999)
+        {
+            $stateSQL   =   array("state"=>$state);
+        }
+
+        if ($class == 9999)
+        {
+            $condition  =   "uid=".$this->uid." and (class=2 or class=3 or class=4)";
+        }
+        else
+        {
+            $condition  =   array("uid"=>$this->uid,"class"=>$class);
+        }
+
+        $scheduleCount = $dbActivity->where($stateSQL)->where($condition)->count();
+        $scheduleTotalPageNum   =   ceil($scheduleCount / _ACTIVITY_PAGE_NUM);
+
+        // if ($page > $scheduleTotalPageNum)
+        //     exit("error");
+        dump($condition);
+        $resule     =   $dbActivity->where($stateSQL)->where($condition)->order("startTime")->limit(($page-1) * _ACTIVITY_PAGE_NUM,_ACTIVITY_PAGE_NUM)->select();
+
+        $tmp    =   null;
+        $tmp["pageTotalNum"] = $scheduleTotalPageNum;
+        $tmp["content"]    =   $this->trimForAjax($resule);
+        dump($tmp);
+        // $this->ajaxReturn($tmp);
     }
 
 
