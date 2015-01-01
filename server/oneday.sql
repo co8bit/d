@@ -20,6 +20,9 @@ create table user(
 	primary key(uid)
 ) CHARACTER SET utf8 COLLATE utf8_general_ci;
 INSERT INTO `user`(`name`, `pwd`) VALUES ("wbx@wbx.com","wbx");
+INSERT INTO `user`(`name`, `pwd`) VALUES ("1@2.com","qweqwe");
+INSERT INTO `user`(`name`, `pwd`) VALUES ("neirong1@goOneDay.com","neirong");
+INSERT INTO `user`(`name`, `pwd`) VALUES ("neirong2@goOneDay.com","neirong");
 
 create table schedule(
 	sid bigint NOT NULL AUTO_INCREMENT,

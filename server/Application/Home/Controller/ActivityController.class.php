@@ -451,6 +451,7 @@ class ActivityController extends Controller
     /**
      * 给当前用户的当前活动添加一个评论
      * @param int aid
+     * @param int uid 谁发表的评论
      * @param string content 内容
      * @return bool "" 是否成功
      */
@@ -458,15 +459,15 @@ class ActivityController extends Controller
     {
         $dbActivity     =   D("Activity");
 
-        $dbActivity->field("aid,content")->create(I('param.'));
+        $dbActivity->field("aid,content,uid")->create(I('param.'));
         $data["date"]      =   date("Y-m-d H:i:s");
 
         $tmp    =   M("Activity")->where(array("aid"=>$dbActivity->aid))->find();
         $tmp["comment"]   =   json_decode($tmp["comment"],true);
         if ($tmp["comment"] === null)
-            $tmp["comment"] = array(array("content"=>$dbActivity->content,"date"=>$data["date"]));
+            $tmp["comment"] = array(array("content"=>$dbActivity->content,"date"=>$data["date"],"uid"=>$dbActivity->uid));
         else
-            array_push($tmp["comment"],array("content"=>$dbActivity->content,"date"=>$data["date"]));
+            array_push($tmp["comment"],array("content"=>$dbActivity->content,"date"=>$data["date"],"uid"=>$dbActivity->uid));
         $tmp2   =   null;
         $tmp2   =   json_encode($tmp["comment"]);
 
@@ -538,6 +539,45 @@ class ActivityController extends Controller
         $this->addParticipant(1,$dbActivity->aid,$dbActivity->uid);
         $ScheduleAction  =   A("Schedule");
         $ScheduleAction->create();
+    }
+
+
+    /**
+     * 查询一个活动的参与者名单
+     * @param int aid
+     * @return jsonArray 参与用户的详细信息数组，如：
+     *         [
+     *             {"uid":"1","name":"wbx@wbx.com","realName":"","logoPic":"","phone":"","address":""},
+     *             {"uid":"2","name":"neirong1@goOneDay.com","realName":"","logoPic":"","phone":"","address":""},
+     *             {"uid":"3","name":"neirong2@goOneDay.com","realName":"","logoPic":"","phone":"","address":""}
+     *         ]
+     */
+    public function queryActivityUser()
+    {
+        $dbActivity     =   D("Activity");
+        $dbUser         =   D("User");
+
+        $dbActivity->field("aid")->create(I("param."));
+
+        $tmp    =   $dbActivity->find();
+        $uidList    =   json_decode($tmp["participant"],true);
+
+        $map["uid"] = arraY("in",$uidList);
+        $result     =   $dbUser->where($map)->select();
+
+        //删掉密码字段
+        foreach ($result as $key1=>$value1)
+        {
+            foreach ($result[$key1] as $key2=>$value2)
+            {
+                if ( ($key2 == "pwd") )
+                {
+                    unset($result[$key1][$key2]);
+                }
+            }
+        }
+
+        $this->ajaxReturn($result);
     }
 
 }

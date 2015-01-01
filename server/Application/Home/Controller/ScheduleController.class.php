@@ -473,6 +473,7 @@ class ScheduleController extends Controller
     /**
      * 给当前用户的当前日程添加一个评论
      * @param int sid
+     * @param int uid 谁发表的评论
      * @param string content 内容
      * @return bool "" 是否成功
      */
@@ -480,15 +481,15 @@ class ScheduleController extends Controller
     {
         $dbSchedule     =   D("Schedule");
 
-        $dbSchedule->field("sid,content")->create(I('param.'));
+        $dbSchedule->field("sid,content,uid")->create(I('param.'));
         $data["date"]      =   date("Y-m-d H:i:s");
 
         $tmp    =   M("Schedule")->where(array("sid"=>$dbSchedule->sid))->find();
         $tmp["comment"]   =   json_decode($tmp["comment"],true);
         if ($tmp["comment"] === null)
-            $tmp["comment"] = array(array("content"=>$dbSchedule->content,"date"=>$data["date"]));
+            $tmp["comment"] = array(array("content"=>$dbSchedule->content,"date"=>$data["date"],"uid"=>$dbSchedule->uid));
         else
-            array_push($tmp["comment"],array("content"=>$dbSchedule->content,"date"=>$data["date"]));
+            array_push($tmp["comment"],array("content"=>$dbSchedule->content,"date"=>$data["date"],"uid"=>$dbSchedule->uid));
         $tmp2   =   null;
         $tmp2   =   json_encode($tmp["comment"]);
 
