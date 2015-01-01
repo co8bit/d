@@ -50,7 +50,7 @@ $(document).ready(function(){
         }
     }};
     changetime(timenow);
-    jiazai();
+    //jiazai();
     //用户信息载入
     userInfo();
     //得到图片路径
@@ -115,6 +115,34 @@ $(document).ready(function(){
             }
         },500)
     })
+    $('body').on('click','.column2-bottom-actmanager-item',function(){
+        $('.column2-bottom-actmanager-action[id="actmanager-action-'+($(this).attr('id').split('-'))[2]+'"]').slideToggle();
+    });
+    $('body').on('click','.column2-bottom-actmanager-action-button',function(){
+        var aid=($(this).parent().attr('id').split('-'))[2];
+        var thisobj=$(this).parent();
+        var itemobj=$('.column2-bottom-actmanager').find('#actmanager-item-'+aid);
+        switch($(this).html()){
+            case '修改':
+                window.open('modify.html?data='+aid);
+                break;
+            case '查看名单':
+                break;
+            case '删除':
+                var con=confirm('确定要删除该条活动吗?');
+                if(con){
+                    $.post(geturl(apiBaseurl,'Home','Activity','delete'),{aid:aid},function(data){
+                        if(data=='true'){
+                            itemobj.fadeOut();
+                            thisobj.fadeOut();
+                        }else{
+                           alert('您不是这个活动的创建者哦');
+                        }
+                    });
+                }
+                break;
+        }
+    })
     $('.column3-setting-item').click(function(){
         switch($(this).html()){
             case '个人中心':
@@ -171,7 +199,46 @@ $(document).ready(function(){
                 })
                 break;
             case '活动管理':
-                window.open('create.html');
+                pagenow=1;
+                $.post(geturl(apiBaseurl,'Home','Activity','queryAll'),{page:pagenow,class:9999},function(data){
+                    $('.column2-bottom').html(
+                            '<div class="column2-bottom-actmanager">'+
+                            '</div>').attr('state','actmanager');
+                    for(var i=0;i<data.content.length;i++){
+                        var aid=data.content[i].aid;
+                        var src=getLogopicSrc(data.content[i].logoPic);
+                        var participant='';
+                        $('.column2-bottom-actmanager').append('<div class="column2-bottom-actmanager-item" id="actmanager-item-'+data.content[i].aid+'">'+
+                            '<div class="column2-bottom-actmanager-item-img left">'+
+                            '<img src="'+src+'" width="100%" height="100%"/>'+
+                            '</div>'+
+                            '<div class="column2-bottom-actmanager-item-content left">'+
+                            '<h1>'+data.content[i].title+'</h1>'+
+                            '<h2>'+data.content[i].brief+'</h2>'+
+                            '<div class="column2-bottom-actmanager-item-content-imgcontainer">'+
+                            '参与者:'+
+                            '</div>'+
+                            '</div>'+
+                            '</div>'+
+                            '<div class="column2-bottom-actmanager-action clear" id="actmanager-action-'+data.content[i].aid+'">'+
+                            '<div class="left column2-bottom-actmanager-action-button">修改</div>'+
+                            '<div class="left column2-bottom-actmanager-action-divider"></div>'+
+                            '<div class="left column2-bottom-actmanager-action-button">查看名单</div>'+
+                            '<div class="left column2-bottom-actmanager-action-divider"></div>'+
+                            '<div class="left column2-bottom-actmanager-action-button">删除</div>'+
+                            '</div>');
+                    }
+                    $.each($(".column2-bottom-actmanager-item"),function(i,d){
+                        var aid=($(d).attr('id').split('-'))[2];
+                        $.post(geturl(apiBaseurl,'Home','Activity','queryOne'),{aid:aid},function(data){
+                            for(var j=0;j<data.participant.length;j++){
+                                $.post(geturl(apiBaseurl,'Home','User','getUserInfo'),{uid:data.participant[j]},function(userinfo){
+                                    $(d).find('.column2-bottom-actmanager-item-content-imgcontainer').append('<img width="40px" height="40px" src="'+getLogopicSrc(userinfo.logoPic)+'"/>')
+                                })
+                            }
+                        })
+                    })
+                });
                 break;
             case '关于我们':
                 break;
@@ -635,23 +702,25 @@ $(document).ready(function(){
                             $('.column2-bottom-activitydetail-participant-item img').css('height',$('.column2-bottom-activitydetail-participant-item img').css('width')).css('border-radius','50%');
                         })
                     }
-
+                    getAllcomment(aid);
                 })
             })
         })
+    })
+    function getAllcomment(aid){
         $.post(geturl(apiBaseurl,'Home','Activity','queryOne'),{aid:aid},function(data){
             console.log(data);
             $('.column3-bottom').attr('state','pinglun').attr('aid',aid).html(
-                '<div class="activity-pinglun-title">'+
+                    '<div class="activity-pinglun-title">'+
                     '<img src="image/oneday-rightarrow.png"/>'+
                     '<span>评论</span>'+
-                '</div>'+
-                '<div class="activity-pinglun-container">'+
-                '</div>'+
-                '<div class="activity-pinglun-textarea">'+
+                    '</div>'+
+                    '<div class="activity-pinglun-container">'+
+                    '</div>'+
+                    '<div class="activity-pinglun-textarea">'+
                     '<textarea></textarea>'+
                     '<div class="activity-pinglun-textarea-button">评论</div>'+
-                '</div>'
+                    '</div>'
             );
             var comment=JSON.parse(data.comment);
             console.log(comment);
@@ -676,7 +745,7 @@ $(document).ready(function(){
                 );
             }
         })
-    })
+    }
     //评论按钮逻辑
     /*$('body').on('click','.activity-pinglun-container-item-button',function(){
         var thisobj=$(this);
@@ -691,9 +760,10 @@ $(document).ready(function(){
         var aid=$('.column3-bottom').attr('aid')
         var comment=$('.activity-pinglun-textarea textarea').val();
         console.log(comment);
-        $.get(geturl(apiBaseurl,'Home','Activity','addComment'),{'aid':aid,'comment':comment},function(data){
+        $.get(geturl(apiBaseurl,'Home','Activity','addComment'),{'aid':aid,'content':comment},function(data){
             if(data=='true'){
                 alert('评论成功');
+                getAllcomment(aid);
             }
         })
     })
@@ -736,33 +806,16 @@ $(document).ready(function(){
         $('.column1-search img').attr('src','image/oneday-fangda.png');
     })
     //获取全部活动并放进activityarray中
-    function getActivityArray(page){
-        $.post(geturl(apiBaseurl,'Home','Activity','queryAll'),{page:pagenow,class:2},function(data2){
-            $.post(geturl(apiBaseurl,'Home','Activity','queryAll'),{page:pagenow,class:3},function(data3){
-                $.post(geturl(apiBaseurl,'Home','Activity','queryAll'),{page:pagenow,class:4},function(data4){
-                    activityarray.splice(0,activityarray.length);
-                    if(data2!='error'){
-                        $.each(data2,function(i,d){
-                            activityarray.push(d);
-                        })
-                    }
-                    if(data3!='error'){
-                        $.each(data3,function(i,d){
-                            activityarray.push(d);
-                        })
-                    }
-                    if(data4!='error'){
-                        $.each(data4,function(i,d){
-                            activityarray.push(d);
-                        })
-                    }
+    function getActivityArray(pagenow){
+        $.post(geturl(apiBaseurl,'Home','Activity','queryAll'),{page:pagenow,class:9999},function(data2){
+            activityarray.splice(0,activityarray.length);
+            if(data2!='error'){
+                $.each(data2,function(i,d){
+                    activityarray.push(d);
                 })
-            })
+            }
         })
     }
-    /*$('.column2-date-calender').click(function(){
-        $(this).css('background','#2e3440').find('img').attr('src','image/oneday-canleder-on.png');
-    })*/
     //点击翻转事件
     $('.reverge-tag').click(function(){
         $.each($('.reverge-tag'),function(i,d){
@@ -953,12 +1006,12 @@ $(document).ready(function(){
         for(var i= 0;i<itemarray.length;i++){
             var now=new Date;
             var width=getpercentage(now,dbtimetojsdate(itemarray[i].startTime),dbtimetojsdate(itemarray[i].endTime));
-            if(width=='100%'||itemarray[i].state!=0){
+            /*if(width=='100%'||itemarray[i].state!=0){
                 $('.item-container').find("[sid='"+itemarray[i].sid+"']").css('display','none');
             }else{
                 $('.item-container').find("[sid='"+itemarray[i].sid+"']").find('.item-cotainer-content').css('width',width);
-            }
-
+            }*/
+            $('.item-container').find("[sid='"+itemarray[i].sid+"']").find('.item-cotainer-content').css('width',width);
         }
         timeout=setTimeout(refresh,1000);
     }

@@ -6,6 +6,16 @@ $(document).ready(function(){
     function geturl(api,m,c,a){
         return api+'m='+m+'&c='+c+'&a='+a;
     }
+    //赋值
+    //
+    var str=window.location.href;
+    var aid=(str.split('='))[1];
+    function gaihuilai(str){
+        str=str.replace(/&lt;/g,'<');
+        str=str.replace(/&gt;/g,'>');
+        str=str.replace(/&quot;/g,'');
+        return str;
+    }
     $.datepicker.regional['zh-CN'] = {
         clearText: '清除',
         clearStatus: '清除已选日期',
@@ -38,19 +48,14 @@ $(document).ready(function(){
         isRTL: false};
     $.datepicker.setDefaults($.datepicker.regional['zh-CN']);
     $("input[name='startTime']").datepicker({changeMonth: true,changeYear: true});
-    $("input[name='endTime']").attr('disabled',true);
-    $("input[name='startTime']").change(function(){
-        if($("input[name='startTime']").val()){
-            $("input[name='endTime']").attr('disabled',false);
-            $("input[name='endTime']").datepicker({minDate:new Date($("input[name='startTime']").val()),changeMonth: true,changeYear: true});
-        }
-    });
+    $("input[name='endTime']").datepicker({minDate:new Date($("input[name='startTime']").val()),changeMonth: true,changeYear: true});
     $("input[name='logoPic']").change(function(){
         var str=($(this).val().split('\\'))[($(this).val().split('\\')).length-1];
         if(str.length>=12){
             str=str.substr(0,12)+'...'
         }
         $('.file-content').html(str);
+        $("input[name='mode']").val('2');
     })
     $('#editor').css({'height':'400px','width':'700px','display':'inline-block','vertical-align':'top'});
     ue = UE.getEditor('editor',{
@@ -59,10 +64,27 @@ $(document).ready(function(){
         autoFloatEnabled: true,
         enableAutoSave:true
     });
+    ue.ready(function(){
+        $.post(geturl(apiBaseurl,'Home','Activity','queryOne'),{aid:aid},function(data){
+            $('input[name="title"]').val(data.title);
+            $('input[name="aid"]').val(aid);
+            $('input[name="location"]').val(data.location);
+            $('input[name="startTime"]').val(data.startTime);
+            $('input[name="endTime"]').val(data.endTime);
+            $('input[name="content"]').val(data.content);
+            $('input[name="participant"]').val(data.participant);
+            $('input[name="title"]').val(data.title);
+            $('input[name="brief"]').val(data.brief);
+            $('input[name="participant"]').val(JSON.stringify(data.participant));
+            $('select').find('[value="'+data.class+'"]').attr('selected','true');
+            $('.file-content').html((data.logoPic.split('/'))[(data.logoPic.split('/')).length-1])
+            ue.setContent(gaihuilai(data.content));
+        })
+    })
     setInterval(function(){
         var message=$(document.getElementById('iframe').contentWindow.document.body).html();
         if(message.indexOf('true')!=-1){
-            alert('提交成功');
+            alert('修改成功');
             setTimeout(function(){
                 window.location.href='index.html';
             })

@@ -23,4 +23,5 @@ textarea{width: 400px;height: 200px;resize: none;vertical-align: top;border-radi
 .submit input{background: #ed7a72;color: #ffffff;border: none;cursor: pointer}
 #cancel{background: #666}
 .participant-img-container{display: inline-block;vertical-align: -14px}
-.participant-img{;margin-left:10px;width: 40px;float: left;margin-right: 10px}
+.participant-img{margin-left:10px;width: 40px;height: 40px;float: left;margin-right: 10px}
+.participant-img img{border-radius: 50%;}
