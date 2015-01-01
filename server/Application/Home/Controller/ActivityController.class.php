@@ -543,7 +543,12 @@ class ActivityController extends Controller
     /**
      * 查询一个活动的参与者名单
      * @param int aid
-     * @return [type] [description]
+     * @return jsonArray 参与用户的详细信息数组，如：
+     *         [
+     *             {"uid":"1","name":"wbx@wbx.com","realName":"","logoPic":"","phone":"","address":""},
+     *             {"uid":"2","name":"neirong1@goOneDay.com","realName":"","logoPic":"","phone":"","address":""},
+     *             {"uid":"3","name":"neirong2@goOneDay.com","realName":"","logoPic":"","phone":"","address":""}
+     *         ]
      */
     public function queryActivityUser()
     {
