@@ -540,24 +540,21 @@ class ActivityController extends Controller
     }
 
 
+
     /**
-     * 查询一个活动的参与者名单
+     * 得到一个活动的参与者详细信息数组；注：只能是创建者本人才有这个权限，服务器会进行验证
      * @param int aid
-     * @return jsonArray 参与用户的详细信息数组，如：
-     *         [
-     *             {"uid":"1","name":"wbx@wbx.com","realName":"","logoPic":"","phone":"","address":""},
-     *             {"uid":"2","name":"neirong1@goOneDay.com","realName":"","logoPic":"","phone":"","address":""},
-     *             {"uid":"3","name":"neirong2@goOneDay.com","realName":"","logoPic":"","phone":"","address":""}
-     *         ]
+     * @return array[i][数据库字段] 详细信息数组，每一个array[i]是数据库中的一行
      */
-    public function queryActivityUser()
+    protected   function getActivityUserArray($aid)
     {
         $dbActivity     =   D("Activity");
         $dbUser         =   D("User");
 
-        $dbActivity->field("aid")->create(I("param."));
+        $tmp    =   $dbActivity->where(array("aid"=>$aid))->find();
+        if ($tmp["uid"] != $this->uid)
+            exit("error");
 
-        $tmp    =   $dbActivity->find();
         $uidList    =   json_decode($tmp["participant"],true);
 
         $map["uid"] = arraY("in",$uidList);
@@ -575,7 +572,140 @@ class ActivityController extends Controller
             }
         }
 
-        $this->ajaxReturn($result);
+        return $result;
+    }
+
+    /**
+     * 查询一个活动的参与者名单；注：只能是创建者本人才有这个权限，服务器会进行验证
+     * @param int aid
+     * @return jsonArray 参与用户的详细信息数组，如：
+     *         [
+     *             {"uid":"1","name":"wbx@wbx.com","realName":"","logoPic":"","phone":"","address":""},
+     *             {"uid":"2","name":"neirong1@goOneDay.com","realName":"","logoPic":"","phone":"","address":""},
+     *             {"uid":"3","name":"neirong2@goOneDay.com","realName":"","logoPic":"","phone":"","address":""}
+     *         ]
+     * @return error "" 没有权限
+     */
+    public function queryActivityUser()
+    {
+        $dbActivity     =   D("Activity");
+        $dbActivity->field("aid")->create(I("param."));
+
+        $this->ajaxReturn($this->getActivityUserArray($dbActivity->aid));
+    }
+
+
+
+    /**
+     * 创建一个活动的参与者名单的excel表格；注：只能是创建者本人才有这个权限，服务器会进行验证
+     * @param int aid
+     * @return excel文件
+     * @return error "" 没有权限
+     */
+    public function createActivityUserExcel()
+    {
+        $dbActivity     =   D("Activity");
+        $dbActivity->field("aid")->create(I("param."));
+
+        $tmp    =   $dbActivity->find();
+        $data   =   $this->getActivityUserArray($dbActivity->aid);
+        //============================EXCEL====================================
+
+        /** Error reporting */
+        error_reporting(E_ALL);
+        ini_set('display_errors', TRUE);
+        ini_set('display_startup_errors', TRUE);
+        date_default_timezone_set('Europe/London');
+        
+        if (PHP_SAPI == 'cli')
+            die('This example should only be run from a Web Browser');
+        
+        /** Include PHPExcel */
+        Vendor('PHPExcel.PHPExcel');
+
+        $objPHPExcel = new \PHPExcel();
+       
+        // Set document properties
+        $objPHPExcel->getProperties()->setCreator(_COMPANY_NAME)
+        ->setLastModifiedBy(_COMPANY_NAME)
+        ->setTitle($tmp["title"]."参与者名单")
+        ->setSubject($tmp["title"]."参与者名单")
+        ->setDescription(_COMPANY_NAME.$tmp["title"]."参与者名单")
+        ->setKeywords("参与者名单")
+        ->setCategory("参与者名单");
+        
+        $objPHPExcel->getActiveSheet()->setTitle($tmp["title"]."参与者名单");
+        $objPHPExcel->setActiveSheetIndex(0);
+
+        /**
+         * 添加数据
+         */
+        //制作表头
+        $objActSheet = $objPHPExcel->setActiveSheetIndex(0);
+        
+        foreach(range('A', 'Z') as $value)
+        {
+            $objActSheet->getColumnDimension($value)->setWidth(10);
+        
+            $objActSheet->getStyle($value)->getAlignment()->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+            $objActSheet->getStyle($value)->getAlignment()->setVertical(\PHPExcel_Style_Alignment::VERTICAL_CENTER);
+        }
+         
+        $objActSheet->getColumnDimension("B")->setWidth(30);
+        $objActSheet->getColumnDimension("C")->setWidth(30);
+        $objActSheet->getColumnDimension("D")->setWidth(30);
+        $objActSheet->getColumnDimension("E")->setWidth(50);
+        
+        $objActSheet
+            ->setCellValue('A1', '序号')
+            ->setCellValue('B1', '用户名')
+            ->setCellValue('C1', '真实姓名')
+            ->setCellValue('D1', '电话')
+            ->setCellValue('E1', '地址');        
+        
+        
+        $objActSheet->getStyle('A1')->getFont()->setSize(12)->setBold(true);
+        $objActSheet->getStyle('B1')->getFont()->setSize(12)->setBold(true);
+        $objActSheet->getStyle('C1')->getFont()->setSize(12)->setBold(true);
+        $objActSheet->getStyle('D1')->getFont()->setSize(12)->setBold(true);
+        $objActSheet->getStyle('E1')->getFont()->setSize(12)->setBold(true);
+
+
+
+        //写数据
+        $baseOffset = 2;//基准偏移量。内容第一行真正开始的位置
+        for ($i = 0; $i < count($data); $i++)//处理一个订单
+        {
+            $nowRow = $baseOffset + $i;//当前订单开始的第一行的行编号（excel的）。当前订单有可能是多行，但是nowRow一定是开始的第一行
+            $objActSheet
+            ->setCellValue('A'.$nowRow, $i + 1)
+            ->setCellValue('B'.$nowRow,$data[$i]["name"])
+            ->setCellValue('C'.$nowRow,$data[$i]["realName"])
+            ->setCellValue('D'.$nowRow,$data[$i]["phone"])
+            ->setCellValue('E'.$nowRow,$data[$i]["address"]);
+        }
+
+
+
+        /**
+         * 浏览器进行输出
+         */
+        // Redirect output to a client’s web browser (Excel2007)
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment;filename="'.$tmp["title"].'参与者名单.xlsx"');
+        header('Cache-Control: max-age=0');
+        // If you're serving to IE 9, then the following may be needed
+        header('Cache-Control: max-age=1');
+        
+        // If you're serving to IE over SSL, then the following may be needed
+        header ('Expires: Mon, 26 Jul 1997 05:00:00 GMT'); // Date in the past
+        header ('Last-Modified: '.gmdate('D, d M Y H:i:s').' GMT'); // always modified
+        header ('Cache-Control: cache, must-revalidate'); // HTTP/1.1
+        header ('Pragma: public'); // HTTP/1.0
+        
+        $objWriter = \PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
+        $objWriter->save('php://output');
+        exit;
     }
 
 }
