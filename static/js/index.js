@@ -66,21 +66,25 @@ $(document).ready(function(){
     }
     function userInfo(){
         $.post(geturl(apiBaseurl,'Home','User','getUid'),{},function(uid){
-            $.post(geturl(apiBaseurl,'Home','User','getUserInfo'),{uid:uid},function(data){
-                if(data.logoPic){
-                    src='../server/Public'+data.logoPic;
-                }else{
-                    src='image/oneday-weishangchuan.png';
-                }
-                if(data.realName){
-                    var realname=data.realName;
-                }else{
-                    var realname='还没有名字'
-                }
-                $('.column1-search img').attr('src',src);
-                $('.column1-p p:first').html(realname);
-                $('.column1-search img').css('height',$('.column1-search img').css('width')).css('border-radius','50%');
-            })
+            if(uid==''){
+                window.location.href='login.html';
+            }else{
+                $.post(geturl(apiBaseurl,'Home','User','getUserInfo'),{uid:uid},function(data){
+                    if(data.logoPic){
+                        src='../server/Public'+data.logoPic;
+                    }else{
+                        src='image/oneday-weishangchuan.png';
+                    }
+                    if(data.realName){
+                        var realname=data.realName;
+                    }else{
+                        var realname='还没有名字'
+                    }
+                    $('.column1-search img').attr('src',src);
+                    $('.column1-p p:first').html(realname);
+                    $('.column1-search img').css('height',$('.column1-search img').css('width')).css('border-radius','50%');
+                })
+            }
         })
 
     }
@@ -250,44 +254,45 @@ $(document).ready(function(){
             case '活动管理':
                 pagenow=1;
                 $.post(geturl(apiBaseurl,'Home','Activity','querySelf'),{page:pagenow,class:9999},function(data){
-                    console.log(data);
-                    $('.column2-bottom').html(
-                            '<div class="column2-bottom-actmanager">'+
-                            '</div>').attr('state','actmanager');
-                    for(var i=0;i<data.content.length;i++){
-                        var aid=data.content[i].aid;
-                        var src=getLogopicSrc(data.content[i].logoPic);
-                        var participant='';
-                        $('.column2-bottom-actmanager').append('<div class="column2-bottom-actmanager-item" id="actmanager-item-'+data.content[i].aid+'">'+
-                            '<div class="column2-bottom-actmanager-item-img left">'+
-                            '<img src="'+src+'" width="100%" height="100%"/>'+
-                            '</div>'+
-                            '<div class="column2-bottom-actmanager-item-content left">'+
-                            '<h1>'+data.content[i].title+'</h1>'+
-                            '<h2>'+data.content[i].brief+'</h2>'+
-                            '<div class="column2-bottom-actmanager-item-content-imgcontainer">'+
-                            '参与者:'+
-                            '</div>'+
-                            '</div>'+
-                            '</div>'+
-                            '<div class="column2-bottom-actmanager-action clear" id="actmanager-action-'+data.content[i].aid+'">'+
-                            '<div class="left column2-bottom-actmanager-action-button">修改</div>'+
-                            '<div class="left column2-bottom-actmanager-action-divider"></div>'+
-                            '<div class="left column2-bottom-actmanager-action-button">查看名单</div>'+
-                            '<div class="left column2-bottom-actmanager-action-divider"></div>'+
-                            '<div class="left column2-bottom-actmanager-action-button">删除</div>'+
-                            '</div>');
-                    }
-                    $.each($(".column2-bottom-actmanager-item"),function(i,d){
-                        var aid=($(d).attr('id').split('-'))[2];
-                        $.post(geturl(apiBaseurl,'Home','Activity','queryOne'),{aid:aid},function(data){
-                            for(var j=0;j<data.participant.length;j++){
-                                $.post(geturl(apiBaseurl,'Home','User','getUserInfo'),{uid:data.participant[j]},function(userinfo){
-                                    $(d).find('.column2-bottom-actmanager-item-content-imgcontainer').append('<img width="40px" height="40px" src="'+getLogopicSrc(userinfo.logoPic)+'"/>')
-                                })
-                            }
+                    if(data!=''){
+                        $('.column2-bottom').html(
+                                '<div class="column2-bottom-actmanager">'+
+                                '</div>').attr('state','actmanager');
+                        for(var i=0;i<data.content.length;i++){
+                            var aid=data.content[i].aid;
+                            var src=getLogopicSrc(data.content[i].logoPic);
+                            var participant='';
+                            $('.column2-bottom-actmanager').append('<div class="column2-bottom-actmanager-item" id="actmanager-item-'+data.content[i].aid+'">'+
+                                '<div class="column2-bottom-actmanager-item-img left">'+
+                                '<img src="'+src+'" width="100%" height="100%"/>'+
+                                '</div>'+
+                                '<div class="column2-bottom-actmanager-item-content left">'+
+                                '<h1>'+data.content[i].title+'</h1>'+
+                                '<h2>'+data.content[i].brief+'</h2>'+
+                                '<div class="column2-bottom-actmanager-item-content-imgcontainer">'+
+                                '参与者:'+
+                                '</div>'+
+                                '</div>'+
+                                '</div>'+
+                                '<div class="column2-bottom-actmanager-action clear" id="actmanager-action-'+data.content[i].aid+'">'+
+                                '<div class="left column2-bottom-actmanager-action-button">修改</div>'+
+                                '<div class="left column2-bottom-actmanager-action-divider"></div>'+
+                                '<div class="left column2-bottom-actmanager-action-button">查看名单</div>'+
+                                '<div class="left column2-bottom-actmanager-action-divider"></div>'+
+                                '<div class="left column2-bottom-actmanager-action-button">删除</div>'+
+                                '</div>');
+                        }
+                        $.each($(".column2-bottom-actmanager-item"),function(i,d){
+                            var aid=($(d).attr('id').split('-'))[2];
+                            $.post(geturl(apiBaseurl,'Home','Activity','queryOne'),{aid:aid},function(data){
+                                for(var j=0;j<data.participant.length;j++){
+                                    $.post(geturl(apiBaseurl,'Home','User','getUserInfo'),{uid:data.participant[j]},function(userinfo){
+                                        $(d).find('.column2-bottom-actmanager-item-content-imgcontainer').append('<img width="40px" height="40px" src="'+getLogopicSrc(userinfo.logoPic)+'"/>')
+                                    })
+                                }
+                            })
                         })
-                    })
+                    }
                 });
                 break;
             case '关于我们':

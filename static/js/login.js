@@ -31,11 +31,10 @@ $(document).ready(function(){
     $('.container-content-login').click(function(){
         if(validateEmail()&&validatepassword()){
             var username=$('.container-content-email input').val();
-            var password=$('.container-content-password input').val();
+            var password=hex_md5($('.container-content-password input').val());
             $.post(geturl(apiBaseurl,'Home','User','login'),
                 {userName:username,userPassword:password},
                 function (result){
-                    console.log(result);
                     console.log(geturl(apiBaseurl,'Home','User','login'));
                     if(result=='true'){
                         console.log(geturl(apiBaseurl,'Home','User','login'));
@@ -51,14 +50,21 @@ $(document).ready(function(){
     $('.container-content-register').click(function(){
         if(validateEmail()&&validatepassword()){
             var username=$('.container-content-email input').val();
-            var password=$('.container-content-password input').val();
+            var password= hex_md5($('.container-content-password input').val());
             $.post(geturl(apiBaseurl,'Home','User','sign'),
                 {userName:username,userPassword:password},
                 function (result){
                     if(result=='true'){
-                        $('.container').animate({opacity:0},500,function(){
-                            window.location.href="index.html";
-                        });
+                        $.post(geturl(apiBaseurl,'Home','User','login'),
+                            {userName:username,userPassword:password},
+                            function (result){
+                                if (result == 'true') {
+                                    $('.container').animate({opacity: 0}, 500, function () {
+                                        window.location.href = "index.html";
+                                    });
+                                }
+                            }
+                        )
                     }
                 }
             );
