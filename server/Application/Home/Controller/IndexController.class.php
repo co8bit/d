@@ -44,5 +44,11 @@ class IndexController extends Controller
                 <input type="submit" value="提交" >
             </form><br>
         ';
+        echo '<br>测试活动名单导出：
+        	<form action="'.U("Activity/createActivityUserExcel").'" method="post" >
+                aid:<input type="text" name="aid" value="1"/>
+                <input type="submit" value="下载" >
+            </form><br>
+        ';
     }
 }

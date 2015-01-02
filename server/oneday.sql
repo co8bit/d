@@ -19,10 +19,10 @@ create table user(
 
 	primary key(uid)
 ) CHARACTER SET utf8 COLLATE utf8_general_ci;
-INSERT INTO `user`(`name`, `pwd`) VALUES ("wbx@wbx.com","wbx");
-INSERT INTO `user`(`name`, `pwd`) VALUES ("1@2.com","qweqwe");
-INSERT INTO `user`(`name`, `pwd`) VALUES ("neirong1@goOneDay.com","neirong");
-INSERT INTO `user`(`name`, `pwd`) VALUES ("neirong2@goOneDay.com","neirong");
+INSERT INTO `user` VALUES (null,"wbx@wbx.com","wbx","王博鑫","","15355666666","zju");
+INSERT INTO `user` VALUES (null,"1@2.com","qweqwe","苏州","","13055666666","zju");
+INSERT INTO `user` VALUES (null,"neirong1@goOneDay.com","neirong","内容发布者","","15888666666","zju");
+INSERT INTO `user` VALUES (null,"neirong2@goOneDay.com","neirong","传说内容发布者","","18955666666","zju");
 
 create table schedule(
 	sid bigint NOT NULL AUTO_INCREMENT,
@@ -45,7 +45,7 @@ create table schedule(
 
 	primary key(sid)
 ) CHARACTER SET utf8 COLLATE utf8_general_ci;
-INSERT INTO `oneday`.`schedule` (`sid`, `uid`, `title`, `tag`,`class`, `location`, `startTime`, `endTIme`, `content`, `check`, `participant`) VALUES (NULL, 1, 'George', 'null',0 ,'zju', '2014-12-25 09:25:32', '2014-12-26 15:36:37', '你好吗', '{ "content": "nicaibudao", "state": 0 }, { "content": "nice", "state": 1 } }', '[ 1 ] ');
+INSERT INTO `oneday`.`schedule` (`sid`, `uid`, `title`, `tag`,`class`, `location`, `startTime`, `endTIme`, `content`, `check`, `participant`) VALUES (NULL, 1, 'George', 'null',0 ,'zju', '2014-12-25 09:25:32', '2014-12-26 15:36:37', '你好吗', '{"content":"nicaibudao","state":0},{"content":"nice","state":1}}', '[1]');
 
 
 
@@ -70,4 +70,4 @@ create table activity(
 
 	primary key(aid)
 ) CHARACTER SET utf8 COLLATE utf8_general_ci;
-INSERT INTO `oneday`.`activity` (`aid`, `uid`, `title`, `tag`,`class`, `location`, `startTime`, `endTIme`, `content`, `participant`) VALUES (NULL, 1, 'George', 'null',3 ,'zju', '2014-12-25 09:25:32', '2014-12-26 15:36:37', '这是一个活动', '[ 1, 2 ] ');
+INSERT INTO `oneday`.`activity` (`aid`, `uid`, `title`, `tag`,`class`, `location`, `startTime`, `endTIme`, `content`, `participant`) VALUES (NULL, 1, '程序员沙龙', 'null',3 ,'zju', '2014-12-25 09:25:32', '2014-12-26 15:36:37', '这是一个活动', '[1,2,3]');
