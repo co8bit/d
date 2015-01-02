@@ -19,6 +19,7 @@ $(document).ready(function(){
             thisobj.parent().find('.column3-bottom-setting-logoPic-zhezhu img').attr('src',this.result);
         }
     })
+    var userinfourl='../server/index.php?m=Home&c=User&a=editUserInfo';
     var timeout;
     var timeinter;
     var timenow=new Date();
@@ -27,7 +28,9 @@ $(document).ready(function(){
     var activityarray=new Array();
     var apiBaseurl='../server/index.php?';
     var pagenow=1;
-    var userinfourl='../server/index.php?m=Home&c=User&a=editUserInfo';
+    var rishitubgcolorarray=['#fafaba','#fbf49c','#feec64','#fad94e','#fdb636','#fe8a25','#fc5520','#fb291c','#fc1362','#ed429e','#8b6ce3','#156eca','#1f80de','#239efb','#20bbfd'];
+    var rishitucolorarray=['#ed9780','#d4a071','#dea063','#fff1a3','#fff9c5','#ffddac','#ffdbc1','#ffc1d0','#f47e7c','#f2738e','#cb8cb9','#a195c3','#c58a90','#ae9998','#9a9fa5'];
+    var itemnow;
     function geturl(api,m,c,a){
         return api+'m='+m+'&c='+c+'&a='+a;
     }
@@ -50,7 +53,7 @@ $(document).ready(function(){
         }
     }};
     changetime(timenow);
-    //jiazai();
+    jiazai();
     //用户信息载入
     userInfo();
     //得到图片路径
@@ -112,8 +115,53 @@ $(document).ready(function(){
                 alert('修改成功了哦');
                 jiazai();
                 clearInterval(timeinter);
+                userInfo();
             }
         },500)
+    })
+    //个人页面
+    $('.column1-search').click(function(){
+        $.post(geturl(apiBaseurl,'Home','User','getUid'),{},function(id){
+            $.post(geturl(apiBaseurl,'Home','User','getUserInfo'),{uid:id},function(data){
+                src=getLogopicSrc(data.logoPic);
+                $('.column2-bottom').html('<iframe name="bushuaxin" id="userInfoiframe" style="display: none"></iframe>'+
+                    '<form target="bushuaxin" enctype="multipart/form-data" method="post" action="'+userinfourl+'">'+
+                    '<input type="hidden" value="'+data.uid+'" name="uid"/>'+
+                    '<input type="hidden" value="'+data.pwd+'" name="pwd"/>'+
+                    '<div class="column2-bottom-setting-bg">'+
+                    '<img src="image/oneday-setting-bg.png" width="100%"/>'+
+                    '</div>'+
+                    '<div class="column2-bottom-setting-userinfo">'+
+                    '<div class="column2-bottom-setting-userinfo-touxiang left">'+
+                    '<img src="'+src+'" width="100%"/>'+
+                    '</div>'+
+                    '<div class="column2-bottom-setting-userinfo-info left">'+
+                    '<p>'+data.realName+'</p>'+
+                    '<p>'+data.name+'</p>'+
+                    '</div>'+
+                    '<div class="column2-bottom-setting-userinfo-all clear">'+
+                    '<div class="column2-bottom-setting-userinfo-all-name">'+
+                    '真实姓名: <input type="text" name="realName" value="'+data.realName+'"/>'+
+                    '</div>'+
+                    '<div class="column2-bottom-setting-userinfo-all-name">'+
+                    '我的头像:<input type="text" readonly id="file-value"/>'+
+                    '<input type="file" name="logoPic" id="userinfo-file-input"/>'+
+                    '<div class="userinfo-file-input-zhezhu">浏览</div>'+
+                    '</div>'+
+                    '<div class="column2-bottom-setting-userinfo-all-name">'+
+                    '手&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;机: <input type="text" name="phone" value="'+data.phone+'"/>'+
+                    '</div>'+
+                    '<div class="column2-bottom-setting-userinfo-all-name">'+
+                    '地&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;址: <input type="text" name="address" value="'+data.address+'"/>'+
+                    '</div>'+
+                    '<div class="column2-bottom-setting-userinfo-all-name">'+
+                    '<input type="submit" id="column2-bottom-setting-userinfo-submit"/>'+
+                    '</div>'+
+                    '</div>'+
+                    '</div>').css('background','#fff');
+                $('.column2-bottom-setting-userinfo-touxiang img').css('height',$('.column2-bottom-setting-userinfo-touxiang img').css('width')).css('border-radius','50%');
+            })
+        })
     })
     $('body').on('click','.column2-bottom-actmanager-item',function(){
         $('.column2-bottom-actmanager-action[id="actmanager-action-'+($(this).attr('id').split('-'))[2]+'"]').slideToggle();
@@ -127,6 +175,7 @@ $(document).ready(function(){
                 window.open('modify.html?data='+aid);
                 break;
             case '查看名单':
+                window.open('namelist.html?data='+aid);
                 break;
             case '删除':
                 var con=confirm('确定要删除该条活动吗?');
@@ -200,7 +249,7 @@ $(document).ready(function(){
                 break;
             case '活动管理':
                 pagenow=1;
-                $.post(geturl(apiBaseurl,'Home','Activity','queryAll'),{page:pagenow,class:9999},function(data){
+                $.post(geturl(apiBaseurl,'Home','Activity','querySelf'),{page:pagenow,class:9999},function(data){
                     console.log(data);
                     $('.column2-bottom').html(
                             '<div class="column2-bottom-actmanager">'+
@@ -254,14 +303,14 @@ $(document).ready(function(){
                 var nexttime=dbtimetojsdate(data.endTime);
                 $('.column3-bottom').html('<div class="column3-bottom-title">'+
                     '<div class="left"><img src="image/oneday-rightarrow.png"></div>'+
-                    '正在创建新任务'+
+                    '正在修改任务'+
                     '</div>'+
                     '<form id="newtask">'+
                     '<div class="column3-bottom-input">'+
                     '<label>标题</label><input type="text" name="title" placeholder="在此输入标题" value="'+data.title+'"/>'+
                     '</div>'+
                     '<div class="column3-bottom-input">'+
-                    '<label>标签</label><input type="text"  name="tag"placeholder="添加标签" value="'+data.tag+'"/>'+
+                    '<label>标签</label><input type="text"  name="tag" placeholder="添加标签,用空格分开" value="'+(data.tag==null?'':data.tag)+'"/>'+
                     '</div>'+
                     '<div class="column3-bottom-input">'+
                     '<label>地点</label><input type="text"  name="destination" placeholder="在此输入地点" value="'+data.location+'"/>'+
@@ -299,7 +348,7 @@ $(document).ready(function(){
                     '</div>'+
                     '</div>'+
                     '<div class="column3-bottom-cancel left">取 消</div>'+
-                    '<div class="column3-bottom-confirm left">确 认</div>');
+                    '<div class="column3-bottom-modify left">确 认</div>');
                 for(var i=0;i<data.check.length;i++){
                     if(data.check[i].state==1){
                         $('.column3-bottom-group').append(
@@ -316,11 +365,52 @@ $(document).ready(function(){
                     }
                 }
             })
-
             $('.column2-bottom').css('background','url("image/oneday-dayview-bg.png")').css('background-size','100%');
         }
     })
-
+    $('body').on('click','.column3-bottom-modify',function(){
+        var optionnum=$('.column3-bottom-group .option').length;
+        var title=$("input[name='title']").val();
+        var tag=[];
+        tag.push($("input[name='tag']").val());
+        var destination=$("input[name='destination']").val();
+        var starttime=$("input[name='starttime']").val();
+        var endtime=$("input[name='endtime']").val();
+        var check=new Array();
+        starttimeobj=timeformat(starttime);
+        starttime1=starttimeobj.year+'-'+starttimeobj.month+'-'+starttimeobj.day+'-'+' '+starttimeobj.hour+':'+starttimeobj.minute+':'+'00';
+        endtimeobj=timeformat(endtime);
+        endtime1=endtimeobj.year+'-'+endtimeobj.month+'-'+endtimeobj.day+'-'+' '+endtimeobj.hour+':'+endtimeobj.minute+':'+'00';
+        var description=$("textarea[name='description']").val();
+        var checkall=$('.column3-bottom-group .option');
+        $.each(checkall,function(i,d){
+            var checkitem={content:$(d).find('label').attr('value'),state:1};
+            check.push(checkitem);
+        });
+        var checkstr=JSON.stringify(check);
+        var tag=JSON.stringify(tag);
+        $.post(geturl(apiBaseurl,'Home','Schedule','edit'),
+            {
+                sid:$('.column3-bottom').attr('sid'),
+                title:title,
+                tag:tag,
+                location:destination,
+                startTime:starttime1,
+                endTime:endtime1,
+                content:description==null?'null':description,
+                check:checkstr,
+                participant:null
+            },
+            function (result){
+                if(result=='true'){
+                    jiazai();
+                    alert('修改成功');
+                    drawc3rili();
+                }else{
+                    alert('似乎出了一些问题');
+                }
+            });
+    })
 
 
     //增加按钮逻辑
@@ -670,6 +760,7 @@ $(document).ready(function(){
     $('.column1-tag').click(function(){
         switch ($(this).find('.column1-tag-label').html()){
             case '发现活动':
+                pagenow=1;
                 jiazaiActivity(pagenow);
                 $('.column3-bottom').html('<div class="column3-bottom-activity-title"><img src="image/oneday-rightarrow.png"/>最近活动</div>'+
                     '<div class="column3-bottom-activity-container">'+
@@ -750,18 +841,6 @@ $(document).ready(function(){
                         '<div class="left column2-bottom-activitydetail-participant-circle">'+
                         '<img src="image/oneday-activity-circle.png" width="100%"/>'+
                         '</div>'+
-                        /*'<div class="left column2-bottom-activitydetail-participant-item">'+
-                        '<img src="image/oneday-activity-circle.png" width="100%"/>'+
-                        '</div>'+
-                        '<div class="left column2-bottom-activitydetail-participant-item">'+
-                        '<img src="image/oneday-activity-circle.png" width="100%"/>'+
-                        '</div>'+
-                        '<div class="left column2-bottom-activitydetail-participant-item">'+
-                        '<img src="image/oneday-activity-circle.png" width="100%"/>'+
-                        '</div>'+
-                        '<div class="left column2-bottom-activitydetail-participant-item">'+
-                        '<img src="image/oneday-activity-circle.png" width="100%"/>'+
-                        '</div>'+*/
                         '</div>'+
                         '<div class="column2-bottom-activitydetail-buttons">'+
                         '<div class="column2-bottom-activitydetail-button left"><img src="image/oneday-activity-zanyixia.jpg" width="100%"></div>'+
@@ -947,7 +1026,7 @@ $(document).ready(function(){
                     location:null,
                     startTime:timenow.getFullYear()+'-'+(timenow.getMonth()+1)+'-'+timenow.getDate()+' '+timenow.getHours()+':'+checktime(timenow.getMinutes())+':'+'00',/*starttimeobj.month+'-'+starttimeobj.day+'-'+' '+starttimeobj.hour+':'+starttimeobj.minute+':'+'00';*/
                     endTime:nexttime.getFullYear()+'-'+(nexttime.getMonth()+1)+'-'+nexttime.getDate()+' '+nexttime.getHours()+':'+checktime(nexttime.getMinutes())+':'+'00',
-                    content:null,
+                    content:thisobj.val(),
                     check:null,
                     participant:null
                 },function(result){
@@ -1092,7 +1171,10 @@ $(document).ready(function(){
     }
 //1秒刷新一次
     function refresh(){
+        var itemnow=0;
         for(var i= 0;i<itemarray.length;i++){
+            var backgroundcolor=getbackgroundcolor(itemnow++);
+            var color=getcolor(itemnow);
             var now=new Date;
             var width=getpercentage(now,dbtimetojsdate(itemarray[i].startTime),dbtimetojsdate(itemarray[i].endTime));
             /*if(width=='100%'||itemarray[i].state!=0){
@@ -1100,13 +1182,21 @@ $(document).ready(function(){
             }else{
                 $('.item-container').find("[sid='"+itemarray[i].sid+"']").find('.item-cotainer-content').css('width',width);
             }*/
-            $('.item-container').find("[sid='"+itemarray[i].sid+"']").find('.item-cotainer-content').css('width',width);
+            $('.item-container').find("[sid='"+itemarray[i].sid+"']").find('.item-cotainer-content').css({'width':width,'background':backgroundcolor,'color':color}).parent().css('border-color',backgroundcolor);
         }
         timeout=setTimeout(refresh,1000);
+    }
+//得到背景色
+    function getbackgroundcolor(num){
+        return rishitubgcolorarray[num];
+    }
+    function getcolor(num){
+        return rishitucolorarray[num];
     }
 //加载活动全部
     function jiazaiActivity(pagenow){
         $.post(geturl(apiBaseurl,'Home','Activity','queryAll'),{page:pagenow,class:9999},function(data2){
+            console.log(data2);
             initActivity(data2);
             drawAcitivtyList()
         })
@@ -1176,7 +1266,7 @@ $(document).ready(function(){
                             '<div class="item-container-con">'+
                             '<div class="left item-cotainer-border">'+
                             '<div class="item-cotainer-content">'+
-                                itemarray[i].title+
+                                '<span>'+itemarray[i].title+'</span>'+
                             '</div>'+
                             '</div>'+
                             '</div>'+
@@ -1226,6 +1316,7 @@ $(document).ready(function(){
     }
     //画日视图点击详情
     function drawc3rilidetail(data){
+        console.log(data);
         if(data.state==1){
             var src="image/oneday-confirm-button-on.png";
         }else{
@@ -1241,9 +1332,21 @@ $(document).ready(function(){
             '<div class="column3-bottom-taskdetail-content">'+
             '<h6>地点&nbsp&nbsp&nbsp'+data.location+'</h6>'+
             '<h6>描述&nbsp&nbsp&nbsp'+data.content+'</h6>'+
+            '<h6><span class="left">检查项&nbsp&nbsp&nbsp</span>'+
+            '<div class="column3-bottom-taskdetail-content-options left">'+
             '</div>'+
+            '</h6>'+
+            '<h6 class="clear column3-bottom-taskdetail-content-canyu">'+
+            '参与者'+
+            '</h6>'+
+            '</div>'+
+            '<div class="column3-bottom-taskdetail-divider"></div>'+
             '<div class="column3-bottom-taskdetail-bottom">'+
-            '<div id="editor" style="width: 220px;height: 150px;float: right;margin-right: 20px"></div>'+
+                '<div class="column3-bottom-taskdetail-bottom-pinglun">'+
+                '</div>'+
+            '<div class="column3-bottom-taskdetail-bottom-textarea">'+
+            '<textarea placeholder="说一点你喜欢的。。。"></textarea>'+
+            '</div>'+
             '<div class="column3-bottom-taskdetail-bottom-buttons">'+
             '<div class="column3-bottom-taskdetail-bottom-button" id="column3-bottom-taskdetail-bottom-buttons-confirm">'+
             '确认'+
@@ -1252,32 +1355,111 @@ $(document).ready(function(){
             '取消'+
             '</div>'+
             '</div>'+
-            '<div class="column3-bottom-taskdetail-left">'+
-            '<img src="image/oneday-taskdetail-page.png"/>'+
-            '<img src="image/oneday-taskdetail-img.png"/>'+
-            '<img src="image/oneday-taskdetail-other.png"/>'+
-            '</div>'+
             '</div>'+
             '</div>').attr('state','detail');
-        if(!UEDITORFLAG){
-            ue = UE.getEditor('editor',{
-                toolbars:[['bold','italic','underline','strikethrough','insertorderedlist','insertunorderedlist']],
-                autoHeightEnabled:true,
-                autoFloatEnabled: true,
-                enableAutoSave:true
-            });
-            UEDITORFLAG=true;
-        }else{
-            ue.destroy();
-            ue = UE.getEditor('editor',{
-                toolbars:[['bold','italic','underline','strikethrough','insertorderedlist','insertunorderedlist']],
-                autoHeightEnabled:true,
-                autoFloatEnabled: true,
-                enableAutoSave:true
-            });
-            $('table.edui-default').css('display','none');/**/
+        if(data.check!=null){
+            for(var i=0;i<data.check.length;i++){
+                if(data.check[i].state==1){
+                    $('.column3-bottom-taskdetail-content-options').append(
+                            '<div class="column3-bottom-taskdetail-content-option">'+
+                            '<img src="image/oneday-option.jpg" width="20px" height="20px"/><span>'+data.check[i].content+'</span>'+
+                            '</div>'
+                    )
+                }else{
+                    $('.column3-bottom-taskdetail-content-options').append(
+                            '<div class="column3-bottom-taskdetail-content-option">'+
+                            '<img src="image/oneday-option-on.jpg" width="20px" height="20px"/><span>'+data.check[i].content+'</span>'+
+                            '</div>'
+                    )
+                }
+            }
+        }
+        if(data.participant!=null){
+            for(var i=0;i<data.participant.length;i++){
+                $.post(geturl(apiBaseurl,'Home','User','getUserInfo'),{uid:data.participant[i]},function(userinfo){
+                    $('.column3-bottom-taskdetail-content-canyu').append('<img src="'+getLogopicSrc(userinfo.logoPic)+'" width="40px" height="40px"/>');
+                })
+            }
+        }
+        var comment=JSON.parse(data.comment);
+        if(comment!=''){
+            $.each(comment,function(i,d){
+                $.ajax({
+                    async:false,
+                    type:'POST',
+                    url:geturl(apiBaseurl,'Home','User','getUserInfo'),
+                    data:{uid:comment[i].uid},
+                    success:function(userinfo){
+                        $('.column3-bottom-taskdetail-bottom-pinglun').append(
+                                '<div class="column3-bottom-taskdetail-bottom-item left ">'+
+                                '<div class="column3-bottom-taskdetail-bottom-item-img left">'+
+                                '<img src="image/oneday-weishangchuan.png" width="90%" height="90%" class="left"/>'+
+                                '</div>'+
+                                '<div class="column3-bottom-taskdetail-bottom-item-content left">'+
+                                '<h4>'+userinfo.realName+'</h4>'+
+                                '<h5>'+comment[i].content+'</h5>'+
+                                '<h6 class="right">'+comment[i].date+'</h6>'+
+                                '</div>'+
+                                '</div>'
+                        )
+                    }
+                })
+            })
         }
     }
+    //提交评论
+    $('body').on('click','#column3-bottom-taskdetail-bottom-buttons-confirm',function(){
+        var content=$('.column3-bottom-taskdetail-bottom-textarea textarea').val();
+        var sid=$('.column3-bottom').attr('sid');
+        $.post(geturl(apiBaseurl,'Home','User','getUid'),{},function(uid){
+            $.post(geturl(apiBaseurl,'Home','Schedule','addComment'),{uid:uid,content:content,sid:sid},function(data){
+                console.log(data);
+                if(data=='true'){
+                    timenow=new Date();
+                    $('.column3-bottom-taskdetail-bottom-pinglun').append(
+                            '<div class="column3-bottom-taskdetail-bottom-item left">'+
+                            '<div class="column3-bottom-taskdetail-bottom-item-img left">'+
+                            '<img src="image/oneday-weishangchuan.png" width="90%" height="90%" class="left"/>'+
+                            '</div>'+
+                            '<div class="column3-bottom-taskdetail-bottom-item-content left">'+
+                            '<h4>哈哈哈</h4>'+
+                            '<h5>'+content+'</h5>'+
+                            '<h6 class="right">'+timenow.getFullYear()+'-'+(timenow.getMonth()+1)+'-'+timenow.getDate()+' '+timenow.getHours()+':'+timenow.getMinutes()+':'+timenow.getSeconds()+'</h6>'+
+                            '</div>'+
+                            '</div>'
+                    )
+                    $('.column3-bottom-taskdetail-bottom-textarea textarea').val('');
+                }
+            })
+        })
+    })
+    //检查项点击逻辑
+    $('body').on('click','.column3-bottom-taskdetail-content-option',function(){
+        var src=$(this).find('img').attr('src');
+        var array=new Array();
+        if(src=='image/oneday-option.jpg'){
+            $(this).find('img').attr('src','image/oneday-option-on.jpg');
+        }else{
+            $(this).find('img').attr('src','image/oneday-option.jpg');
+        }
+        $.each($(this).parent().find('.column3-bottom-taskdetail-content-option'),function(i,d){
+            var src=$(d).find('img').attr('src');
+            var state;
+            if(src=='image/oneday-option.jpg'){
+                state='1';
+            }else{
+                state='0';
+            }
+            var content=$(d).find('span').html();
+            var obj={'content':content,'state':state};
+            array.push(obj);
+        })
+        $.post(geturl(apiBaseurl,'Home','Schedule','editCheck'),{sid:$('.column3-bottom').attr('sid'),check:JSON.stringify(array)},function(data){
+            if(data=='true'){
+                console.log(1);
+            }
+        })
+    })
     //画日视图右侧添加按钮
     function drawc3rili(){
         $('.column3-bottom').html('<div class="column3-bottom-title">'+
