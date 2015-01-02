@@ -2,18 +2,28 @@
 namespace Home\Controller;
 use Think\Controller;
 
+require_once(APP_PATH."/Home/Conf/MyConfigINI.php");
+
 class IndexController extends Controller
 {
 	protected function _initialize()
     {
         header("Content-Type:text/html; charset=utf-8");
+        $this->uid      =       session("uid");
+        empty($this->uid) && $this->error("=.=你知道的太多了，biu",U("Index/login"));
+        if ($this->uid > 4)
+            exit("=.=你知道的太多了，biu");
     }
 
     public function index()
     {
-    	//$this->show("asd");
-    	echo "你知道的太多了<br>";
-    	echo "<a href='".U("User/sign")."'>注册</a><br>";
+    	echo '<br>注册：User/sign：
+            <form action="'.U("User/sign").'" method="post" >
+                用户名:<input type="text" name="userName" value=""/>
+                密码:<input type="text" name="userPassword" value=""/>
+                <input type="submit" value="提交" >
+            </form><br>
+        ';
 
     	echo '<br>测试Activity/create：
     		<form action="'.U("Activity/create").'" enctype="multipart/form-data" method="post" >

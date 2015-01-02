@@ -19,10 +19,10 @@ create table user(
 
 	primary key(uid)
 ) CHARACTER SET utf8 COLLATE utf8_general_ci;
-INSERT INTO `user` VALUES (null,"wbx@wbx.com","wbx","王博鑫","","15355666666","zju");
-INSERT INTO `user` VALUES (null,"1@2.com","qweqwe","苏州","","13055666666","zju");
-INSERT INTO `user` VALUES (null,"neirong1@goOneDay.com","neirong","内容发布者","","15888666666","zju");
-INSERT INTO `user` VALUES (null,"neirong2@goOneDay.com","neirong","传说内容发布者","","18955666666","zju");
+INSERT INTO `user` VALUES (null,"wbx@wbx.com","9ca633d2c9103309e8ab7f2d20818aef","王博鑫","","15355666666","zju");
+INSERT INTO `user` VALUES (null,"1@2.com","efe6398127928f1b2e9ef3207fb82663","苏州","","13055666666","zju");
+INSERT INTO `user` VALUES (null,"neirong1@goOneDay.com","fa5f47fc60ac772d1c74dc8284ba0e9d","内容发布者","","15888666666","zju");
+INSERT INTO `user` VALUES (null,"neirong2@goOneDay.com","fa5f47fc60ac772d1c74dc8284ba0e9d","传说内容发布者","","18955666666","zju");
 
 create table schedule(
 	sid bigint NOT NULL AUTO_INCREMENT,
@@ -66,7 +66,7 @@ create table activity(
 	logoPic TEXT NOT NULL,
 	templateNo int not null,/*模板编号*/
 	brief varchar(200) not null,/*活动的摘要内容 TODO:字数待定*/
-	heat bigint not null,/*热度*/
+	zan bigint not null,/*赞的数量*/
 
 	primary key(aid)
 ) CHARACTER SET utf8 COLLATE utf8_general_ci;

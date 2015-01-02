@@ -2,7 +2,7 @@
 namespace Home\Controller;
 use Think\Controller;
 
-include(APP_PATH."/Home/Conf/MyConfigINI.php");
+require_once(APP_PATH."/Home/Conf/MyConfigINI.php");
 
 class ActivityController extends Controller
 {
@@ -12,7 +12,7 @@ class ActivityController extends Controller
      */
     protected $UPLOADCONFIG = array(    
         'maxSize'    =>    3145728,
-        'rootPath'   =>    './Public/',
+        'rootPath'   =>    _UPLOADPATH,
         'savePath'   =>    '/Uploads/',    
         'saveName'   =>    array('uniqid',''),    
         'exts'       =>    array('jpg', 'png', 'jpeg'),    
@@ -708,4 +708,21 @@ class ActivityController extends Controller
         exit;
     }
 
+
+    /**
+     * 赞一下
+     * @param int aid
+     * @return bool "" 是否成功
+     */
+    public function zan()
+    {
+        $dbActivity     =   D("Activity");
+        $dbActivity->field("aid")->create(I("param."));
+
+        //TODO:检查一个用户一次
+        if (!$dbActivity->where(array("aid"=>$dbActivity->aid))->setInc("zan"))
+            exit("false");
+        else
+            exit("true");
+    }
 }
