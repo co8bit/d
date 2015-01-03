@@ -1,0 +1,709 @@
+[ 2015-01-04T00:53:06+08:00 ] 127.0.0.1 /oneday/oneday/server/index.php?m=Home&c=User&a=getUid
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001792s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002883s ]
+
+[ 2015-01-04T00:53:06+08:00 ] 127.0.0.1 /oneday/oneday/server/index.php?m=Home&c=User&a=getUid
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.002348s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.003526s ]
+
+[ 2015-01-04T00:53:06+08:00 ] 127.0.0.1 /oneday/oneday/server/index.php?m=Home&c=User&a=getUserInfo
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001736s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002994s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0085s ]
+SQL: SELECT * FROM `user` WHERE `uid` = '7' LIMIT 1   [ RunTime:0.0007s ]
+
+[ 2015-01-04T00:53:06+08:00 ] 127.0.0.1 /oneday/oneday/server/index.php?m=Home&c=Schedule&a=day
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001748s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002859s ]
+SQL: SHOW COLUMNS FROM `schedule` [ RunTime:0.0108s ]
+SQL: SELECT * FROM `schedule` WHERE `startTime` BETWEEN '2015-1-4 00:00:00' AND '2015-1-4 23:59:59' AND `uid` = '7'  [ RunTime:0.0011s ]
+NOTIC: [2] Invalid argument supplied for foreach() F:\wamp\www\oneday\oneday\server\Application\Home\Controller\ScheduleController.class.php 第 50 行.
+
+[ 2015-01-04T00:53:07+08:00 ] 127.0.0.1 /oneday/oneday/server/index.php?m=Home&c=Activity&a=queryAll
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.002400s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.003227s ]
+SQL: SHOW COLUMNS FROM `activity` [ RunTime:0.0066s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `activity` WHERE ( state=0 and (class=2 or class=3 or class=4) ) LIMIT 1   [ RunTime:0.0005s ]
+SQL: SELECT * FROM `activity` WHERE ( state=0 and (class=2 or class=3 or class=4) ) ORDER BY startTime LIMIT 0,4   [ RunTime:0.0007s ]
+
+[ 2015-01-04T00:53:09+08:00 ] 127.0.0.1 /oneday/oneday/server/index.php?m=Home&c=User&a=getUid
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.002996s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.004112s ]
+
+[ 2015-01-04T00:53:09+08:00 ] 127.0.0.1 /oneday/oneday/server/index.php?m=Home&c=User&a=getUid
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.002311s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.003555s ]
+
+[ 2015-01-04T00:53:09+08:00 ] 127.0.0.1 /oneday/oneday/server/index.php?m=Home&c=User&a=getUserInfo
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.002390s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.003985s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0081s ]
+SQL: SELECT * FROM `user` WHERE `uid` = '7' LIMIT 1   [ RunTime:0.0007s ]
+
+[ 2015-01-04T00:53:09+08:00 ] 127.0.0.1 /oneday/oneday/server/index.php?m=Home&c=Schedule&a=day
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001719s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002773s ]
+SQL: SHOW COLUMNS FROM `schedule` [ RunTime:0.0102s ]
+SQL: SELECT * FROM `schedule` WHERE `startTime` BETWEEN '2015-1-4 00:00:00' AND '2015-1-4 23:59:59' AND `uid` = '7'  [ RunTime:0.0010s ]
+NOTIC: [2] Invalid argument supplied for foreach() F:\wamp\www\oneday\oneday\server\Application\Home\Controller\ScheduleController.class.php 第 50 行.
+
+[ 2015-01-04T00:53:16+08:00 ] 127.0.0.1 /oneday/oneday/server/index.php?m=Home&c=Activity&a=queryAll
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.002258s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.003497s ]
+SQL: SHOW COLUMNS FROM `activity` [ RunTime:0.0146s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `activity` WHERE ( state=0 and (class=2 or class=3 or class=4) ) LIMIT 1   [ RunTime:0.0009s ]
+SQL: SELECT * FROM `activity` WHERE ( state=0 and (class=2 or class=3 or class=4) ) ORDER BY startTime LIMIT 0,4   [ RunTime:0.0011s ]
+
+[ 2015-01-04T00:53:23+08:00 ] 127.0.0.1 /oneday/oneday/server/index.php?m=Home&c=User&a=getUid
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.002306s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.003722s ]
+
+[ 2015-01-04T00:53:23+08:00 ] 127.0.0.1 /oneday/oneday/server/index.php?m=Home&c=User&a=getUid
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.002455s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.003868s ]
+
+[ 2015-01-04T00:53:24+08:00 ] 127.0.0.1 /oneday/oneday/server/index.php?m=Home&c=Schedule&a=day
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001954s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.003426s ]
+SQL: SHOW COLUMNS FROM `schedule` [ RunTime:0.0077s ]
+SQL: SELECT * FROM `schedule` WHERE `startTime` BETWEEN '2015-1-4 00:00:00' AND '2015-1-4 23:59:59' AND `uid` = '7'  [ RunTime:0.0009s ]
+NOTIC: [2] Invalid argument supplied for foreach() F:\wamp\www\oneday\oneday\server\Application\Home\Controller\ScheduleController.class.php 第 50 行.
+
+[ 2015-01-04T00:53:24+08:00 ] 127.0.0.1 /oneday/oneday/server/index.php?m=Home&c=User&a=getUserInfo
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.002144s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.003866s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0103s ]
+SQL: SELECT * FROM `user` WHERE `uid` = '7' LIMIT 1   [ RunTime:0.0007s ]
+
+[ 2015-01-04T00:53:27+08:00 ] 127.0.0.1 /oneday/oneday/server/index.php?m=Home&c=User&a=getUid
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001824s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.003111s ]
+
+[ 2015-01-04T00:53:27+08:00 ] 127.0.0.1 /oneday/oneday/server/index.php?m=Home&c=Schedule&a=day
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001637s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002874s ]
+SQL: SHOW COLUMNS FROM `schedule` [ RunTime:0.0084s ]
+SQL: SELECT * FROM `schedule` WHERE `startTime` BETWEEN '2015-1-4 00:00:00' AND '2015-1-4 23:59:59' AND `uid` = '7'  [ RunTime:0.0011s ]
+NOTIC: [2] Invalid argument supplied for foreach() F:\wamp\www\oneday\oneday\server\Application\Home\Controller\ScheduleController.class.php 第 50 行.
+
+[ 2015-01-04T00:53:28+08:00 ] 127.0.0.1 /oneday/oneday/server/index.php?m=Home&c=Activity&a=queryAll
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001545s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002513s ]
+SQL: SHOW COLUMNS FROM `activity` [ RunTime:0.0086s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `activity` WHERE ( state=0 and (class=2 or class=3 or class=4) ) LIMIT 1   [ RunTime:0.0008s ]
+SQL: SELECT * FROM `activity` WHERE ( state=0 and (class=2 or class=3 or class=4) ) ORDER BY startTime LIMIT 0,4   [ RunTime:0.0010s ]
+
+[ 2015-01-04T00:53:46+08:00 ] 127.0.0.1 /oneday/oneday/server/index.php?m=Home&c=Activity&a=queryOne
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001404s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002244s ]
+SQL: SHOW COLUMNS FROM `activity` [ RunTime:0.0086s ]
+SQL: SELECT * FROM `activity` WHERE `aid` = '2' LIMIT 1   [ RunTime:0.0008s ]
+
+[ 2015-01-04T00:53:46+08:00 ] 127.0.0.1 /oneday/oneday/server/index.php?m=Home&c=User&a=getUserInfo
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001187s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001934s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0061s ]
+SQL: SELECT * FROM `user` WHERE `uid` = '2' LIMIT 1   [ RunTime:0.0005s ]
+
+[ 2015-01-04T00:53:46+08:00 ] 127.0.0.1 /oneday/oneday/server/index.php?m=Home&c=User&a=getUid
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001372s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002258s ]
+
+[ 2015-01-04T00:53:46+08:00 ] 127.0.0.1 /oneday/oneday/server/index.php?m=Home&c=User&a=getUserInfo
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.003363s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.005473s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0098s ]
+SQL: SELECT * FROM `user` WHERE `uid` = '2' LIMIT 1   [ RunTime:0.0007s ]
+
+[ 2015-01-04T00:53:46+08:00 ] 127.0.0.1 /oneday/oneday/server/index.php?m=Home&c=User&a=getUserInfo
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.007894s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.008972s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0069s ]
+SQL: SELECT * FROM `user` WHERE `uid` = '6' LIMIT 1   [ RunTime:0.0022s ]
+
+[ 2015-01-04T00:53:46+08:00 ] 127.0.0.1 /oneday/oneday/server/index.php?m=Home&c=User&a=getUserInfo
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.002007s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.007489s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0118s ]
+SQL: SELECT * FROM `user` WHERE `uid` = '5' LIMIT 1   [ RunTime:0.0019s ]
+
+[ 2015-01-04T00:53:46+08:00 ] 127.0.0.1 /oneday/oneday/server/index.php?m=Home&c=Activity&a=queryOne
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.007017s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.008048s ]
+SQL: SHOW COLUMNS FROM `activity` [ RunTime:0.0092s ]
+SQL: SELECT * FROM `activity` WHERE `aid` = '2' LIMIT 1   [ RunTime:0.0006s ]
+
+[ 2015-01-04T00:53:46+08:00 ] 127.0.0.1 /oneday/oneday/server/index.php?m=Home&c=User&a=getUserInfo
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.010344s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.013291s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0062s ]
+SQL: SELECT * FROM `user` WHERE `uid` = '7' LIMIT 1   [ RunTime:0.0011s ]
+
+[ 2015-01-04T00:53:48+08:00 ] 127.0.0.1 /oneday/oneday/server/index.php?m=Home&c=Activity&a=queryAll
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.002025s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.003189s ]
+SQL: SHOW COLUMNS FROM `activity` [ RunTime:0.0083s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `activity` WHERE ( state=0 and (class=2 or class=3 or class=4) ) LIMIT 1   [ RunTime:0.0007s ]
+SQL: SELECT * FROM `activity` WHERE ( state=0 and (class=2 or class=3 or class=4) ) ORDER BY startTime LIMIT 0,4   [ RunTime:0.0010s ]
+
+[ 2015-01-04T00:54:33+08:00 ] 127.0.0.1 /oneday/oneday/server/index.php?m=Home&c=User&a=getUid
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.002873s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.003735s ]
+
+[ 2015-01-04T00:54:33+08:00 ] 127.0.0.1 /oneday/oneday/server/index.php?m=Home&c=User&a=getUid
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.002933s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.004293s ]
+
+[ 2015-01-04T00:54:33+08:00 ] 127.0.0.1 /oneday/oneday/server/index.php?m=Home&c=Schedule&a=day
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001633s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002656s ]
+SQL: SHOW COLUMNS FROM `schedule` [ RunTime:0.0079s ]
+SQL: SELECT * FROM `schedule` WHERE `startTime` BETWEEN '2015-1-4 00:00:00' AND '2015-1-4 23:59:59' AND `uid` = '7'  [ RunTime:0.0010s ]
+NOTIC: [2] Invalid argument supplied for foreach() F:\wamp\www\oneday\oneday\server\Application\Home\Controller\ScheduleController.class.php 第 50 行.
+
+[ 2015-01-04T00:54:34+08:00 ] 127.0.0.1 /oneday/oneday/server/index.php?m=Home&c=User&a=getUserInfo
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001429s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002459s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0101s ]
+SQL: SELECT * FROM `user` WHERE `uid` = '7' LIMIT 1   [ RunTime:0.0007s ]
+
+[ 2015-01-04T00:54:36+08:00 ] 127.0.0.1 /oneday/oneday/server/index.php?m=Home&c=Activity&a=queryAll
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.002220s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.003535s ]
+SQL: SHOW COLUMNS FROM `activity` [ RunTime:0.0082s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `activity` WHERE ( state=0 and (class=2 or class=3 or class=4) ) LIMIT 1   [ RunTime:0.0007s ]
+
+[ 2015-01-04T00:54:37+08:00 ] 127.0.0.1 /oneday/oneday/server/index.php?m=Home&c=User&a=getUid
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001544s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.004199s ]
+
+[ 2015-01-04T00:54:37+08:00 ] 127.0.0.1 /oneday/oneday/server/index.php?m=Home&c=Schedule&a=day
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001762s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002874s ]
+SQL: SHOW COLUMNS FROM `schedule` [ RunTime:0.0081s ]
+SQL: SELECT * FROM `schedule` WHERE `startTime` BETWEEN '2015-1-4 00:00:00' AND '2015-1-4 23:59:59' AND `uid` = '7'  [ RunTime:0.0010s ]
+NOTIC: [2] Invalid argument supplied for foreach() F:\wamp\www\oneday\oneday\server\Application\Home\Controller\ScheduleController.class.php 第 50 行.
+
+[ 2015-01-04T00:54:37+08:00 ] 127.0.0.1 /oneday/oneday/server/index.php?m=Home&c=Activity&a=queryAll
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001869s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.003128s ]
+SQL: SHOW COLUMNS FROM `activity` [ RunTime:0.0089s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `activity` WHERE ( state=0 and (class=2 or class=3 or class=4) ) LIMIT 1   [ RunTime:0.0012s ]
+
+[ 2015-01-04T00:54:39+08:00 ] 127.0.0.1 /oneday/oneday/server/index.php?m=Home&c=User&a=getUid
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001620s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002632s ]
+
+[ 2015-01-04T00:54:39+08:00 ] 127.0.0.1 /oneday/oneday/server/index.php?m=Home&c=Schedule&a=day
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001594s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002629s ]
+SQL: SHOW COLUMNS FROM `schedule` [ RunTime:0.0084s ]
+SQL: SELECT * FROM `schedule` WHERE `startTime` BETWEEN '2015-1-4 00:00:00' AND '2015-1-4 23:59:59' AND `uid` = '7'  [ RunTime:0.0010s ]
+NOTIC: [2] Invalid argument supplied for foreach() F:\wamp\www\oneday\oneday\server\Application\Home\Controller\ScheduleController.class.php 第 50 行.
+
+[ 2015-01-04T00:54:40+08:00 ] 127.0.0.1 /oneday/oneday/server/index.php?m=Home&c=Activity&a=queryAll
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001663s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002764s ]
+SQL: SHOW COLUMNS FROM `activity` [ RunTime:0.0081s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `activity` WHERE ( state=0 and (class=2 or class=3 or class=4) ) LIMIT 1   [ RunTime:0.0007s ]
+
+[ 2015-01-04T00:54:41+08:00 ] 127.0.0.1 /oneday/oneday/server/index.php?m=Home&c=User&a=getUid
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.003266s ]
+
+[ 2015-01-04T00:54:41+08:00 ] 127.0.0.1 /oneday/oneday/server/index.php?m=Home&c=Schedule&a=day
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001583s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002575s ]
+SQL: SHOW COLUMNS FROM `schedule` [ RunTime:0.0084s ]
+SQL: SELECT * FROM `schedule` WHERE `startTime` BETWEEN '2015-1-4 00:00:00' AND '2015-1-4 23:59:59' AND `uid` = '7'  [ RunTime:0.0009s ]
+NOTIC: [2] Invalid argument supplied for foreach() F:\wamp\www\oneday\oneday\server\Application\Home\Controller\ScheduleController.class.php 第 50 行.
+
+[ 2015-01-04T00:54:57+08:00 ] 127.0.0.1 /oneday/oneday/server/index.php?m=Home&c=User&a=getUid
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.002078s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.003229s ]
+
+[ 2015-01-04T00:54:57+08:00 ] 127.0.0.1 /oneday/oneday/server/index.php?m=Home&c=User&a=getUserInfo
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.002001s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.003208s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0077s ]
+SQL: SELECT * FROM `user` WHERE `uid` = '7' LIMIT 1   [ RunTime:0.0006s ]
+
+[ 2015-01-04T00:55:44+08:00 ] 127.0.0.1 /oneday/oneday/server/index.php?m=Home&c=User&a=getUid
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.002057s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.003367s ]
+
+[ 2015-01-04T00:55:44+08:00 ] 127.0.0.1 /oneday/oneday/server/index.php?m=Home&c=User&a=getUid
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.004011s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.005661s ]
+
+[ 2015-01-04T00:55:44+08:00 ] 127.0.0.1 /oneday/oneday/server/index.php?m=Home&c=Schedule&a=day
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001696s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002551s ]
+SQL: SHOW COLUMNS FROM `schedule` [ RunTime:0.0075s ]
+SQL: SELECT * FROM `schedule` WHERE `startTime` BETWEEN '2015-1-4 00:00:00' AND '2015-1-4 23:59:59' AND `uid` = '7'  [ RunTime:0.0008s ]
+NOTIC: [2] Invalid argument supplied for foreach() F:\wamp\www\oneday\oneday\server\Application\Home\Controller\ScheduleController.class.php 第 50 行.
+
+[ 2015-01-04T00:55:44+08:00 ] 127.0.0.1 /oneday/oneday/server/index.php?m=Home&c=User&a=getUserInfo
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001578s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002489s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0092s ]
+SQL: SELECT * FROM `user` WHERE `uid` = '7' LIMIT 1   [ RunTime:0.0008s ]
+
+[ 2015-01-04T00:55:46+08:00 ] 127.0.0.1 /oneday/oneday/server/index.php?m=Home&c=User&a=getUid
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.002019s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.003259s ]
+
+[ 2015-01-04T00:55:46+08:00 ] 127.0.0.1 /oneday/oneday/server/index.php?m=Home&c=User&a=getUserInfo
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.002201s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.003397s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0081s ]
+SQL: SELECT * FROM `user` WHERE `uid` = '7' LIMIT 1   [ RunTime:0.0008s ]
+
+[ 2015-01-04T00:55:57+08:00 ] 127.0.0.1 /oneday/oneday/server/index.php?m=Home&c=User&a=getUid
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.004323s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.005337s ]
+
+[ 2015-01-04T00:55:57+08:00 ] 127.0.0.1 /oneday/oneday/server/index.php?m=Home&c=User&a=getUid
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001868s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.003143s ]
+
+[ 2015-01-04T00:55:57+08:00 ] 127.0.0.1 /oneday/oneday/server/index.php?m=Home&c=User&a=getUserInfo
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001844s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.003023s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0108s ]
+SQL: SELECT * FROM `user` WHERE `uid` = '7' LIMIT 1   [ RunTime:0.0009s ]
+
+[ 2015-01-04T00:55:57+08:00 ] 127.0.0.1 /oneday/oneday/server/index.php?m=Home&c=Schedule&a=day
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001605s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002566s ]
+SQL: SHOW COLUMNS FROM `schedule` [ RunTime:0.0095s ]
+SQL: SELECT * FROM `schedule` WHERE `startTime` BETWEEN '2015-1-4 00:00:00' AND '2015-1-4 23:59:59' AND `uid` = '7'  [ RunTime:0.0012s ]
+NOTIC: [2] Invalid argument supplied for foreach() F:\wamp\www\oneday\oneday\server\Application\Home\Controller\ScheduleController.class.php 第 50 行.
+
+[ 2015-01-04T00:55:58+08:00 ] 127.0.0.1 /oneday/oneday/server/index.php?m=Home&c=User&a=getUid
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001799s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002922s ]
+
+[ 2015-01-04T00:55:58+08:00 ] 127.0.0.1 /oneday/oneday/server/index.php?m=Home&c=User&a=getUserInfo
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001811s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002917s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0083s ]
+SQL: SELECT * FROM `user` WHERE `uid` = '7' LIMIT 1   [ RunTime:0.0008s ]
+
+[ 2015-01-04T00:56:34+08:00 ] 127.0.0.1 /oneday/oneday/server/index.php?m=Home&c=User&a=getUid
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001621s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002722s ]
+
+[ 2015-01-04T00:56:34+08:00 ] 127.0.0.1 /oneday/oneday/server/index.php?m=Home&c=Schedule&a=day
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001621s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002611s ]
+SQL: SHOW COLUMNS FROM `schedule` [ RunTime:0.0081s ]
+SQL: SELECT * FROM `schedule` WHERE `startTime` BETWEEN '2015-1-4 00:00:00' AND '2015-1-4 23:59:59' AND `uid` = '7'  [ RunTime:0.0011s ]
+NOTIC: [2] Invalid argument supplied for foreach() F:\wamp\www\oneday\oneday\server\Application\Home\Controller\ScheduleController.class.php 第 50 行.
+
+[ 2015-01-04T00:56:34+08:00 ] 127.0.0.1 /oneday/oneday/server/index.php?m=Home&c=User&a=getUid
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.010880s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.038328s ]
+
+[ 2015-01-04T00:56:34+08:00 ] 127.0.0.1 /oneday/oneday/server/index.php?m=Home&c=User&a=getUserInfo
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.002012s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.005980s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0080s ]
+SQL: SELECT * FROM `user` WHERE `uid` = '7' LIMIT 1   [ RunTime:0.0008s ]
+
+[ 2015-01-04T00:56:35+08:00 ] 127.0.0.1 /oneday/oneday/server/index.php?m=Home&c=User&a=getUid
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.002019s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.003243s ]
+
+[ 2015-01-04T00:56:35+08:00 ] 127.0.0.1 /oneday/oneday/server/index.php?m=Home&c=User&a=getUserInfo
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.002039s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.003220s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.0086s ]
+SQL: SELECT * FROM `user` WHERE `uid` = '7' LIMIT 1   [ RunTime:0.0008s ]
+
+[ 2015-01-04T01:02:51+08:00 ] 127.0.0.1 /oneday/oneday/server/index.php?m=Home&c=User&a=getUid
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.002262s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.004236s ]
+
+[ 2015-01-04T01:02:51+08:00 ] 127.0.0.1 /oneday/oneday/server/index.php?m=Home&c=User&a=getUid
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.004514s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.006771s ]
+
+[ 2015-01-04T01:02:51+08:00 ] 127.0.0.1 /oneday/oneday/server/index.php?m=Home&c=Schedule&a=day
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.002364s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.004035s ]
+SQL: SHOW COLUMNS FROM `schedule` [ RunTime:0.008952s ]
+SQL: SELECT * FROM `schedule` WHERE `startTime` BETWEEN '2015-1-4 00:00:00' AND '2015-1-4 23:59:59' AND `uid` = '7'  [ RunTime:0.000820s ]
+NOTIC: [2] Invalid argument supplied for foreach() F:\wamp\www\oneday\oneday\server\Application\Home\Controller\ScheduleController.class.php 第 50 行.
+
+[ 2015-01-04T01:02:51+08:00 ] 127.0.0.1 /oneday/oneday/server/index.php?m=Home&c=User&a=getUserInfo
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.003644s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.005321s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.009870s ]
+SQL: SELECT * FROM `user` WHERE `uid` = '7' LIMIT 1   [ RunTime:0.000847s ]
+
+[ 2015-01-04T01:03:09+08:00 ] 127.0.0.1 /oneday/oneday/server/index.php?m=Home&c=User&a=getUid
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.002435s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.003607s ]
+
+[ 2015-01-04T01:03:09+08:00 ] 127.0.0.1 /oneday/oneday/server/index.php?m=Home&c=User&a=getUid
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.002213s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.004197s ]
+
+[ 2015-01-04T01:03:09+08:00 ] 127.0.0.1 /oneday/oneday/server/index.php?m=Home&c=User&a=getUserInfo
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.002975s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.004244s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.011538s ]
+SQL: SELECT * FROM `user` WHERE `uid` = '7' LIMIT 1   [ RunTime:0.001207s ]
+
+[ 2015-01-04T01:03:09+08:00 ] 127.0.0.1 /oneday/oneday/server/index.php?m=Home&c=Schedule&a=day
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.002031s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.006998s ]
+SQL: SHOW COLUMNS FROM `schedule` [ RunTime:0.008941s ]
+SQL: SELECT * FROM `schedule` WHERE `startTime` BETWEEN '2015-1-4 00:00:00' AND '2015-1-4 23:59:59' AND `uid` = '7'  [ RunTime:0.000935s ]
+NOTIC: [2] Invalid argument supplied for foreach() F:\wamp\www\oneday\oneday\server\Application\Home\Controller\ScheduleController.class.php 第 50 行.
+
+[ 2015-01-04T01:03:18+08:00 ] 127.0.0.1 /oneday/oneday/server/index.php?m=Home&c=User&a=getUid
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001891s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.003090s ]
+
+[ 2015-01-04T01:03:18+08:00 ] 127.0.0.1 /oneday/oneday/server/index.php?m=Home&c=User&a=getUserInfo
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001795s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002907s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.007537s ]
+SQL: SELECT * FROM `user` WHERE `uid` = '7' LIMIT 1   [ RunTime:0.000778s ]
+
+[ 2015-01-04T01:03:28+08:00 ] 127.0.0.1 /oneday/oneday/server/index.php?m=Home&c=Activity&a=queryAll
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001687s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002797s ]
+SQL: SHOW COLUMNS FROM `activity` [ RunTime:0.007984s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `activity` WHERE ( state=0 and (class=2 or class=3 or class=4) ) LIMIT 1   [ RunTime:0.000732s ]
+SQL: SELECT * FROM `activity` WHERE ( state=0 and (class=2 or class=3 or class=4) ) ORDER BY startTime LIMIT 0,4   [ RunTime:0.000922s ]
+
+[ 2015-01-04T01:03:29+08:00 ] 127.0.0.1 /oneday/oneday/server/index.php?m=Home&c=Activity&a=queryOne
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001770s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002890s ]
+SQL: SHOW COLUMNS FROM `activity` [ RunTime:0.008145s ]
+SQL: SELECT * FROM `activity` WHERE `aid` = '7' LIMIT 1   [ RunTime:0.000890s ]
+
+[ 2015-01-04T01:03:29+08:00 ] 127.0.0.1 /oneday/oneday/server/index.php?m=Home&c=User&a=getUserInfo
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001764s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002885s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.007197s ]
+SQL: SELECT * FROM `user` WHERE `uid` = '7' LIMIT 1   [ RunTime:0.000780s ]
+
+[ 2015-01-04T01:03:29+08:00 ] 127.0.0.1 /oneday/oneday/server/index.php?m=Home&c=User&a=getUid
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001778s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002864s ]
+
+[ 2015-01-04T01:03:29+08:00 ] 127.0.0.1 /oneday/oneday/server/index.php?m=Home&c=User&a=getUserInfo
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001724s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002745s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.007450s ]
+SQL: SELECT * FROM `user` WHERE `uid` = '7' LIMIT 1   [ RunTime:0.000715s ]
+
+[ 2015-01-04T01:03:29+08:00 ] 127.0.0.1 /oneday/oneday/server/index.php?m=Home&c=Activity&a=queryOne
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001993s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.003629s ]
+SQL: SHOW COLUMNS FROM `activity` [ RunTime:0.007915s ]
+SQL: SELECT * FROM `activity` WHERE `aid` = '7' LIMIT 1   [ RunTime:0.001494s ]
+
+[ 2015-01-04T01:03:32+08:00 ] 127.0.0.1 /oneday/oneday/server/index.php?m=Home&c=User&a=getUid
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.002363s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.003630s ]
+
+[ 2015-01-04T01:03:33+08:00 ] 127.0.0.1 /oneday/oneday/server/index.php?m=Home&c=Activity&a=addComment
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001593s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002585s ]
+SQL: SHOW COLUMNS FROM `activity` [ RunTime:0.008822s ]
+SQL: SHOW COLUMNS FROM `activity` [ RunTime:0.007983s ]
+SQL: SELECT * FROM `activity` WHERE `aid` = '7' LIMIT 1   [ RunTime:0.000855s ]
+SQL: UPDATE `activity` SET `comment`='[{\"content\":\"123\",\"date\":\"2015-01-04 01:03:33\",\"uid\":\"7\"}]' WHERE `aid` = '7' [ RunTime:0.101845s ]
+
+[ 2015-01-04T01:03:33+08:00 ] 127.0.0.1 /oneday/oneday/server/index.php?m=Home&c=Activity&a=queryOne
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001595s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002641s ]
+SQL: SHOW COLUMNS FROM `activity` [ RunTime:0.007709s ]
+SQL: SELECT * FROM `activity` WHERE `aid` = '7' LIMIT 1   [ RunTime:0.000758s ]
+
+[ 2015-01-04T01:03:33+08:00 ] 127.0.0.1 /oneday/oneday/server/index.php?m=Home&c=User&a=getUserInfo
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001727s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002787s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.008181s ]
+SQL: SELECT * FROM `user` WHERE `uid` = '7' LIMIT 1   [ RunTime:0.000794s ]
+
+[ 2015-01-04T01:03:38+08:00 ] 127.0.0.1 /oneday/oneday/server/index.php?m=Home&c=User&a=getUid
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001561s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002543s ]
+
+[ 2015-01-04T01:03:38+08:00 ] 127.0.0.1 /oneday/oneday/server/index.php?m=Home&c=Activity&a=addComment
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001593s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002617s ]
+SQL: SHOW COLUMNS FROM `activity` [ RunTime:0.007798s ]
+SQL: SHOW COLUMNS FROM `activity` [ RunTime:0.007828s ]
+SQL: SELECT * FROM `activity` WHERE `aid` = '7' LIMIT 1   [ RunTime:0.000905s ]
+SQL: UPDATE `activity` SET `comment`='[{\"content\":\"123\",\"date\":\"2015-01-04 01:03:33\",\"uid\":\"7\"},{\"content\":\"@\\u54c8\\u54c8    123\",\"date\":\"2015-01-04 01:03:38\",\"uid\":\"7\"}]' WHERE `aid` = '7' [ RunTime:0.239403s ]
+
+[ 2015-01-04T01:03:38+08:00 ] 127.0.0.1 /oneday/oneday/server/index.php?m=Home&c=Activity&a=queryOne
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001732s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.003045s ]
+SQL: SHOW COLUMNS FROM `activity` [ RunTime:0.012833s ]
+SQL: SELECT * FROM `activity` WHERE `aid` = '7' LIMIT 1   [ RunTime:0.000868s ]
+
+[ 2015-01-04T01:03:38+08:00 ] 127.0.0.1 /oneday/oneday/server/index.php?m=Home&c=User&a=getUserInfo
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001708s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002643s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.007372s ]
+SQL: SELECT * FROM `user` WHERE `uid` = '7' LIMIT 1   [ RunTime:0.000641s ]
+
+[ 2015-01-04T01:03:38+08:00 ] 127.0.0.1 /oneday/oneday/server/index.php?m=Home&c=User&a=getUserInfo
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001820s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002932s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.007540s ]
+SQL: SELECT * FROM `user` WHERE `uid` = '7' LIMIT 1   [ RunTime:0.000782s ]
+
+[ 2015-01-04T01:05:32+08:00 ] 127.0.0.1 /oneday/oneday/server/index.php?m=Home&c=User&a=getUid
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.002846s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.004421s ]
+
+[ 2015-01-04T01:05:32+08:00 ] 127.0.0.1 /oneday/oneday/server/index.php?m=Home&c=User&a=getUid
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001902s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.003088s ]
+
+[ 2015-01-04T01:05:32+08:00 ] 127.0.0.1 /oneday/oneday/server/index.php?m=Home&c=Schedule&a=day
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.002640s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.004059s ]
+SQL: SHOW COLUMNS FROM `schedule` [ RunTime:0.013267s ]
+SQL: SELECT * FROM `schedule` WHERE `startTime` BETWEEN '2015-1-4 00:00:00' AND '2015-1-4 23:59:59' AND `uid` = '7'  [ RunTime:0.001104s ]
+NOTIC: [2] Invalid argument supplied for foreach() F:\wamp\www\oneday\oneday\server\Application\Home\Controller\ScheduleController.class.php 第 50 行.
+
+[ 2015-01-04T01:05:32+08:00 ] 127.0.0.1 /oneday/oneday/server/index.php?m=Home&c=User&a=getUserInfo
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001761s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002808s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.009993s ]
+SQL: SELECT * FROM `user` WHERE `uid` = '7' LIMIT 1   [ RunTime:0.000743s ]
+
+[ 2015-01-04T01:05:33+08:00 ] 127.0.0.1 /oneday/oneday/server/index.php?m=Home&c=User&a=getUid
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001509s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002530s ]
+
+[ 2015-01-04T01:05:33+08:00 ] 127.0.0.1 /oneday/oneday/server/index.php?m=Home&c=Schedule&a=day
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001507s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002531s ]
+SQL: SHOW COLUMNS FROM `schedule` [ RunTime:0.009911s ]
+SQL: SELECT * FROM `schedule` WHERE `startTime` BETWEEN '2015-1-4 00:00:00' AND '2015-1-4 23:59:59' AND `uid` = '7'  [ RunTime:0.000911s ]
+NOTIC: [2] Invalid argument supplied for foreach() F:\wamp\www\oneday\oneday\server\Application\Home\Controller\ScheduleController.class.php 第 50 行.
+
+[ 2015-01-04T01:05:34+08:00 ] 127.0.0.1 /oneday/oneday/server/index.php?m=Home&c=Activity&a=queryAll
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001786s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002930s ]
+SQL: SHOW COLUMNS FROM `activity` [ RunTime:0.008351s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `activity` WHERE ( state=0 and (class=2 or class=3 or class=4) ) LIMIT 1   [ RunTime:0.000729s ]
+SQL: SELECT * FROM `activity` WHERE ( state=0 and (class=2 or class=3 or class=4) ) ORDER BY startTime LIMIT 0,4   [ RunTime:0.000876s ]
+
+[ 2015-01-04T01:05:36+08:00 ] 127.0.0.1 /oneday/oneday/server/index.php?m=Home&c=Activity&a=queryOne
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001505s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002494s ]
+SQL: SHOW COLUMNS FROM `activity` [ RunTime:0.007689s ]
+SQL: SELECT * FROM `activity` WHERE `aid` = '7' LIMIT 1   [ RunTime:0.000931s ]
+
+[ 2015-01-04T01:05:36+08:00 ] 127.0.0.1 /oneday/oneday/server/index.php?m=Home&c=User&a=getUserInfo
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001475s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002457s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.007459s ]
+SQL: SELECT * FROM `user` WHERE `uid` = '7' LIMIT 1   [ RunTime:0.000788s ]
+
+[ 2015-01-04T01:05:36+08:00 ] 127.0.0.1 /oneday/oneday/server/index.php?m=Home&c=User&a=getUid
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001696s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002794s ]
+
+[ 2015-01-04T01:05:36+08:00 ] 127.0.0.1 /oneday/oneday/server/index.php?m=Home&c=User&a=getUserInfo
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001486s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002803s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.008567s ]
+SQL: SELECT * FROM `user` WHERE `uid` = '7' LIMIT 1   [ RunTime:0.000659s ]
+
+[ 2015-01-04T01:05:36+08:00 ] 127.0.0.1 /oneday/oneday/server/index.php?m=Home&c=Activity&a=queryOne
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001633s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002584s ]
+SQL: SHOW COLUMNS FROM `activity` [ RunTime:0.007491s ]
+SQL: SELECT * FROM `activity` WHERE `aid` = '7' LIMIT 1   [ RunTime:0.000799s ]
+
+[ 2015-01-04T01:05:36+08:00 ] 127.0.0.1 /oneday/oneday/server/index.php?m=Home&c=User&a=getUserInfo
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001577s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002516s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.007172s ]
+SQL: SELECT * FROM `user` WHERE `uid` = '7' LIMIT 1   [ RunTime:0.000744s ]
+
+[ 2015-01-04T01:05:36+08:00 ] 127.0.0.1 /oneday/oneday/server/index.php?m=Home&c=User&a=getUserInfo
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001535s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002500s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.009834s ]
+SQL: SELECT * FROM `user` WHERE `uid` = '7' LIMIT 1   [ RunTime:0.000688s ]
+
+[ 2015-01-04T01:05:41+08:00 ] 127.0.0.1 /oneday/oneday/server/index.php?m=Home&c=User&a=getUid
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001607s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002889s ]
+
+[ 2015-01-04T01:05:41+08:00 ] 127.0.0.1 /oneday/oneday/server/index.php?m=Home&c=Schedule&a=day
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001898s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.003005s ]
+SQL: SHOW COLUMNS FROM `schedule` [ RunTime:0.007908s ]
+SQL: SELECT * FROM `schedule` WHERE `startTime` BETWEEN '2015-1-4 00:00:00' AND '2015-1-4 23:59:59' AND `uid` = '7'  [ RunTime:0.000995s ]
+NOTIC: [2] Invalid argument supplied for foreach() F:\wamp\www\oneday\oneday\server\Application\Home\Controller\ScheduleController.class.php 第 50 行.
+
+[ 2015-01-04T01:05:42+08:00 ] 127.0.0.1 /oneday/oneday/server/index.php?m=Home&c=Activity&a=queryAll
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001748s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002878s ]
+SQL: SHOW COLUMNS FROM `activity` [ RunTime:0.007966s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `activity` WHERE ( state=0 and (class=2 or class=3 or class=4) ) LIMIT 1   [ RunTime:0.000714s ]
+SQL: SELECT * FROM `activity` WHERE ( state=0 and (class=2 or class=3 or class=4) ) ORDER BY startTime LIMIT 0,4   [ RunTime:0.000872s ]
+
+[ 2015-01-04T01:05:43+08:00 ] 127.0.0.1 /oneday/oneday/server/index.php?m=Home&c=Activity&a=queryOne
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001763s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002905s ]
+SQL: SHOW COLUMNS FROM `activity` [ RunTime:0.008036s ]
+SQL: SELECT * FROM `activity` WHERE `aid` = '7' LIMIT 1   [ RunTime:0.000899s ]
+
+[ 2015-01-04T01:05:43+08:00 ] 127.0.0.1 /oneday/oneday/server/index.php?m=Home&c=User&a=getUserInfo
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001768s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002916s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.007769s ]
+SQL: SELECT * FROM `user` WHERE `uid` = '7' LIMIT 1   [ RunTime:0.000795s ]
+
+[ 2015-01-04T01:05:43+08:00 ] 127.0.0.1 /oneday/oneday/server/index.php?m=Home&c=User&a=getUid
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001756s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002863s ]
+
+[ 2015-01-04T01:05:43+08:00 ] 127.0.0.1 /oneday/oneday/server/index.php?m=Home&c=User&a=getUserInfo
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001574s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002785s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.007776s ]
+SQL: SELECT * FROM `user` WHERE `uid` = '7' LIMIT 1   [ RunTime:0.001046s ]
+
+[ 2015-01-04T01:05:43+08:00 ] 127.0.0.1 /oneday/oneday/server/index.php?m=Home&c=Activity&a=queryOne
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001848s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.003020s ]
+SQL: SHOW COLUMNS FROM `activity` [ RunTime:0.011549s ]
+SQL: SELECT * FROM `activity` WHERE `aid` = '7' LIMIT 1   [ RunTime:0.001061s ]
+
+[ 2015-01-04T01:05:43+08:00 ] 127.0.0.1 /oneday/oneday/server/index.php?m=Home&c=User&a=getUserInfo
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001717s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002836s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.008871s ]
+SQL: SELECT * FROM `user` WHERE `uid` = '7' LIMIT 1   [ RunTime:0.000887s ]
+
+[ 2015-01-04T01:05:44+08:00 ] 127.0.0.1 /oneday/oneday/server/index.php?m=Home&c=User&a=getUserInfo
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001887s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.003018s ]
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.007221s ]
+SQL: SELECT * FROM `user` WHERE `uid` = '7' LIMIT 1   [ RunTime:0.000786s ]
+
