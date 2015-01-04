@@ -31,7 +31,7 @@ $(document).ready(function(){
     $('.container-content-login').click(function(){
         if(validateEmail()&&validatepassword()){
             var username=$('.container-content-email input').val();
-            var password=$('.container-content-password input').val();
+            var password=hex_md5($('.container-content-password input').val());
             $.post(geturl(apiBaseurl,'Home','User','login'),
                 {userName:username,userPassword:password},
                 function (result){
@@ -51,7 +51,7 @@ $(document).ready(function(){
     $('.container-content-register').click(function(){
         if(validateEmail()&&validatepassword()){
             var username=$('.container-content-email input').val();
-            var password=$('.container-content-password input').val();
+            var password=hex_md5($('.container-content-password input').val());
             $.post(geturl(apiBaseurl,'Home','User','sign'),
                 {userName:username,userPassword:password},
                 function (result){
@@ -59,15 +59,55 @@ $(document).ready(function(){
                         $('.container').animate({opacity:0},500,function(){
                             window.location.href="index.html";
                         });
+                    }else{
+                        alert('该邮箱已经被注册了哦,尝试着换一个吧');
                     }
                 }
             );
         }
+    });
+    $('.container-content-email input').keyup(function(e){
+        if(e.keyCode==13){
+            $('.container-content-password input').focus();
+        }
     })
-    /*$.getJSON(apiBaseUrl,function(data){
-        console.log(data);
-        alert(123);
-    })*/
+    $('.container-content-password input').keyup(function(e){
+        if(e.keyCode=='13'){
+            if(validateEmail()&&validatepassword()){
+                var username=$('.container-content-email input').val();
+                var password=hex_md5($('.container-content-password input').val());
+                if($('.container-login').css('display')=='block'){
+                    $.post(geturl(apiBaseurl,'Home','User','login'),
+                        {userName:username,userPassword:password},
+                        function (result){
+                            console.log(result);
+                            console.log(geturl(apiBaseurl,'Home','User','login'));
+                            if(result=='true'){
+                                console.log(geturl(apiBaseurl,'Home','User','login'));
+                                $('.container').animate({opacity:0},500,function(){
+                                    window.location.href="index.html";
+                                });
+                            }else{
+                                alert('用户名或密码错误');
+                            }
+                        });
+                }else{
+                    $.post(geturl(apiBaseurl,'Home','User','sign'),
+                        {userName:username,userPassword:password},
+                        function (result){
+                            if(result=='true'){
+                                $('.container').animate({opacity:0},500,function(){
+                                    window.location.href="index.html";
+                                });
+                            }else{
+                                alert('该邮箱已经被注册了哦,尝试着换一个吧');
+                            }
+                        }
+                    );
+                }
+            }
+        }
+    })
     $('.container-content-email input').blur(function(){
         if($(this).val()==''){
             $(this).val('Email');
@@ -84,13 +124,18 @@ $(document).ready(function(){
             $(this).attr('src','image/oneday-register-frame.jpg')
         }
     });
+    $('.container-login-spans span').click(function(){
+        if($(this).html()=='&nbsp;账号注册'){
+            $('.container-login').css('display','none');
+            $('.container-register').css('display','block');
+        }
+    })
     $('.container-top-login').click(function(){
         $('.container-register').css('display','none');
         $('.container-login').css('display','block');
     })
     $('.container-top-register').click(function(){
-        $('.container-login').css('display','none');
-        $('.container-register').css('display','block');
+
     })
     $('#black').attr('width',parseInt(width)).attr('height',parseInt(height));
 })

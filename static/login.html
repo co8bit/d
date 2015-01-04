@@ -7,6 +7,7 @@
     <title>登录</title>
     <script src="js/jquery-1.10.2.js"></script>
     <script src="js/jquery.validity.js"></script>
+    <script src="js/md5.js" type="text/ecmascript"></script>
     <script src="js/1.js"></script>
     <script src="js/login.js"></script>
 </head>
@@ -14,14 +15,8 @@
     <!--<canvas id="black"></canvas>-->
     <div class="container">
         <div class="container-top">
-            <div class="container-top-login left">
-                <img src="image/oneday-login-login.png"/>
-            </div>
-            <div class="container-top-logo left">
+            <div class="container-top-logo">
                 <img src="image/oneday-login-logo.png"/>
-            </div>
-            <div class="container-top-register left">
-                <img src="image/oneday-login-register.png"/>
             </div>
         </div>
         <div class="container-content">
@@ -48,8 +43,11 @@
                 <div class="container-content-login">
                     登 录
                 </div>
-                <div class="left"><img src="image/oneday-register-frame.jpg"/>记住我</div>
-                <div class="right">忘记密码？</div>
+                <div class="container-login-spans">
+                    <span>忘记密码&nbsp;</span>
+                    <span>|</span>
+                    <span>&nbsp;账号注册</span>
+                </div>
             </div>
         </div>
     </div>

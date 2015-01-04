@@ -1375,6 +1375,7 @@ $(document).ready(function(){
             })
         })
         $('.column2-bottom').css('background','url("image/oneday-dayview-bg.png")').css('background-size','100%');
+        drawc3rili();
     }
     function jiazaishuju() {
         $.post(geturl(apiBaseurl,'Home','User','getUid'),{},function(uid){
@@ -1560,54 +1561,59 @@ $(document).ready(function(){
     })
     //画日视图右侧添加按钮
     function drawc3rili(){
-        $('.column3-bottom').html('<div class="column3-bottom-title">'+
-            '<div class="left"><img src="image/oneday-rightarrow.png"></div>'+
-            '正在创建新任务'+
-            '</div>'+
-            '<form id="newtask">'+
-            '<div class="column3-bottom-input">'+
-            '<label>标题</label><input type="text" name="title" placeholder="在此输入标题"/>'+
-            '</div>'+
-            '<div class="column3-bottom-input">'+
-            '<label>标签</label><input type="text"  name="tag"placeholder="添加标签"/>'+
-            '</div>'+
-            '<div class="column3-bottom-input">'+
-            '<label>地点</label><input type="text"  name="destination" placeholder="在此输入地点"/>'+
-            '</div>'+
-            '<div class="column3-bottom-input">'+
-            '<label>始于</label><input type="text" name="starttime"/>'+
-            '</div>'+
-            '<div class="column3-bottom-input">'+
-            '<label>止于</label><input type="text" name="endtime"/>'+
-            '</div>'+
-            '<div class="column3-bottom-input">'+
-            '<label>描述</label><textarea name="description"/></textarea>'+
-            '</div>'+
-            '<div class="column3-bottom-option">'+
-            '<div class="column3-bottom-option-label left">检查项</div>'+
-            '<div class="column3-bottom-group left">'+
-            '</div>'+
-            '<div class="column3-bottom-option-new">'+
-            '<div class="column3-bottom-option-input">'+
-            '<input type="text" placeholder="输入检查项内容" name="checkoption"/>'+
-            '</div>'+
-            '<div class="clear">'+
-            '<div class="column3-bottom-option-new-confirm left">添 加</div>'+
-            '<div class="column3-bottom-option-new-cancel left">取 消</div>'+
-            '</div>'+
-            '</div>'+
-            '</div>'+
-            '</form>'+
-            '<div class="column3-bottom-person overflow">'+
-            '<div class="column3-bottom-person-label left">参与者</div>'+
-            '<div class="column3-bottom-person-img left">'+
-            '<img src="image/oneday-addperson.png" width="50px" height="50px"/>'+
-            '</div>'+
-            '<div id="addperson">'+
-            '</div>'+
-            '</div>'+
-            '<div class="column3-bottom-cancel left">取 消</div>'+
-            '<div class="column3-bottom-confirm left">确 认</div>');
+        $.post(geturl(apiBaseurl,'Home','User','getUid'),function(uid){
+            $.post(geturl(apiBaseurl,'Home','User','getUserInfo'),{uid:uid},function(data){
+                $('.column3-bottom').html('<div class="column3-bottom-title">'+
+                    '<div class="left"><img src="image/oneday-rightarrow.png"></div>'+
+                    '正在创建新任务'+
+                    '</div>'+
+                    '<form id="newtask">'+
+                    '<div class="column3-bottom-input">'+
+                    '<label>标题</label><input type="text" name="title" placeholder="在此输入标题"/>'+
+                    '</div>'+
+                    '<div class="column3-bottom-input">'+
+                    '<label>标签</label><input type="text"  name="tag"placeholder="添加标签"/>'+
+                    '</div>'+
+                    '<div class="column3-bottom-input">'+
+                    '<label>地点</label><input type="text"  name="destination" placeholder="在此输入地点"/>'+
+                    '</div>'+
+                    '<div class="column3-bottom-input">'+
+                    '<label>始于</label><input type="text" name="starttime"/>'+
+                    '</div>'+
+                    '<div class="column3-bottom-input">'+
+                    '<label>止于</label><input type="text" name="endtime"/>'+
+                    '</div>'+
+                    '<div class="column3-bottom-input">'+
+                    '<label>描述</label><textarea name="description"/></textarea>'+
+                    '</div>'+
+                    '<div class="column3-bottom-option">'+
+                    '<div class="column3-bottom-option-label left">检查项</div>'+
+                    '<div class="column3-bottom-group left">'+
+                    '</div>'+
+                    '<div class="column3-bottom-option-new">'+
+                    '<div class="column3-bottom-option-input">'+
+                    '<input type="text" placeholder="输入检查项内容" name="checkoption"/>'+
+                    '</div>'+
+                    '<div class="clear">'+
+                    '<div class="column3-bottom-option-new-confirm left">添 加</div>'+
+                    '<div class="column3-bottom-option-new-cancel left">取 消</div>'+
+                    '</div>'+
+                    '</div>'+
+                    '</div>'+
+                    '</form>'+
+                    '<div class="column3-bottom-person overflow">'+
+                    '<div class="column3-bottom-person-label left">参与者</div>'+
+                    '<div class="column3-bottom-person-img left">'+
+                    '<img src="'+getLogopicSrc(data.logoPic)+'" width="50px" height="50px"/>'+
+                    '</div>'+
+                    '<div id="addperson">'+
+                    '</div>'+
+                    '</div>'+
+                    '<div class="column3-bottom-cancel left">取 消</div>'+
+                    '<div class="column3-bottom-confirm left">确 认</div>');
+            })
+        })
+
     }
     //画月视图框架
     function drawcalcu(){

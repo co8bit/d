@@ -8,9 +8,12 @@ canvas{position: absolute;top: 0;z-index: 1}
 .container{width: 400px;margin: 0px auto;position: relative;z-index: 1;margin-top: 40px;z-index: 2}
 .container-top-login,.container-top-register{margin-top: 40px;cursor: pointer}
 .container-top-login{margin-left: 65px;position: relative;z-index: 2}
-.container-top-logo{margin: 0 20px;position: relative;z-index: 4}
+.container-top-logo{position: relative;z-index: 4;text-align: center}
 .container-top-register{position: relative;z-index: 2}
-.container-login{overflow: hidden;width: 320px;margin: 16px auto;color: #adadad;margin-bottom: 20px}
+.container-login{overflow: hidden;width: 320px;margin: 0px auto;color: #adadad}
+.container-login-spans{margin-top: 20px;margin-bottom: 60px}
+.container-login-spans span{cursor: pointer}
+.container-login-spans span:hover{color: #f4a8a3}
 .container-register{display: none}
 .container-login img{vertical-align: -4px;margin-right: 3px}
 .container-login div.right{cursor: pointer}
