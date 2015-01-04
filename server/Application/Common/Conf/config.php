@@ -11,6 +11,7 @@ return array(
 	'DB_PWD'    => 'onedaysfkl76jk', // 密码
 	'DB_PORT'   => 3306, // 端口
 	'DB_PREFIX' => '', // 数据库表前缀
+	'DB_PARAMS' => array(\PDO::ATTR_CASE => \PDO::CASE_NATURAL),//数据库字段名不强制小写
 
 	'URL_MODEL' => 0,
 	
