@@ -1276,10 +1276,10 @@ $(document).ready(function(){
             var now=new Date;
             var width=getpercentage(now,dbtimetojsdate(itemarray[i].startTime),dbtimetojsdate(itemarray[i].endTime));
             /*if(width=='100%'||itemarray[i].state!=0){
-             $('.item-container').find("[sid='"+itemarray[i].sid+"']").css('display','none');
-             }else{
-             $('.item-container').find("[sid='"+itemarray[i].sid+"']").find('.item-cotainer-content').css('width',width);
-             }*/
+                $('.item-container').find("[sid='"+itemarray[i].sid+"']").css('display','none');
+            }else{
+                $('.item-container').find("[sid='"+itemarray[i].sid+"']").find('.item-cotainer-content').css('width',width);
+            }*/
             $('.item-container').find("[sid='"+itemarray[i].sid+"']").find('.item-cotainer-content').css({'width':width,'background':backgroundcolor,'color':color}).parent().css('border-color',backgroundcolor);
         }
         timeout=setTimeout(refresh,1000);

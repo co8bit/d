@@ -219,54 +219,80 @@
                     <textarea></textarea>
                     <div class="activity-pinglun-textarea-button">评论</div>
                 </div>-->
-                <div class="column3-bottom-title">
-                    <div class="left"><img src="image/oneday-rightarrow.png"></div>
-                    正在创建新任务
-                </div>
-                <form id="newtask">
-                    <div class="column3-bottom-input">
-                        <label>标题</label><input type="text" name="title" placeholder="在此输入标题"/>
+                <!--<div class="column3-bottom-taskdetail">
+                    <div class="column3-bottom-taskdetail-header">
+                        <img src="image/oneday-rightarrow.png" class="rightarrow"/>
+                        <span class="column3-bottom-taskdetail-header-title">任务标题</span>
+                        <span class="column3-bottom-taskdetail-header-ddl">DDL&nbsp12:45a.m</span>
+                        <img src="'+src+'" class="confirm"/>
                     </div>
-                    <div class="column3-bottom-input">
-                        <label>标签</label><input type="text"  name="tag"placeholder="添加标签"/>
-                    </div>
-                    <div class="column3-bottom-input">
-                        <label>地点</label><input type="text"  name="destination" placeholder="在此输入地点"/>
-                    </div>
-                    <div class="column3-bottom-input">
-                        <label>始于</label><input type="text" name="starttime"/>
-                    </div>
-                    <div class="column3-bottom-input">
-                        <label>止于</label><input type="text" name="endtime"/>
-                    </div>
-                    <div class="column3-bottom-input">
-                        <label>描述</label><textarea name="description"/></textarea>
-                    </div>
-                    <div class="column3-bottom-option">
-                        <div class="column3-bottom-option-label left">检查项</div>
-                        <div class="column3-bottom-group left">
-                        </div>
-                        <div class="column3-bottom-option-new">
-                            <div class="column3-bottom-option-input">
-                                <input type="text" placeholder="输入检查项内容" name="checkoption"/>
+                    <div class="column3-bottom-taskdetail-content">
+                        <h6>地点&nbsp&nbsp&nbsp哈哈哈</h6>
+                        <h6>描述&nbsp&nbsp&nbsp嘿嘿嘿</h6>
+                        <h6><span class="left">检查项&nbsp&nbsp&nbsp</span>
+                            <div class="column3-bottom-taskdetail-content-options left">
+                                <div class="column3-bottom-taskdetail-content-option">
+                                    <img src="image/oneday-option.jpg" width="20px" height="20px"/><span>检查项1</span>
+                                </div>
+                                <div class="column3-bottom-taskdetail-content-option">
+                                    <img src="image/oneday-option.jpg" width="20px" height="20px"/><span>检查项1</span>
+                                </div>
                             </div>
-                            <div class="clear">
-                                <div class="column3-bottom-option-new-confirm left">添 加</div>
-                                <div class="column3-bottom-option-new-cancel left">取 消</div>
+                        </h6>
+                        <h6 class="clear column3-bottom-taskdetail-content-canyu">
+                            参与者
+                            <img src="image/oneday-weishangchuan.png" width="40px" height="40px"/>
+                            <img src="image/oneday-weishangchuan.png" width="40px" height="40px"/>
+                            <img src="image/oneday-weishangchuan.png" width="40px" height="40px"/>
+                        </h6>
+                    </div>
+                    <div class="column3-bottom-taskdetail-divider"></div>
+                    <div class="column3-bottom-taskdetail-bottom">
+                        <div class="column3-bottom-taskdetail-bottom-pinglun">
+                            <div class="column3-bottom-taskdetail-bottom-item left">
+                                <div class="column3-bottom-taskdetail-bottom-item-img left">
+                                    <img src="image/oneday-weishangchuan.png" width="90%" height="90%" class="left"/>
+                                </div>
+                                <div class="column3-bottom-taskdetail-bottom-item-content left">
+                                    <h4>测试数据</h4>
+                                    <h5>测试数据测试数据测试数据撒旦</h5>
+                                    <h6 class="right">2015-05-32 15:30:59</h6>
+                                </div>
+                            </div>
+                            <div class="column3-bottom-taskdetail-bottom-item left">
+                                <div class="column3-bottom-taskdetail-bottom-item-img left">
+                                    <img src="image/oneday-weishangchuan.png" width="90%" height="90%" class="left"/>
+                                </div>
+                                <div class="column3-bottom-taskdetail-bottom-item-content left">
+                                    <h4>测试数据</h4>
+                                    <h5>测试数据测试数据测试数据撒旦</h5>
+                                    <h6 class="right">2015-05-32 15:30:59</h6>
+                                </div>
+                            </div>
+                            <div class="column3-bottom-taskdetail-bottom-item left">
+                                <div class="column3-bottom-taskdetail-bottom-item-img left">
+                                    <img src="image/oneday-weishangchuan.png" width="90%" height="90%" class="left"/>
+                                </div>
+                                <div class="column3-bottom-taskdetail-bottom-item-content left">
+                                    <h4>测试数据</h4>
+                                    <h5>测试数据测试数据测试数据撒旦</h5>
+                                    <h6 class="right">2015-05-32 15:30:59</h6>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="column3-bottom-taskdetail-bottom-textarea">
+                            <textarea placeholder="说一点你喜欢的。。。"></textarea>
+                        </div>
+                        <div class="column3-bottom-taskdetail-bottom-buttons">
+                            <div class="column3-bottom-taskdetail-bottom-button" id="column3-bottom-taskdetail-bottom-buttons-confirm">
+                                确认
+                            </div>
+                            <div class="column3-bottom-taskdetail-bottom-button" id="column3-bottom-taskdetail-bottom-buttons-cancel">
+                                取消
                             </div>
                         </div>
                     </div>
-                </form>
-                <div class="column3-bottom-person overflow">
-                    <div class="column3-bottom-person-label left">参与者</div>
-                    <div class="column3-bottom-person-img left">
-                        <img src="image/oneday-addperson.png" width="50px" height="50px"/>
-                    </div>
-                    <div id="addperson">
-                    </div>
-                </div>
-                <div class="column3-bottom-cancel left">取 消</div>
-                <div class="column3-bottom-confirm left">确 认</div>
+                </div>-->
             </div>
         </div>
     </div>

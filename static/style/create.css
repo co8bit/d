@@ -25,3 +25,9 @@ textarea{width: 400px;height: 200px;resize: none;vertical-align: top;border-radi
 .participant-img-container{display: inline-block;vertical-align: -14px}
 .participant-img{margin-left:10px;width: 40px;height: 40px;float: left;margin-right: 10px}
 .participant-img img{border-radius: 50%;}
+.item{;padding-bottom:10px;overflow: hidden;display: inline-block;margin-left: 40px;margin-top: 20px;border-bottom: 1px #9c9c9c solid}
+.item-img{float: left}
+.item-img img{border-radius: 50%}
+.item-name{float: left;font-size: 14px;margin-left: 10px}
+.namelist-button{text-align: center;margin-top: 40px}
+.namelist-button span{background: #ed7a72;color: #ffffff;padding: 10px 20px;cursor: pointer;border-radius: 5px}
