@@ -2,6 +2,8 @@
 namespace Home\Controller;
 use Think\Controller;
 
+require_once(APP_PATH."/Home/Conf/MyConfigINI.php");
+
 class UserController extends Controller
 {
     /**
@@ -10,7 +12,7 @@ class UserController extends Controller
      */
     protected $UPLOADCONFIG = array(    
         'maxSize'    =>    3145728,
-        'rootPath'   =>    './Public/',
+        'rootPath'   =>    _UPLOADPATH,
         'savePath'   =>    '/Uploads/',    
         'saveName'   =>    array('uniqid',''),    
         'exts'       =>    array('jpg', 'png', 'jpeg'),    
