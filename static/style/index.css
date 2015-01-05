@@ -24,7 +24,8 @@ body{background: url("../image/background.jpg");background-size:cover;overflow-x
 .column2-date{height: 45px;background: white;border-radius: 5px;overflow: hidden}
 .column2-date-calender{width: 45px; height:45px;cursor: pointer;background: url("../image/oneday-calender.jpg")}
 .column2-divider{width: 1px;height: 100%;background: #e6e6e5}
-.column2-date-time{font-size: 16px;color: #373836;padding: 13px 9px;cursor: pointer}
+.column2-date-time{font-size: 16px;color: #373836;padding: 13px 9px;cursor: pointer;position: relative}
+.column2-date-time input{position: absolute;width: 10px;left: 40%;opacity: 0;cursor: pointer}
 .column2-arrows{height: 45%}
 .column2-arrows-left{width:30px;height:45px;background:url("../image/oneday-leftarrow.jpg");cursor: pointer}
 .column2-arrawdivider{width: 1px;height: 22px;background:#e6e6e5;margin-top: 11px }
@@ -61,6 +62,7 @@ body{background: url("../image/background.jpg");background-size:cover;overflow-x
 .column2-bottom-setting-userinfo-all{margin-left: 4%;padding-top: 10px}
 .column2-bottom-setting-userinfo-all-name{margin: 25px 0;position: relative}
 #file-value{width: 40%;margin-left: 1%;border: 1px solid #e9e7e3;border-radius: 2px;height: 30px}
+.column2-bottom-setting-userinfo-all-name input{width: 39%;margin-left: 1%;border: 1px solid #e9e7e3;border-radius: 2px;height: 30px}
 #userinfo-file-input{width: 15%;height: 30px;position: absolute;left: 55%;top: 10%;z-index: 2;opacity: 0}
 .userinfo-file-input-zhezhu{position: absolute;width: 15%;height:30px;background: #e9e7e3;display: inline-block;left: 55%;top: 10%;z-index: 1;text-align: center;line-height: 30px;border-radius: 2px;color: #373836}
 #userinfo-file-input-submit{width: 15%;left: 75%;height: 30px;top: 10%;background: #f4a8a3;border: none;position: absolute;color: #ffffff;border-radius: 2px}

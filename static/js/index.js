@@ -123,6 +123,28 @@ $(document).ready(function(){
             }
         },500)
     })
+    //日期点击出选择
+    $('.column2-date-time').click(function(){
+        $(this).find('input').focus();
+    })
+    var changetimes=1;
+    $('body').on('focus','.column2-date-time input',function(){
+        $(this).datepicker({
+            changeYear:true,
+            changeMonth:true,
+            defaultDate:timenow
+        });
+        var thisobj=$(this);
+        $(this).change(function(){
+            if(changetimes==1){
+                timenow=new Date($(this).val());
+                jiazai();
+                changetime(timenow);
+                changetimes=0;
+            }
+            setTimeout(function(){changetimes=1},1000);
+        })
+    })
     //个人页面
     $('.column1-search').click(function(){
         $.post(geturl(apiBaseurl,'Home','User','getUid'),{},function(id){
@@ -233,7 +255,7 @@ $(document).ready(function(){
                             '地&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;址: <input type="text" name="address" value="'+data.address+'"/>'+
                             '</div>'+
                             '<div class="column2-bottom-setting-userinfo-all-name">'+
-                            '<input type="submit" id="column2-bottom-setting-userinfo-submit"/>'+
+                            '<input type="submit" id="column2-bottom-setting-userinfo-submit" value="修改"/>'+
                             '</div>'+
                             '</div>'+
                             '</div>').css('background','#fff');
@@ -449,6 +471,7 @@ $(document).ready(function(){
         timenow=dbtimetojsdate($(this).attr('date'));
         jiazai();
         changetime(timenow);
+        $('#oneday-calcu').attr('state','off');
     })
     //周视图单元格点击事件
     $('body').on('click','.column2-bottom-week-container .column2-bottom-week-container-item',function(){
@@ -466,11 +489,18 @@ $(document).ready(function(){
     }
     //月视图点击事件
     $('#oneday-calcu').click(function(){
-        var timenow=new Date();
-        drawcalcu();
-        $.post(geturl(apiBaseurl,'Home','Schedule','month'),{date:timenow.getFullYear()+'-'+(timenow.getMonth()+1)+'-'+timenow.getDate()},function(data){
-            initMonth(data,timenow);
-        });
+        if($(this).attr('state')=='off'){
+            var timenow=new Date();
+            drawcalcu();
+            $.post(geturl(apiBaseurl,'Home','Schedule','month'),{date:timenow.getFullYear()+'-'+(timenow.getMonth()+1)+'-'+timenow.getDate()},function(data){
+                initMonth(data,timenow);
+            });
+            $(this).attr('state','on');
+        }else{
+            jiazai();
+            $(this).attr('state','off');
+            $(this).css('background','url("image/'+$(this).attr(id)+'.png")');
+        }
     })
     //周视图点击事件
     $('#oneday-calender').click(function(){
@@ -559,7 +589,7 @@ $(document).ready(function(){
                 str='周六'
                 break;
         }
-        $('.column2-date-time').html(str+','+(time.getMonth()+1)+'月'+time.getDate()+'日');
+        $('.column2-date-time').html(str+','+(time.getMonth()+1)+'月'+time.getDate()+'日'+'<input type="text"/>');
     }
     //判断是否是闰年
     function isrunnian(year){
@@ -651,7 +681,6 @@ $(document).ready(function(){
             }else{
                 pagenow--;
                 $.post(geturl(apiBaseurl,'Home','Activity','queryAll'),{page:pagenow,class:9999},function(data){
-                    console.log(data);
                     $('.column2-bottom').html(
                             '<div class="column2-bottom-actmanager">'+
                             '</div>').attr('state','actmanager');
@@ -880,9 +909,6 @@ $(document).ready(function(){
             })
         })
     })
-    $('body').on('click','#column2-bottom-activitydetail-zan',function(){
-        alert(123);
-    })
     function getAllcomment(aid){
         $.post(geturl(apiBaseurl,'Home','Activity','queryOne'),{aid:aid},function(data){
             $('.column3-bottom').attr('state','pinglun').attr('aid',aid).html(
@@ -1092,12 +1118,14 @@ $(document).ready(function(){
     })
     $('body').width($(window).width());
     $('#container').height($(window).width()*0.57);
-    $('body').on('click',"input[name='starttime']",function(){
+/*    $('body').on('focus',"input[name='starttime']",function(){
         $("input[name='starttime']").datetimepicker();
     })
-    $('body').on('click',"input[name='endtime']",function(){
+    $('body').on('focus',"input[name='endtime']",function(){
         $("input[name='endtime']").datetimepicker();
-    })
+    })*/
+    /*$("input[name='starttime']").datetimepicker();
+    $("input[name='endtime']").datetimepicker();*/
     $('body').on('click','.column3-bottom-option-new-confirm',function(){
         if(validatenull($('input[name=checkoption]'))){
             var option=$('input[name=checkoption]').val();
@@ -1251,8 +1279,7 @@ $(document).ready(function(){
     }
 //得到某一天的位置
     function getposition(str,firstday){
-        var day=(str.split('-'))[2];
-        var row=parseInt((day-1+firstday)/7);
+        var row=parseInt((str-1+firstday)/7);
         return row;
     }
 //表单验证
@@ -1385,6 +1412,14 @@ $(document).ready(function(){
             })
         })
     }
+    function getdays(month,year){
+        if(isrunnian(parseInt(year))){
+            var day=[31,29,31,30,31,30,31,31,30,31,30,31]
+        }else{
+            var day=[31,28,31,30,31,30,31,31,30,31,30,31]
+        }
+        return day[month];
+    }
     function initMonth(obj,timenow){
         var array=new Array();
         $.each(obj,function(i,d){
@@ -1405,10 +1440,15 @@ $(document).ready(function(){
         for(var i=0;i<montharray.length;i++){
             globelmonthobj.addDate((montharray[i].startTime.split(' '))[0]);
         }
+        for(var i=0;i<getdays(timenow.getMonth(),timenow.getFullYear());i++){
+            var date=new Date(timenow.getFullYear()+'/'+(timenow.getMonth()+1)+'/'+(i+1));
+            var row=getposition(date.getDate(),firstday.getDay());
+            $(".column2-bottom-calender-container:eq("+row+")").find('td:eq('+ date.getDay()+')').attr('date',date.getFullYear()+'-'+checktime(date.getMonth()+1)+'-'+checktime(date.getDate())).css('cursor','pointer').html('<div class="td-day">'+date.getDate()+'</div>');
+        }
         for(var i in globelmonthobj){
             if(typeof globelmonthobj[i]=='number'){
                 var date=new Date(i.replace(/-/g,'/'));
-                var row=getposition(i,firstday.getDay());
+                var row=getposition(date.getDate(),firstday.getDay());
                 $(".column2-bottom-calender-container:eq("+row+")").find('td:eq('+ date.getDay()+')').attr('date',i).css('cursor','pointer').html('<div class="td-day">'+date.getDate()+'</div><div class="td-num"><b>'+globelmonthobj[i]+'</b>个</div>').css('background','#f9d1ce');
             }
         }
@@ -1421,11 +1461,17 @@ $(document).ready(function(){
         }else{
             var src="image/oneday-confirm-button.png";
         }
+        var endTime=dbtimetojsdate(data.endTime);
+        if(endTime.getHours()>=12){
+            var str=checktime(endTime.getHours()-12)+':'+checktime(endTime.getMinutes())+'p.m';
+        }else{
+            var str=checktime(endTime.getHours())+':'+checktime(endTime.getMinutes())+'a.m';
+        }
         $('.column3-bottom').attr('sid',data.sid).html('<div class="column3-bottom-taskdetail">'+
             '<div class="column3-bottom-taskdetail-header">'+
             '<img src="image/oneday-rightarrow.png" class="rightarrow"/>'+
             '<span class="column3-bottom-taskdetail-header-title">任务标题</span>'+
-            '<span class="column3-bottom-taskdetail-header-ddl">DDL&nbsp12:45a.m</span>'+
+            '<span class="column3-bottom-taskdetail-header-ddl">DDL&nbsp'+str+'</span>'+
             '<img src="'+src+'" class="confirm"/>'+
             '</div>'+
             '<div class="column3-bottom-taskdetail-content">'+
@@ -1611,6 +1657,8 @@ $(document).ready(function(){
                     '</div>'+
                     '<div class="column3-bottom-cancel left">取 消</div>'+
                     '<div class="column3-bottom-confirm left">确 认</div>');
+                $("input[name='starttime']").datetimepicker();
+                $("input[name='endtime']").datetimepicker();
             })
         })
 

@@ -2,13 +2,18 @@
 <html>
 <head lang="en">
     <meta charset="UTF-8">
-    <title>首页</title>
+    <title>OneDay</title>
     <script src="js/jquery-1.10.2.js"></script>
     <script src="js/jquery.validity.js"></script>
+    <script src="js/jquery-ui-1.10.4.custom.js"></script>
     <script src="js/jquery.datetimepicker.js"></script>
     <script src="js/index.js"></script>
     <link type="text/css" rel="stylesheet" href="style/jquery.validity.css">
     <link type="text/css" rel="stylesheet" href="style/jquery.datetimepicker.css"/>
+    <link type="text/css" rel="stylesheet" href="style/jquery-ui-1.10.4.custom.min.css"/>
+    <link href="favicon/favicon.png" mce_href="favicon.ico" rel="bookmark" type="image/x-icon" />
+    <link href="favicon/favicon.png" mce_href="favicon.ico" rel="icon" type="image/x-icon" />
+    <link href="favicon/favicon.png" mce_href="favicon.ico" rel="shortcut icon" type="image/x-icon" />
     <script type="text/javascript" charset="utf-8" src="ueditor/ueditor1_4_3-utf8-php/ueditor.config.js"></script>
     <script type="text/javascript" charset="utf-8" src="ueditor/ueditor1_4_3-utf8-php/ueditor.all.min.js"> </script>
     <!--建议手动加在语言，避免在ie下有时因为加载语言失败导致编辑器加载失败-->
@@ -35,14 +40,14 @@
                     <div class="left column1-tag-label">发现活动</div>
                     <div class="right"><img src="image/oneday-rightarrow.png"></div>
                 </div>
-                <div class="column1-tag">
+               <!-- <div class="column1-tag">
                     <div class="left column1-tag-label">稍后阅读</div>
                     <div class="right"><img src="image/oneday-rightarrow.png"></div>
                 </div>
                 <div class="column1-tag">
                     <div class="left column1-tag-label">求职信息</div>
                     <div class="right"><img src="image/oneday-rightarrow.png"></div>
-                </div>
+                </div>-->
             </div>
         </div>
         <div class="column2 left">
@@ -50,7 +55,7 @@
                 <div class="column2-date-calender left reverge-tag" id="oneday-calender">
                 </div>
                 <div class="column2-divider left"></div>
-                <div class="column2-date-time left">周三,12月3日</div>
+                <div class="column2-date-time left">周三,12月3日<input type="text"/></div>
                 <div class="column2-divider left"></div>
                 <div class="column2-arrows left">
                     <div class="column2-arrows-left left reverge-tag" id="oneday-leftarrow"></div>
@@ -58,7 +63,7 @@
                     <div class="column2-arrows-right left reverge-tag" id="oneday-rightarrow"></div>
                 </div>
                 <div class="column2-divider left"></div>
-                <div class="column2-cal right reverge-tag" id="oneday-calcu">
+                <div class="column2-cal right reverge-tag" id="oneday-calcu" state='off'>
                 </div>
                 <div class="column2-divider right"></div>
             </div>
@@ -185,7 +190,7 @@
                     <div class="column3-setting-item-divider"></div>
                     <div class="column3-setting-item">活动管理</div>
                     <div class="column3-setting-item-divider"></div>
-                    <div class="column3-setting-item">关于我们</div>
+                    <div class="column3-setting-item">意见&bug修复</div>
                     <div class="column3-setting-item-divider"></div>
                     <div class="column3-setting-item">退出</div>
                 </div>
