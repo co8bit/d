@@ -74,6 +74,152 @@ class ActivityController extends Controller
         $this->ajaxReturn($result);
     }
 
+
+    /**
+     * 查询所有未完成的活动;
+     * @param int page 当前的页数
+     * @param int class 活动的类别;不传或传class=9999,返回所有类别的活动
+     * @return error "" page过大或没有此类活动
+     * @return json 活动内容，形如：
+     *         {
+     *             "pageTotalNum":2,//总页数
+     *             "content":[ //具体的内容
+     *                 {},//一个活动
+     *                 {}
+     *             ]
+     *         }
+     */
+    public function queryAll()
+    {
+        $dbActivity     =   D("Activity");
+
+        $page   =   I("param.page",1);
+        $class  =   I("param.class",9999);
+        if ($class == 9999)
+        {
+            $condition  =   "state=0 and (class=2 or class=3 or class=4)";
+        }
+        else
+        {
+            $condition  =   array("class"=>$class,"state"=>0);
+        }
+
+        $scheduleCount = $dbActivity->where($condition)->count();
+        $scheduleTotalPageNum   =   ceil($scheduleCount / _ACTIVITY_PAGE_NUM);
+
+        if ($page > $scheduleTotalPageNum)
+            exit("error");
+
+        $result     =   $dbActivity->where($condition)->order("startTime")->limit(($page-1) * _ACTIVITY_PAGE_NUM,_ACTIVITY_PAGE_NUM)->select();
+
+        $tmp    =   null;
+        $tmp["pageTotalNum"] = $scheduleTotalPageNum;
+        $tmp["content"]    =   $this->trimForAjax($result);
+        $this->ajaxReturn($tmp);
+    }
+
+
+
+    /**
+     * 查询所有自己的活动;
+     * @param int page 当前的页数
+     * @param int class 活动的类别;不传此参数或传class=9999,返回所有类别的活动
+     * @param int state 选择要查询的状态，不传此参数或传state=9999，返回所有状态
+     * @return error "" page过大或没有此类活动
+     * @return jsonArray 活动内容，形如：
+     *         [{
+     *             "pageTotalNum":2,//总页数
+     *             "content":[ //具体的内容
+     *                 {},//一个活动
+     *                 {}
+     *             ]
+     *         },
+     *         {...},
+     *         ...
+     *         ]
+     */
+    public function querySelf()
+    {
+        $dbActivity     =   D("Activity");
+
+        $page   =   I("param.page",1);
+        $class  =   I("param.class",9999);
+        $state  =   I("param.state",9999);
+        $state  =   (int)$state;
+
+        if ($state != 9999)
+        {
+            $stateSQL   =   array("state"=>$state);
+        }
+
+        if ($class == 9999)
+        {
+            $condition  =   "uid=".$this->uid." and (class=2 or class=3 or class=4)";
+        }
+        else
+        {
+            $condition  =   array("uid"=>$this->uid,"class"=>$class);
+        }
+
+        $scheduleCount = $dbActivity->where($stateSQL)->where($condition)->count();
+        $scheduleTotalPageNum   =   ceil($scheduleCount / _ACTIVITY_PAGE_NUM);
+
+        // if ($page > $scheduleTotalPageNum)
+        //     exit("error");
+        // dump($condition);
+        $result     =   $dbActivity->where($stateSQL)->where($condition)->order("startTime")->limit(($page-1) * _ACTIVITY_PAGE_NUM,_ACTIVITY_PAGE_NUM)->select();
+
+        $tmp    =   null;
+        $tmp["pageTotalNum"] = $scheduleTotalPageNum;
+        $tmp["content"]    =   $this->trimForAjax($result);
+        // dump($tmp);
+        $this->ajaxReturn($tmp);
+    }
+
+
+    /**
+     * 查询最近活动。（范围：所有类别的未完成活动）
+     * @param int [GET] num 代表返回多少条，默认为4
+     * @return null 没有该类活动
+     * @return jsonArray 活动内容，形如：
+     *         [
+     *           {},//一个活动，一行数据表中的内容
+     *           {}
+     *         ]
+     */
+    public function queryRecently($num = 4)
+    {
+        $dbActivity     =   D("Activity");
+
+        $map["startTime"]   =   array("gt",date("Y-m-d H:i:s"));
+        $result     =   $dbActivity->where($map)->where(array("state"=>0))->order("startTime")->limit(0,$num)->select();
+        $this->ajaxReturn($this->trimForAjax($result));
+    }
+
+
+
+    /**
+     * 查询热门活动。（范围：所有类别的未完成活动）
+     * @param int [GET] num 代表返回多少条，默认为4
+     * @return null 没有该类活动
+     * @return jsonArray 活动内容，形如：
+     *         [
+     *           {},//一个活动，一行数据表中的内容
+     *           {}
+     *         ]
+     */
+    public function queryHot($num = 4)
+    {
+        $dbActivity     =   D("Activity");
+
+        $map["startTime"]   =   array("gt",date("Y-m-d H:i:s"));
+        $map["zan"]         =   array("gt",_HOT_ACTIVITY_ZAN_THRESHOLD);
+        $result     =   $dbActivity->where($map)->where(array("state"=>0))->order("startTime")->limit(0,$num)->select();
+        $this->ajaxReturn($this->trimForAjax($result));
+    }
+
+
+
     /**
      * 创建一个活动
      * @param 多个参数，名称参考returnJson,但是形式是post
@@ -191,109 +337,6 @@ class ActivityController extends Controller
         else
             exit("false");
     }
-
-
-    /**
-     * 查询所有未完成的活动;
-     * @param int page 当前的页数
-     * @param int class 活动的类别;不传或传class=9999,返回所有类别的活动
-     * @return error "" page过大或没有此类活动
-     * @return json 活动内容，形如：
-     *         {
-     *             "pageTotalNum":2,//总页数
-     *             "content":[ //具体的内容
-     *                 {},//一个活动
-     *                 {}
-     *             ]
-     *         }
-     */
-    public function queryAll()
-    {
-        $dbActivity     =   D("Activity");
-
-        $page   =   I("param.page",1);
-        $class  =   I("param.class",9999);
-        if ($class == 9999)
-        {
-            $condition  =   "state=0 and (class=2 or class=3 or class=4)";
-        }
-        else
-        {
-            $condition  =   array("class"=>$class,"state"=>0);
-        }
-
-        $scheduleCount = $dbActivity->where($condition)->count();
-        $scheduleTotalPageNum   =   ceil($scheduleCount / _ACTIVITY_PAGE_NUM);
-
-        if ($page > $scheduleTotalPageNum)
-            exit("error");
-
-        $resule     =   $dbActivity->where($condition)->order("startTime")->limit(($page-1) * _ACTIVITY_PAGE_NUM,_ACTIVITY_PAGE_NUM)->select();
-
-        $tmp    =   null;
-        $tmp["pageTotalNum"] = $scheduleTotalPageNum;
-        $tmp["content"]    =   $this->trimForAjax($resule);
-        $this->ajaxReturn($tmp);
-    }
-
-
-
-    /**
-     * 查询所有自己的活动;
-     * @param int page 当前的页数
-     * @param int class 活动的类别;不传此参数或传class=9999,返回所有类别的活动
-     * @param int state 选择要查询的状态，不传此参数或传state=9999，返回所有状态
-     * @return error "" page过大或没有此类活动
-     * @return jsonArray 活动内容，形如：
-     *         [{
-     *             "pageTotalNum":2,//总页数
-     *             "content":[ //具体的内容
-     *                 {},//一个活动
-     *                 {}
-     *             ]
-     *         },
-     *         {...},
-     *         ...
-     *         ]
-     */
-    public function querySelf()
-    {
-        $dbActivity     =   D("Activity");
-
-        $page   =   I("param.page",1);
-        $class  =   I("param.class",9999);
-        $state  =   I("param.state",9999);
-        $state  =   (int)$state;
-
-        if ($state != 9999)
-        {
-            $stateSQL   =   array("state"=>$state);
-        }
-
-        if ($class == 9999)
-        {
-            $condition  =   "uid=".$this->uid." and (class=2 or class=3 or class=4)";
-        }
-        else
-        {
-            $condition  =   array("uid"=>$this->uid,"class"=>$class);
-        }
-
-        $scheduleCount = $dbActivity->where($stateSQL)->where($condition)->count();
-        $scheduleTotalPageNum   =   ceil($scheduleCount / _ACTIVITY_PAGE_NUM);
-
-        // if ($page > $scheduleTotalPageNum)
-        //     exit("error");
-        // dump($condition);
-        $resule     =   $dbActivity->where($stateSQL)->where($condition)->order("startTime")->limit(($page-1) * _ACTIVITY_PAGE_NUM,_ACTIVITY_PAGE_NUM)->select();
-
-        $tmp    =   null;
-        $tmp["pageTotalNum"] = $scheduleTotalPageNum;
-        $tmp["content"]    =   $this->trimForAjax($resule);
-        // dump($tmp);
-        $this->ajaxReturn($tmp);
-    }
-
 
 
     /**
