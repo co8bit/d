@@ -120,6 +120,7 @@ body{background: url("../image/background.jpg");background-size:cover;overflow-x
 .column3-bottom-taskdetail-header img.confirm{float: right;margin-top: 10px;margin-right: 20px}
 .column3-bottom-taskdetail-header-title{font-size: 16px}
 .column3-bottom-taskdetail-header-ddl{color: #79797b;font-size: 12px;margin-left: 20px}
+.column3-bottom-taskdetail-action{height: 40px;border-bottom: 1px solid #dddddd;overflow: hidden}
 .column3-bottom-taskdetail-content{font-size: 1.5em;color: #a19e99;margin-top: 5%;margin-left: 16%}
 .column3-bottom-taskdetail-content h6{margin-bottom: 10px;overflow: hidden}
 .column3-bottom-taskdetail-content-options{vertical-align: 0}

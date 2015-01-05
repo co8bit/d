@@ -323,7 +323,7 @@ $(document).ready(function(){
         $('.column3-setting-hover').css('display','none');
     })
     //这里测试
-    $('#oneday-page').click(function(){
+    $('body').on('click','#oneday-page',function(){
         if($('.column3-bottom').attr('state')=='detail'){
             $.post(geturl(apiBaseurl,'Home','Schedule','query'),{sid:$('.column3-bottom').attr('sid')},function(data){
                 var time=dbtimetojsdate(data.startTime);
@@ -452,7 +452,7 @@ $(document).ready(function(){
 
 
     //删除按钮逻辑
-    $('#oneday-rubbish').click(function(){
+    $('body').on('click','#oneday-rubbish',function(){
         if($('.column3-bottom').attr('sid')){
             var con=confirm('确定要删除这条活动吗？');
             if(con){
@@ -892,7 +892,6 @@ $(document).ready(function(){
                     }
                     for(var i=0;(i<data.participant.length)&&(i<7);i++){
                         $.post(geturl(apiBaseurl,'Home','User','getUserInfo'),{uid:data.participant[i]},function(userinfo){
-                            console.log(userinfo.logoPic);
                             if(userinfo.logoPic==''){
                                 var src='image/oneday-weishangchuan.png';
                             }else{
@@ -908,6 +907,14 @@ $(document).ready(function(){
                 })
             })
         })
+    })
+    $('body').on('click','#column2-bottom-activitydetail-zan',function(){
+        if($(this).find('img').attr('src')=='image/oneday-activity-zanyixia.jpg'){
+            $.post(geturl(apiBaseurl,'Home','Activity','zan'),{aid:$('.column2-bottom').attr('aid')},function(data){
+                console.log(data);
+                console.log($('.column2-bottom').attr('aid'));
+            })
+        }
     })
     function getAllcomment(aid){
         $.post(geturl(apiBaseurl,'Home','Activity','queryOne'),{aid:aid},function(data){
@@ -1143,9 +1150,11 @@ $(document).ready(function(){
             $(this).val('');
         $(this).css('color','#666');
         var thisobj=$(this);
-        var nexttime=new Date(timenow.getTime()+60*60*1000);
         $(this)[0].addEventListener('keydown',function(e){
             if(e.keyCode==13){
+                var offsetdate=new Date();
+                timenow=new Date(timenow.getFullYear()+'/'+(timenow.getMonth()+1)+'/'+timenow.getDate()+' '+offsetdate.getHours()+':'+offsetdate.getMinutes()+':'+offsetdate.getSeconds());
+                var nexttime=new Date(timenow.getTime()+60*60*1000);
                 $.post(geturl(apiBaseurl,'Home','Schedule','create'),{
                     title:thisobj.val(),
                     tag:null,
@@ -1321,7 +1330,6 @@ $(document).ready(function(){
 //加载活动全部
     function jiazaiActivity(pagenow){
         $.post(geturl(apiBaseurl,'Home','Activity','queryAll'),{page:pagenow,class:9999},function(data2){
-            console.log(data2);
             initActivity(data2);
             drawAcitivtyList()
         })
@@ -1455,7 +1463,6 @@ $(document).ready(function(){
     }
     //画日视图点击详情
     function drawc3rilidetail(data){
-        console.log(data);
         if(data.state==1){
             var src="image/oneday-confirm-button-on.png";
         }else{
@@ -1467,20 +1474,30 @@ $(document).ready(function(){
         }else{
             var str=checktime(endTime.getHours())+':'+checktime(endTime.getMinutes())+'a.m';
         }
-        $('.column3-bottom').attr('sid',data.sid).html('<div class="column3-bottom-taskdetail">'+
-            '<div class="column3-bottom-taskdetail-header">'+
-            '<img src="image/oneday-rightarrow.png" class="rightarrow"/>'+
-            '<span class="column3-bottom-taskdetail-header-title">任务标题</span>'+
-            '<span class="column3-bottom-taskdetail-header-ddl">DDL&nbsp'+str+'</span>'+
-            '<img src="'+src+'" class="confirm"/>'+
-            '</div>'+
-            '<div class="column3-bottom-taskdetail-content">'+
-            '<h6>地点&nbsp&nbsp&nbsp'+data.location+'</h6>'+
-            '<h6>描述&nbsp&nbsp&nbsp'+data.content+'</h6>'+
-            '<h6><span class="left">检查项&nbsp&nbsp&nbsp</span>'+
-            '<div class="column3-bottom-taskdetail-content-options left">'+
-            '</div>'+
-            '</h6>'+
+        $('.column3-bottom').attr('sid',data.sid).html(
+            '<div class="column3-bottom-taskdetail">'+
+                '<div class="column3-bottom-taskdetail-header">'+
+                    '<img src="image/oneday-rightarrow.png" class="rightarrow"/>'+
+                    '<span class="column3-bottom-taskdetail-header-title">任务标题</span>'+
+                    '<span class="column3-bottom-taskdetail-header-ddl">DDL&nbsp'+str+'</span>'+
+                    '<img src="'+src+'" class="confirm"/>'+
+                '</div>'+
+                '<div class="column3-bottom-taskdetail-action">'+
+                '<div class="column3-page left reverge-tag" id="oneday-page">'+
+                '</div>'+
+                '<div class="column3-divider left"></div>'+
+                    '<div class="column3-rubbish left reverge-tag" id="oneday-rubbish">'+
+                    '</div>'+
+                    '<div class="column3-divider left"></div>'+
+                '</div>'+
+                '<div class="column3-bottom-taskdetail-content clear">'+
+                    '<h6>地点&nbsp&nbsp&nbsp'+data.location+'</h6>'+
+                    '<h6>描述&nbsp&nbsp&nbsp'+data.content+'</h6>'+
+                    '<h6>' +
+                    '<span class="left">检查项&nbsp&nbsp&nbsp</span>'+
+                    '<div class="column3-bottom-taskdetail-content-options left">'+
+                    '</div>'+
+                    '</h6>'+
             '<h6 class="clear column3-bottom-taskdetail-content-canyu">'+
             '参与者'+
             '</h6>'+
