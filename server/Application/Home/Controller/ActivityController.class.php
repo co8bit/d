@@ -179,7 +179,7 @@ class ActivityController extends Controller
 
     /**
      * 查询最近活动。（范围：所有类别的未完成活动）
-     * @param int [GET] num 代表返回多少条，默认为4
+     * @param [GET]:int num 代表返回多少条，默认为4
      * @return null 没有该类活动
      * @return jsonArray 活动内容，形如：
      *         [
@@ -200,7 +200,7 @@ class ActivityController extends Controller
 
     /**
      * 查询热门活动。（范围：所有类别的未完成活动）
-     * @param int [GET] num 代表返回多少条，默认为4
+     * @param [GET]:int num 代表返回多少条，默认为4
      * @return null 没有该类活动
      * @return jsonArray 活动内容，形如：
      *         [
@@ -631,7 +631,7 @@ class ActivityController extends Controller
      * @param int aid
      * @return array[i][数据库字段] 详细信息数组，每一个array[i]是数据库中的一行
      */
-    protected   function getActivityUserArray($aid)
+    protected function getActivityUserArray($aid)
     {
         $dbActivity     =   D("Activity");
         $dbUser         =   D("User");
