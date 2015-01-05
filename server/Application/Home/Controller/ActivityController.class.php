@@ -542,6 +542,48 @@ class ActivityController extends Controller
     }
 
 
+    /**
+     * 将活动从日程中删除，完成两件事情：
+     *     1.删除aid活动的参与者
+     *     2.从uid日程中删除
+     * @param int uid 将活动从uid那个人的日程中删除
+     * @param int aid 哪个活动
+     * @return bool "" 是否成功
+     */
+    public function deleteActivityToSchedule()
+    {
+        $dbActivity     =   D("Activity");
+        $dbSchedule     =   D("Schedule");
+
+        $dbActivity->field("uid,aid")->create(I("param."));//TODO:是否uid已有aid的检查
+        
+        if ( !$dbSchedule->where(array("uid"=>$dbActivity->uid,"aid"=>$dbActivity->aid))->delete() )
+            exit("false");
+
+        //TODO:一致性，需要锁数据表
+        $tmp    =   M("Activity")->where(array("aid"=>$dbActivity->aid))->find();
+        $tmp2   =   json_decode($tmp["participant"]);
+        $tmp3   =   "[";
+        foreach($tmp2 as $key=>$value)
+        {
+            if ($value == $dbActivity->uid)
+            {
+                unset($tmp2[$key]);
+            }
+            else
+                $tmp3 .= $value.",";
+        }
+        if (empty($tmp3))
+            $tmp3 = "";
+        else
+            $tmp3[strlen($tmp3) - 1] = "]";
+        if (!$dbActivity->save(array("aid"=>$dbActivity->aid,"participant"=>$tmp3)))
+            exit("false");
+        else
+            exit("true");
+    }
+
+
 
     /**
      * 得到一个活动的参与者详细信息数组；注：只能是创建者本人才有这个权限，服务器会进行验证
