@@ -23,6 +23,7 @@ body{background: url("../image/background.jpg");background-size:cover;overflow-x
 .column2{width: 52%;margin: 0 1%;overflow: hidden;height: 100%}
 .column2-date{height: 45px;background: white;border-radius: 5px;overflow: hidden}
 .column2-date-calender{width: 45px; height:45px;cursor: pointer;background: url("../image/oneday-calender.jpg")}
+.column2-date-index{width: 45px; height:45px;cursor: pointer;background: url("../image/oneday-index.jpg")}
 .column2-divider{width: 1px;height: 100%;background: #e6e6e5}
 .column2-date-time{font-size: 16px;color: #373836;padding: 13px 9px;cursor: pointer;position: relative}
 .column2-date-time input{position: absolute;width: 10px;left: 40%;opacity: 0;cursor: pointer}
@@ -129,7 +130,7 @@ body{background: url("../image/background.jpg");background-size:cover;overflow-x
 .column3-bottom-taskdetail-content-canyu img{vertical-align: middle;border-radius: 50%}
 .column3-bottom-activity-title{font-size: 18px;background: #2e3540;height: 45px;width: 100%;color: #ffffff;line-height: 45px}
 .column3-bottom-activity-title img{margin-left: 20px;margin-right: 20px}
-.column3-bottom-activity-item{margin-top: 15px}
+.column3-bottom-activity-item{margin-top: 15px;margin-bottom: 15px;cursor: pointer}
 .column3-bottom-activity-item img{margin-left: 15px;margin-right: 5px}
 .column3-bottom-activity-item span{vertical-align: 15px;font-size: 16px}
 .column3-bottom-title{height: 48px;width:100%;background: #ed7a72;border-radius: 5px 5px 0 0;color: white;font-size: 18px;line-height: 48px;overflow: hidden}

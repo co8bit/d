@@ -28,8 +28,8 @@ $(document).ready(function(){
     var activityarray=new Array();
     var apiBaseurl='../server/index.php?';
     var pagenow=1;
-    var rishitubgcolorarray=['#fafaba','#fbf49c','#feec64','#fad94e','#fdb636','#fe8a25','#fc5520','#fb291c','#fc1362','#ed429e','#8b6ce3','#156eca','#1f80de','#239efb','#20bbfd'];
-    var rishitucolorarray=['#ed9780','#d4a071','#dea063','#fff1a3','#fff9c5','#ffddac','#ffdbc1','#ffc1d0','#f47e7c','#f2738e','#cb8cb9','#a195c3','#c58a90','#ae9998','#9a9fa5'];
+    var rishitubgcolorarray=['#fff9b8','#fdf598','#ffed59','#ffd83e','#ffb71d','#ff8a00','#ff5400','#ff2400'];
+    var rishitucolorarray=['#ff8787','#ff9088','#ff8787','#ffffff','#ffffff','#ffffff','#ffffff','#ffffff'];
     var itemnow;
     function geturl(api,m,c,a){
         return api+'m='+m+'&c='+c+'&a='+a;
@@ -104,10 +104,12 @@ $(document).ready(function(){
     $('#oneday-setting').click(function(){
         $('.column3-setting-hover').fadeToggle();
     })
-    //
+    $('#oneday-index').click(function(){
+        jiazai();
+    });
     $('body').on('change','#userinfo-file-input',function(){
         $('#file-value').val($(this).val());
-        userinfourl='../server/index.php?m=Home&c=User&a=setUserInfo';
+        userinfourl=geturl(apiBaseurl,'Home','User','setUserInfo');
         $('.column2-bottom form').attr('action',userinfourl);
     })
     $('body').on('click','#column2-bottom-setting-userinfo-submit',function(){
@@ -323,6 +325,7 @@ $(document).ready(function(){
         $('.column3-setting-hover').css('display','none');
     })
     //这里测试
+
     $('body').on('click','#oneday-page',function(){
         if($('.column3-bottom').attr('state')=='detail'){
             $.post(geturl(apiBaseurl,'Home','Schedule','query'),{sid:$('.column3-bottom').attr('sid')},function(data){
@@ -797,8 +800,8 @@ $(document).ready(function(){
                 pagenow=1;
                 jiazaiActivity(pagenow);
                 $('.column3-bottom').html('<div class="column3-bottom-activity-title"><img src="image/oneday-rightarrow.png"/>最近活动</div>'+
-                    '<div class="column3-bottom-activity-container">'+
-                    '<div class="column3-bottom-activity-item">'+
+                    '<div class="column3-bottom-activity-container" id="column3-bottom-activity-container-recently">'+
+                    /*'<div class="column3-bottom-activity-item">'+
                     '<img src="image/oneday-activity-img.jpg"/>'+
                     '<span>练练——别在冬天放弃自己</span>'+
                     '</div>'+
@@ -813,11 +816,11 @@ $(document).ready(function(){
                     '<div class="column3-bottom-activity-item">'+
                     '<img src="image/oneday-activity-img.jpg"/>'+
                     '<span>练练——别在冬天放弃自己</span>'+
-                    '</div>'+
+                    '</div>'+*/
                     '</div>'+
                     '<div class="column3-bottom-activity-title"><img src="image/oneday-rightarrow.png"/>热门活动</div>'+
-                    '<div class="column3-bottom-activity-container">'+
-                    '<div class="column3-bottom-activity-item">'+
+                    '<div class="column3-bottom-activity-container" id="column3-bottom-activity-container-hot">'+
+                    /*'<div class="column3-bottom-activity-item">'+
                     '<img src="image/oneday-activity-img.jpg"/>'+
                     '<span>练练——别在冬天放弃自己</span>'+
                     '</div>'+
@@ -832,8 +835,40 @@ $(document).ready(function(){
                     '<div class="column3-bottom-activity-item">'+
                     '<img src="image/oneday-activity-img.jpg"/>'+
                     '<span>练练——别在冬天放弃自己</span>'+
-                    '</div>'+
+                    '</div>'+*/
                     '</div>');
+                $.post(geturl(apiBaseurl,'Home','Activity','queryRecently'),{},function(data){
+                    if(data!=null){
+                        for(var i=0;i<data.length;i++){
+                            $('#column3-bottom-activity-container-recently').append(
+                                    '<div class="column3-bottom-activity-item" aid="'+data[i].aid+'" uid="'+data[i].uid+'">'+
+                                    '<img src="'+getLogopicSrc(data[i].logoPic)+'" width="45px" height="45px"/>'+
+                                    '<span>'+data[i].title+'</span>'+
+                                    '</div>'
+                            )
+                        }
+                    }else{
+                        $('#column3-bottom-activity-container-recently').append(
+                                '<div class="column3-bottom-activity-item">最近没有活动的样子。。。</div>'
+                        )
+                    }
+                })
+                $.post(geturl(apiBaseurl,'Home','Activity','queryHot'),{},function(data){
+                    if(data!=null) {
+                        for (var i = 0; i < data.length; i++) {
+                            $('#column3-bottom-activity-container-hot').append(
+                                    '<div class="column3-bottom-activity-item" aid="'+data[i].aid+'" uid="'+data[i].uid+'">' +
+                                    '<img src="' + getLogopicSrc(data[i].logoPic) + '" width="45px" height="45px"/>' +
+                                    '<span>' + data[i].title + '</span>' +
+                                    '</div>'
+                            )
+                        }
+                    }else{
+                        $('#column3-bottom-activity-container-hot').append(
+                            '<div class="column3-bottom-activity-item">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;最近没有活动的样子。。。</div>'
+                        )
+                    }
+                })
                 $('.column2-bottom').css('background','#f8f7f6');
                 break;
             case '日历':
@@ -845,6 +880,68 @@ $(document).ready(function(){
         $('.column1-tag').css('background','#fff').css('color','#999999').css('font-weight','normal').find('img').attr('src','image/oneday-rightarrow.png');
         $(this).css('background','#f4a8a3').css('color','#fff').css('font-weight','bold').find('img').attr('src','image/oneday-rightarrow-on.png');
         event.stopPropagation();
+    })
+    $('body').on('click','.column3-bottom-activity-item',function(){
+        if($(this).html()!='&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;最近没有活动的样子。。。'){
+            var uid=$(this).attr('uid');
+            var aid=$(this).attr('aid');
+            $.post(geturl(apiBaseurl,'Home','Activity','queryOne'),{aid:aid},function(data){
+                $.post(geturl(apiBaseurl,'Home','User','getUserInfo'),{uid:uid},function(userinfo){
+                    $.post(geturl(apiBaseurl,'Home','User','getUid'),{},function(id){
+                        $('.column2-bottom').html('<div class="column2-bottom-activitydetail-top">'+
+                            '<img src="image/oneday-activitydetail-bg.png" width="100%">'+
+                            '<div class="column2-bottom-activitydetail-top-joinin">'+
+                            '<img src="image/oneday-join-in.png" width="100%"/>'+
+                            '</div>'+
+                            '</div>'+
+                            '<div class="column2-bottom-activitydetail-author">'+
+                            '<div class="column2-bottom-activitydetail-author-touxiang left">'+
+                            '<img src="image/touxiang.jpg" width="100%"/>'+
+                            '</div>'+
+                            '<div class="column2-bottom-activitydetail-author-title left">'+
+                            '<h1>'+data.title+'</h1>'+
+                            '<h2>作者：'+userinfo.name+'&nbsp;&nbsp;|&nbsp;&nbsp;'+data.startTime+'</h2>'+
+                            '</div>'+
+                            '</div>'+
+                            '<div class="column2-bottom-activitydetail-content">'+
+                            '</div>'+
+                            '<div class="column2-bottom-activitydetail-participant">'+
+                            '<div class="left column2-bottom-activitydetail-participant-circle">'+
+                            '<img src="image/oneday-activity-circle.png" width="100%"/>'+
+                            '</div>'+
+                            '</div>'+
+                            '<div class="column2-bottom-activitydetail-buttons">'+
+                            '<div class="column2-bottom-activitydetail-button left" id="column2-bottom-activitydetail-zan"><img src="image/oneday-activity-zanyixia.jpg" width="100%"></div>'+
+                            '<div class="column2-bottom-activitydetail-button right"><img src="image/oneday-activity-yibanban.jpg" width="100%"></div>'+
+                            '</div>').attr('aid',aid);
+                        $('.column2-bottom-activitydetail-author-touxiang img').css('height',$('.column2-bottom-activitydetail-author-touxiang img').css('width')).css('border-radius','50%');
+                        $('.column2-bottom-activitydetail-content').html(gaihuilai(data.content));
+                        if(userinfo.logoPic!=''){
+                            $('.column2-bottom-activitydetail-author-touxiang img').attr('src','../server/Public'+userinfo.logoPic);
+                        }else{
+                            $('.column2-bottom-activitydetail-author-touxiang img').attr('src','image/oneday-weishangchuan.png');
+                        }
+                        if(inArray(id,data.participant)){
+                            $('.column2-bottom-activitydetail-top-joinin img').attr('src','image/oneday-join-havein.png')
+                        }
+                        for(var i=0;(i<data.participant.length)&&(i<7);i++){
+                            $.post(geturl(apiBaseurl,'Home','User','getUserInfo'),{uid:data.participant[i]},function(userinfo){
+                                if(userinfo.logoPic==''){
+                                    var src='image/oneday-weishangchuan.png';
+                                }else{
+                                    var src='../server/Public'+userinfo.logoPic;
+                                }
+                                $('.column2-bottom-activitydetail-participant').append('<div class="left column2-bottom-activitydetail-participant-item">'+
+                                    '<img src="'+src+'" width="100%"/>'+
+                                    '</div>')
+                                $('.column2-bottom-activitydetail-participant-item img').css('height',$('.column2-bottom-activitydetail-participant-item img').css('width')).css('border-radius','50%');
+                            })
+                        }
+                        getAllcomment(aid);
+                    })
+                })
+            })
+        }
     })
 
     //活动单元点击逻辑
@@ -1023,7 +1120,70 @@ $(document).ready(function(){
     $('body').on('click','.column2-bottom-activitydetail-top-joinin img',function(){
         var thisobj=$(this);
         if(thisobj.attr('src')=='image/oneday-join-havein.png'){
-            alert('已经参加了哦')
+            var con=confirm('确定要退出该活动吗？');
+            if(con){
+                $.post(geturl(apiBaseurl,'Home','User','getUid'),{},function(uid){
+                    $.post(geturl(apiBaseurl,'Home','Activity','deleteActivityToSchedule'),{uid:uid,aid:$('.column2-bottom').attr('aid')},function(data){
+                        if(data=='true'){
+                            $.post(geturl(apiBaseurl,'Home','Activity','queryOne'),{aid:$('.column2-bottom').attr('aid')},function(data){
+                                $.post(geturl(apiBaseurl,'Home','User','getUserInfo'),{uid:data.uid},function(userinfo){
+                                    $.post(geturl(apiBaseurl,'Home','User','getUid'),{},function(id){
+                                        $('.column2-bottom').html('<div class="column2-bottom-activitydetail-top">'+
+                                            '<img src="image/oneday-activitydetail-bg.png" width="100%">'+
+                                            '<div class="column2-bottom-activitydetail-top-joinin">'+
+                                            '<img src="image/oneday-join-in.png" width="100%"/>'+
+                                            '</div>'+
+                                            '</div>'+
+                                            '<div class="column2-bottom-activitydetail-author">'+
+                                            '<div class="column2-bottom-activitydetail-author-touxiang left">'+
+                                            '<img src="image/touxiang.jpg" width="100%"/>'+
+                                            '</div>'+
+                                            '<div class="column2-bottom-activitydetail-author-title left">'+
+                                            '<h1>'+data.title+'</h1>'+
+                                            '<h2>作者：'+userinfo.name+'&nbsp;&nbsp;|&nbsp;&nbsp;'+data.startTime+'</h2>'+
+                                            '</div>'+
+                                            '</div>'+
+                                            '<div class="column2-bottom-activitydetail-content">'+
+                                            '</div>'+
+                                            '<div class="column2-bottom-activitydetail-participant">'+
+                                            '<div class="left column2-bottom-activitydetail-participant-circle">'+
+                                            '<img src="image/oneday-activity-circle.png" width="100%"/>'+
+                                            '</div>'+
+                                            '</div>'+
+                                            '<div class="column2-bottom-activitydetail-buttons">'+
+                                            '<div class="column2-bottom-activitydetail-button left"><img src="image/oneday-activity-zanyixia.jpg" width="100%"></div>'+
+                                            '<div class="column2-bottom-activitydetail-button right"><img src="image/oneday-activity-yibanban.jpg" width="100%"></div>'+
+                                            '</div>');
+                                        $('.column2-bottom-activitydetail-author-touxiang img').css('height',$('.column2-bottom-activitydetail-author-touxiang img').css('width')).css('border-radius','50%');
+                                        $('.column2-bottom-activitydetail-content').html(gaihuilai(data.content));
+                                        if(userinfo.logoPic!=''){
+                                            $('.column2-bottom-activitydetail-author-touxiang img').attr('src','../server/Public'+userinfo.logoPic);
+                                        }else{
+                                            $('.column2-bottom-activitydetail-author-touxiang img').attr('src','image/oneday-weishangchuan.png');
+                                        }
+                                        if(inArray(id,data.participant)){
+                                            $('.column2-bottom-activitydetail-top-joinin img').attr('src','image/oneday-join-havein.png')
+                                        }
+                                        for(var i=0;(i<data.participant.length)&&(i<7);i++){
+                                            $.post(geturl(apiBaseurl,'Home','User','getUserInfo'),{uid:data.participant[i]},function(userinfo){
+                                                if(userinfo.logoPic==''){
+                                                    var src='image/oneday-weishangchuan.png';
+                                                }else{
+                                                    var src='../server/Public'+userinfo.logoPic;
+                                                }
+                                                $('.column2-bottom-activitydetail-participant').append('<div class="left column2-bottom-activitydetail-participant-item">'+
+                                                    '<img src="'+src+'" width="100%"/>'+
+                                                    '</div>')
+                                                $('.column2-bottom-activitydetail-participant-item img').css('height',$('.column2-bottom-activitydetail-participant-item img').css('width')).css('border-radius','50%');
+                                            })
+                                        }
+                                    })
+                                })
+                            })
+                        }
+                    })
+                })
+            }
         }else{
             $.post(geturl(apiBaseurl,'Home','User','getUid'),{},function(uid){
                 $.post(geturl(apiBaseurl,'Home','Activity','addActivityToSchedule'),{uid:uid,aid:$('.column2-bottom').attr('aid')},function(data1){
