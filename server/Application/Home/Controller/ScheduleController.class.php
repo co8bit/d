@@ -525,4 +525,30 @@ class ScheduleController extends Controller
             exit("true");
     }
 
+
+
+    public function sendSMS()
+    {
+        $url = 'https://leancloud.cn/1.1/requestSmsCode';
+        $post_data=http_build_query(array("mobilePhoneNumber"=>15355494740));
+        $ch = curl_init ();
+
+        //header
+        curl_setopt ( $ch, CURLOPT_URL, $url );
+        curl_setopt ( $ch, CURLOPT_HTTPHEADER, array (
+        "X-AVOSCloud-Application-Id: wkdqb8ieyy64txz9eg1rufgbu39xdokoytdkb02iaduru2pd",
+        "X-AVOSCloud-Application-Key: ci29987r1xno4wlf7dwwixzmg5let07z1tneiy8vsbhpsfsr",
+        "Content-Type: application/json",
+
+        ) );
+        // curl_setopt($ch, CURLOPT_NOBODY, 1);
+
+        //post
+        curl_setopt ( $ch, CURLOPT_POST, 1);
+        curl_setopt ( $ch, CURLOPT_POSTFIELDS, $post_data);
+
+        //exec
+        curl_exec ( $ch );
+        curl_close ( $ch );
+    }
 }
