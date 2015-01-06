@@ -36,7 +36,7 @@ create table schedule(
 	endTime TIMESTAMP NOT NULL,
 	content text not null,
 	participant text not null,
-	state int not null,/*  0:未完成;1:完成*/
+	state int not null,/*0:未完成;1:完成*/
 	comment TEXT not null,/*评论*/
 
 	`check` text not null,/*活动的时候为""（空）*/
@@ -60,7 +60,7 @@ create table activity(
 	endTime TIMESTAMP NOT NULL,
 	content text not null,
 	participant text not null,
-	state int not null,/*  0:未完成;1:完成*/
+	state int not null,/*0:未完成;1:完成*/
 	comment TEXT not null,/*评论*/
 
 	logoPic TEXT NOT NULL,
@@ -71,3 +71,23 @@ create table activity(
 	primary key(aid)
 ) CHARACTER SET utf8 COLLATE utf8_general_ci;
 INSERT INTO `oneday`.`activity` (`aid`, `uid`, `title`, `tag`,`class`, `location`, `startTime`, `endTIme`, `content`, `participant`) VALUES (NULL, 1, '程序员沙龙', 'null',3 ,'zju', '2014-12-25 09:25:32', '2014-12-26 15:36:37', '这是一个活动', '[1,2,3]');
+
+
+
+create table bug(
+	bugid bigint NOT NULL AUTO_INCREMENT,
+	level int NOT NULL,/*紧急或重要程度*/
+	title TEXT NOT NULL,
+	class int NOT NULL,/*0是bug，1是建议*/
+	createTime TIMESTAMP NOT NULL,
+	content text not null,/*这里应该是富文本编辑器的内容*/
+	state int not null,/*0:未读;1:已读未回复；2：已回复未处理；3：已处理*/
+	comment TEXT not null,/*评论*/
+
+	uid bigint NOT NULL,
+	qq varchar(20) not null,
+	email varchar(100) not null,
+	phone varchar(20) not null,
+
+	primary key(bugid)
+) CHARACTER SET utf8 COLLATE utf8_general_ci;
