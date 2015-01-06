@@ -645,12 +645,16 @@ class ActivityController extends Controller
         $map["uid"] = arraY("in",$uidList);
         $result     =   $dbUser->where($map)->select();
 
-        //删掉密码字段
+        //删选出现的字段
         foreach ($result as $key1=>$value1)
         {
             foreach ($result[$key1] as $key2=>$value2)
             {
-                if ( ($key2 == "pwd") )
+                if ( ($key2 == "uid") || ($key2 == "name") || ($key2 == "realName") || ($key2 == "phone") || ($key2 == "address") )
+                {
+                    ;
+                }
+                else
                 {
                     unset($result[$key1][$key2]);
                 }

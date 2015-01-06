@@ -57,15 +57,17 @@ class UserController extends Controller
             {
                 //设置session
                 $this->setSession($result);
-                echo "true";
+                exit("true");
             }
             else
             {
-                echo "false";
+                exit("false");
             }
        // }
     }
     
+
+
     /**
      * 用户退出函数
      * @return "true" 成功
@@ -85,9 +87,9 @@ class UserController extends Controller
     
         //再次判断session是否存在
         if ( session('?uid') )
-            echo "error";
+            exit("error");
         else
-            echo "true";
+            exit("true");
     }
 
     /**
@@ -113,13 +115,13 @@ class UserController extends Controller
         $userId = $dbUser->add($data);
         if(empty($userId))//添加失败
         {
-            echo "false";
+            exit("false");
         }
         else
         {
             $data["uid"]    =   $userId;
             $this->setSession($data);
-            echo "true";
+            exit("true");
         }
     }
 

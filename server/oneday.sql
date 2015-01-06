@@ -17,6 +17,8 @@ create table user(
 	phone varchar(20) not null,
 	address varchar(150) not null,
 
+	smsBalance	bigint	not null,/*短信的余额*/
+
 	primary key(uid)
 ) CHARACTER SET utf8 COLLATE utf8_general_ci;
 INSERT INTO `user` VALUES (null,"wbx@wbx.com","9ca633d2c9103309e8ab7f2d20818aef","王博鑫","","15355666666","zju");
