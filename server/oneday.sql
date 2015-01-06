@@ -47,6 +47,8 @@ create table schedule(
 
 	logoPic TEXT NOT NULL,
 
+	isSMS boolean not null,/*是否发送过短信*/
+
 	primary key(sid)
 ) CHARACTER SET utf8 COLLATE utf8_general_ci;
 INSERT INTO `oneday`.`schedule` (`sid`, `uid`, `title`, `tag`,`class`, `location`, `startTime`, `endTIme`, `content`, `check`, `participant`) VALUES (NULL, 1, 'George', 'null',0 ,'zju', '2014-12-25 09:25:32', '2014-12-26 15:36:37', '你好吗', '{"content":"nicaibudao","state":0},{"content":"nice","state":1}}', '[1]');
