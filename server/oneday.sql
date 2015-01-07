@@ -23,10 +23,10 @@ create table user(
 
 	primary key(uid)
 ) CHARACTER SET utf8 COLLATE utf8_general_ci;
-INSERT INTO `user` VALUES (null,"wbx@wbx.com","9ca633d2c9103309e8ab7f2d20818aef","王博鑫","","15355666666","zju");
-INSERT INTO `user` VALUES (null,"1@2.com","efe6398127928f1b2e9ef3207fb82663","苏州","","13055666666","zju");
-INSERT INTO `user` VALUES (null,"neirong1@goOneDay.com","fa5f47fc60ac772d1c74dc8284ba0e9d","内容发布者","","15888666666","zju");
-INSERT INTO `user` VALUES (null,"neirong2@goOneDay.com","fa5f47fc60ac772d1c74dc8284ba0e9d","传说内容发布者","","18955666666","zju");
+INSERT INTO `user` VALUES (null,"wbx@wbx.com","9ca633d2c9103309e8ab7f2d20818aef","王博鑫","","15355494740","zju",50,"");
+INSERT INTO `user` VALUES (null,"1@2.com","efe6398127928f1b2e9ef3207fb82663","苏州","","","zju",50,"");
+INSERT INTO `user` VALUES (null,"neirong1@goOneDay.com","fa5f47fc60ac772d1c74dc8284ba0e9d","内容发布者","","","zju",50,"");
+INSERT INTO `user` VALUES (null,"neirong2@goOneDay.com","fa5f47fc60ac772d1c74dc8284ba0e9d","传说内容发布者","","","zju",50,"");
 
 create table schedule(
 	sid bigint NOT NULL AUTO_INCREMENT,
@@ -36,8 +36,8 @@ create table schedule(
 	class int NOT NULL,/*0日程，1是活动*/
 	aid bigint NOT NULL,/*如果是活动的话这里链接到那个活动的aid*/
 	location TEXT not null,
-	startTime TIMESTAMP NOT NULL,
-	endTime TIMESTAMP NOT NULL,
+	startTime datetime NOT NULL,
+	endTime datetime NOT NULL,
 	content text not null,
 	participant text not null,
 	state int not null,/*0:未完成;1:完成*/
@@ -62,8 +62,8 @@ create table activity(
 	tag TEXT NOT NULL,
 	class int NOT NULL,/*0，1被日程占用，2是学校活动，3是社团活动，4是兴趣活动*/
 	location TEXT not null,
-	startTime TIMESTAMP NOT NULL,
-	endTime TIMESTAMP NOT NULL,
+	startTime datetime NOT NULL,
+	endTime datetime NOT NULL,
 	content text not null,
 	participant text not null,
 	state int not null,/*0:未完成;1:完成*/
@@ -85,7 +85,7 @@ create table bug(
 	level int NOT NULL,/*紧急或重要程度*/
 	title TEXT NOT NULL,
 	class int NOT NULL,/*0是bug，1是建议*/
-	createTime TIMESTAMP NOT NULL,
+	createTime datetime NOT NULL,
 	content text not null,/*这里应该是富文本编辑器的内容*/
 	state int not null,/*0:未读;1:已读未回复；2：已回复未处理；3：已处理*/
 	comment TEXT not null,/*评论*/
