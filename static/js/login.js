@@ -20,7 +20,12 @@ $(document).ready(function(){
     function geturl(api,m,c,a){
         return api+'m='+m+'&c='+c+'&a='+a;
     }
-
+    var location=window.location.href;
+    var locationarray=location.split('?');
+    if(locationarray[1]=='action=sign'){
+        $('.container-login').css('display','none');
+        $('.container-register').css('display','block');
+    }
     var width=$(window).width();
     var height=$(document).height();
     $('.container-content-email input').focus(function(){

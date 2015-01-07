@@ -1,0 +1,41 @@
+*{margin: 0;padding: 0;font-family: '微软雅黑'}
+.left{float: left}
+.right{float: right}
+.clear{clear: both}
+body{overflow-y: hidden;overflow-x: hidden}
+#container{position: relative}
+.page{position: relative;overflow: hidden}
+.page1-imgs{width: 30%;margin-top: 5%;overflow: hidden;margin-left: 15%}
+.page1-imgs div{width: 100%}
+.page1-buttons{width: 20%;margin-left: 22%;margin-top: 2%;overflow: hidden}
+#page1-buttons-register{background: #f39800;width: 45%;height: 40px;text-align: center;line-height: 40px;color: #ffffff;font-size: 1.5em;cursor: pointer}
+#page1-buttons-login{border:3px solid #e9e7e3;width: 45%;height: 34px;text-align: center;line-height: 34px;color: #ffffff;font-size: 1.5em;margin-left: 5%;cursor: pointer}
+#page1-buttons-login:hover{border: none;height: 40px;line-height: 40px;;margin-left: 6%;background:#f39800}
+.page-background{width: 100%;height: 100%;position: absolute;z-index: -1}
+.page1-zi2{margin-top: 2%}
+.page1-arrow{text-align: center;position: absolute;bottom: 5%;left: 50%}
+.page1-arrow img{cursor: pointer}
+.page2-leftside{margin-top: 7%;margin-left: 8%;width: 50%}
+#page2 .left img{width:100%}
+.page2-content{margin-left: -5%;width: 40%;margin-top: 7%}
+.page2-content-content{margin-top: 2%}
+.page2-content-lis{width: 100%;margin-top: 6%}
+.page2-content-lis img{margin-top: 2%}
+#page3{background: #070707}
+.page3-title{width: 20%;margin: 0 auto;margin-top: 6%}
+.page3-team{width: 80%;margin:0 auto;overflow: hidden;text-align: center;margin-top: 12%}
+.page3-team-item{color: #ffffff;width: 18%;text-align: center;margin-left: 2.4%}
+.page3-team-item.first{margin: 0}
+.page3-team-item h1{font-size: 20pt;font-weight: normal;margin-top: 2%}
+.page3-team-item h2{font-size: 15pt;font-weight: normal;margin-top: 2%}
+.page3-team-item h3{font-size: 10pt;font-weight: normal;margin-top: 4%;text-align: left}
+.page4-title{width: 20%;margin: 0 auto;margin-top: 6%}
+.page4-product{width: 70%;margin: 0 auto;margin-top: 15%}
+.product-item{width:20%;text-align: center;margin-left: 20%}
+.product-item.first{margin-left: 0}
+.product-item h1{margin-top: 5%;font-weight: normal;font-size: 20pt}
+#page5{background: #070707}
+.page5-title{width: 20%;margin: 0 auto;margin-top: 6%}
+.page5-des{width: 70%;margin: 0 auto;margin-top: 15%}
+.page5-des-item{color: #c0baba;font-size: 30pt;margin-left: 5%}
+.oneday-bottom{width: 100%;position: absolute;bottom: 0}

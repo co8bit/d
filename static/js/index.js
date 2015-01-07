@@ -319,7 +319,8 @@ $(document).ready(function(){
                     }
                 });
                 break;
-            case '关于我们':
+            case '意见&amp;bug修复':
+
                 break;
         }
         $('.column3-setting-hover').css('display','none');
@@ -563,7 +564,6 @@ $(document).ready(function(){
             $('.column2-bottom-week-container').find('td:eq('+ a.getDay()+')').append('<div class="column2-bottom-week-container-item item-new" date="'+weekarray[i].startTime+'"><h2>'+title+'</h2></div>');
             $('.item-new').css('background',colorarray[a.getDay()%2][fanzhuan($('.item-new').parent().parent().find('td:eq('+ a.getDay()+')').find('.column2-bottom-week-container-item').length,colorarray[0].length)]);
             $('.item-new').removeClass('item-new');
-            console.log(a);
         }
     }
     //更改时间显示
@@ -849,7 +849,7 @@ $(document).ready(function(){
                         }
                     }else{
                         $('#column3-bottom-activity-container-recently').append(
-                                '<div class="column3-bottom-activity-item">最近没有活动的样子。。。</div>'
+                                '<div class="column3-bottom-activity-item">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;最近没有活动的样子。。。</div>'
                         )
                     }
                 })
@@ -1285,14 +1285,6 @@ $(document).ready(function(){
     })
     $('body').width($(window).width());
     $('#container').height($(window).width()*0.57);
-/*    $('body').on('focus',"input[name='starttime']",function(){
-        $("input[name='starttime']").datetimepicker();
-    })
-    $('body').on('focus',"input[name='endtime']",function(){
-        $("input[name='endtime']").datetimepicker();
-    })*/
-    /*$("input[name='starttime']").datetimepicker();
-    $("input[name='endtime']").datetimepicker();*/
     $('body').on('click','.column3-bottom-option-new-confirm',function(){
         if(validatenull($('input[name=checkoption]'))){
             var option=$('input[name=checkoption]').val();
@@ -1315,17 +1307,21 @@ $(document).ready(function(){
                 var offsetdate=new Date();
                 timenow=new Date(timenow.getFullYear()+'/'+(timenow.getMonth()+1)+'/'+timenow.getDate()+' '+offsetdate.getHours()+':'+offsetdate.getMinutes()+':'+offsetdate.getSeconds());
                 var nexttime=new Date(timenow.getTime()+60*60*1000);
-                $.post(geturl(apiBaseurl,'Home','Schedule','create'),{
-                    title:thisobj.val(),
-                    tag:null,
-                    location:null,
-                    startTime:timenow.getFullYear()+'-'+(timenow.getMonth()+1)+'-'+timenow.getDate()+' '+timenow.getHours()+':'+checktime(timenow.getMinutes())+':'+'00',/*starttimeobj.month+'-'+starttimeobj.day+'-'+' '+starttimeobj.hour+':'+starttimeobj.minute+':'+'00';*/
-                    endTime:nexttime.getFullYear()+'-'+(nexttime.getMonth()+1)+'-'+nexttime.getDate()+' '+nexttime.getHours()+':'+checktime(nexttime.getMinutes())+':'+'00',
-                    content:thisobj.val(),
-                    check:null,
-                    participant:null
-                },function(result){
-                    jiazai();
+                $.post(geturl(apiBaseurl,'Home','User','getUid'),{},function(uid){
+                    var array=new Array();
+                    array.push(uid);
+                    $.post(geturl(apiBaseurl,'Home','Schedule','create'),{
+                        title:thisobj.val(),
+                        tag:null,
+                        location:null,
+                        startTime:timenow.getFullYear()+'-'+(timenow.getMonth()+1)+'-'+timenow.getDate()+' '+timenow.getHours()+':'+checktime(timenow.getMinutes())+':'+'00',/*starttimeobj.month+'-'+starttimeobj.day+'-'+' '+starttimeobj.hour+':'+starttimeobj.minute+':'+'00';*/
+                        endTime:nexttime.getFullYear()+'-'+(nexttime.getMonth()+1)+'-'+nexttime.getDate()+' '+nexttime.getHours()+':'+checktime(nexttime.getMinutes())+':'+'00',
+                        content:thisobj.val(),
+                        check:null,
+                        participant:JSON.stringify(array)
+                    },function(result){
+                        jiazai();
+                    })
                 })
             }
         })
@@ -1355,7 +1351,7 @@ $(document).ready(function(){
         endtime1=endtimeobj.year+'-'+endtimeobj.month+'-'+endtimeobj.day+'-'+' '+endtimeobj.hour+':'+endtimeobj.minute+':'+'00';
         var description=$("textarea[name='description']").val();
         if($(this).html()=='确 认'){
-            if(validatenull($("input[name='title']"))&&validatenull($("input[name='tag']"))&&validatenull($("input[name='destination']"))&&validatenull($("input[name='starttime']"))&&validatenull($("input[name='endtime']"))&&validatenull($("input[name='description']"))){
+            if(validatenull($("input[name='title']"))&&validatenull($("input[name='starttime']"))&&validatenull($("input[name='endtime']"))&&validatenull($("input[name='description']"))){
                 if(optionnum){
                     var checkall=$('.column3-bottom-group .option');
                     $.each(checkall,function(i,d){
