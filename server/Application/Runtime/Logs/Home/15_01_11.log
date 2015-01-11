@@ -1,3 +1,6 @@
 [ 2015-01-11T15:06:31+08:00 ] ::1 /oneday/server/index.php/User/sendSMSForPhone
 ERR: 非法操作:sendSMSForPhone
 
+[ 2015-01-11T16:55:32+08:00 ] ::1 /oneday/server/index.php/Activity/aid/1/queryActivityUser
+ERR: 非法操作:aid
+

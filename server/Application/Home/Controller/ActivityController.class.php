@@ -191,7 +191,7 @@ class ActivityController extends Controller
     {
         $dbActivity     =   D("Activity");
 
-        $map["startTime"]   =   array("gt",date("Y-m-d H:i:s"));
+        $map["startTime"]   =   array("egt",date("Y-m-d H:i:00"));
         $result     =   $dbActivity->where($map)->where(array("state"=>0))->order("startTime")->limit(0,$num)->select();
         $this->ajaxReturn($this->trimForAjax($result));
     }
@@ -212,8 +212,8 @@ class ActivityController extends Controller
     {
         $dbActivity     =   D("Activity");
 
-        $map["startTime"]   =   array("gt",date("Y-m-d H:i:s"));
-        $map["zan"]         =   array("gt",_HOT_ACTIVITY_ZAN_THRESHOLD);
+        $map["startTime"]   =   array("egt",date("Y-m-d H:i:00"));
+        $map["zan"]         =   array("egt",_HOT_ACTIVITY_ZAN_THRESHOLD);
         $result     =   $dbActivity->where($map)->where(array("state"=>0))->order("startTime")->limit(0,$num)->select();
         $this->ajaxReturn($this->trimForAjax($result));
     }
@@ -629,9 +629,10 @@ class ActivityController extends Controller
     /**
      * 得到一个活动的参与者详细信息数组；注：只能是创建者本人才有这个权限，服务器会进行验证
      * @param int aid
+     * @param int mode 模式，为1返回头像logoPic字段，为0不反回
      * @return array[i][数据库字段] 详细信息数组，每一个array[i]是数据库中的一行
      */
-    protected function getActivityUserArray($aid)
+    protected function getActivityUserArray($aid,$mode = 0)
     {
         $dbActivity     =   D("Activity");
         $dbUser         =   D("User");
@@ -650,7 +651,7 @@ class ActivityController extends Controller
         {
             foreach ($result[$key1] as $key2=>$value2)
             {
-                if ( ($key2 == "uid") || ($key2 == "name") || ($key2 == "realName") || ($key2 == "phone") || ($key2 == "address") )
+                if ( ($key2 == "uid") || ($key2 == "name") || ($key2 == "realName") || ($key2 == "phone") || ($key2 == "address") || ( ($mode == 1) && ($key2 == "logoPic") ) )
                 {
                     ;
                 }
@@ -680,7 +681,7 @@ class ActivityController extends Controller
         $dbActivity     =   D("Activity");
         $dbActivity->field("aid")->create(I("param."));
 
-        $this->ajaxReturn($this->getActivityUserArray($dbActivity->aid));
+        $this->ajaxReturn($this->getActivityUserArray($dbActivity->aid,1));
     }
 
 
