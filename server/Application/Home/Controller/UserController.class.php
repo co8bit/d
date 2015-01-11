@@ -270,6 +270,39 @@ class UserController extends Controller
 
 
 
-    
+    /**
+     * 发送手机绑定验证码
+     * @param string phone 要绑定的手机号
+     * @return void
+     */
+    public function sendSMSForBindPhone()
+    {
+        require_once(COMMON_PATH."/function.php");
+
+        $dbUser     =   D("User");
+
+        $dbUser->field("phone")->create(I(_INPUT_METHOD));
+
+        $Verify = new \Think\Verify(array('length'=>4));
+        $code   =   $Verify->entry(1,false);
+
+        sendSMS("$code,30",$dbUser->phone,2650);
+    }
+
+
+
+    /**
+     * 判断手机验证码是否正确
+     * @param string code 用户输入的验证码
+     * @return bool "" 是否正确
+     */
+    public function bindPhoneVerify()
+    {
+        $verify = new \Think\Verify();
+        if ($verify->check(I(_INPUT_METHOD."code"), 1))
+            exit("true");
+        else
+            exit("false");
+    }
 
 }

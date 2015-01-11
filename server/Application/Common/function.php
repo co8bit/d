@@ -7,7 +7,7 @@ require_once(APP_PATH."/Home/Conf/MyConfigINI.php");
  * @param  int     $to         要发送到的手机号码
  * @param  string  $templateId 短信模板号
  */
-public function sendSMS($param = null, $to = 15355494740, $templateId = "2493")
+function sendSMS($param = null, $to = 15355494740, $templateId = "2493")
 {
     if (empty($param))
         exit("error");

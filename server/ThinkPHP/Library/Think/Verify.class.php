@@ -107,10 +107,12 @@ class Verify {
      * 输出验证码并把验证码的值保存的session中
      * 验证码保存到session的格式为： array('verify_code' => '验证码值', 'verify_time' => '验证码创建时间');
      * @access public     
-     * @param string $id 要生成验证码的标识   
+     * @param string $id 要生成验证码的标识 
+     * @param bool $isOutput 是否输出图像  
      * @return void
+     * @return string 验证码
      */
-    public function entry($id = '') {
+    public function entry($id = '',$isOutput = true) {
         // 图片宽(px)
         $this->imageW || $this->imageW = $this->length*$this->fontSize*1.5 + $this->length*$this->fontSize/2; 
         // 图片高(px)
@@ -169,20 +171,28 @@ class Verify {
        
         // 保存验证码
         $key        =   $this->authcode($this->seKey);
+        $originCode =   strtolower(implode('', $code));//原始验证码
         $code       =   $this->authcode(strtoupper(implode('', $code)));
         $secode     =   array();
         $secode['verify_code'] = $code; // 把校验码保存到session
         $secode['verify_time'] = NOW_TIME;  // 验证码创建时间
         session($key.$id, $secode);
                         
-        header('Cache-Control: private, max-age=0, no-store, no-cache, must-revalidate');
-        header('Cache-Control: post-check=0, pre-check=0', false);		
-        header('Pragma: no-cache');
-        header("content-type: image/png");
+        if ($isOutput)
+        {
+            header('Cache-Control: private, max-age=0, no-store, no-cache, must-revalidate');
+            header('Cache-Control: post-check=0, pre-check=0', false);      
+            header('Pragma: no-cache');
+            header("content-type: image/png");
 
-        // 输出图像
-        imagepng($this->_image);
-        imagedestroy($this->_image);
+            // 输出图像
+            imagepng($this->_image);
+            imagedestroy($this->_image);
+        }
+        else
+        {
+            return $originCode;
+        }
     }
 
     /** 
