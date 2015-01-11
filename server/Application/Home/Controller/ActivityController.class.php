@@ -647,12 +647,16 @@ class ActivityController extends Controller
         $map["uid"] = arraY("in",$uidList);
         $result     =   $dbUser->where($map)->select();
 
-        //删掉密码字段
+        //删选出现的字段
         foreach ($result as $key1=>$value1)
         {
             foreach ($result[$key1] as $key2=>$value2)
             {
-                if ( ($key2 == "pwd") )
+                if ( ($key2 == "uid") || ($key2 == "name") || ($key2 == "realName") || ($key2 == "phone") || ($key2 == "address") )
+                {
+                    ;
+                }
+                else
                 {
                     unset($result[$key1][$key2]);
                 }
@@ -798,18 +802,58 @@ class ActivityController extends Controller
 
     /**
      * 赞一下
+     * 做了两件事：
+     *     1.给activity表的aid行的zan+1
+     *     2.给user表的uid行的zanTable添加一个aid
      * @param int aid
      * @return bool "" 是否成功
      */
     public function zan()
     {
         $dbActivity     =   D("Activity");
+        $dbUser     =   D("User");
         $dbActivity->field("aid")->create(I("param."));
 
         //TODO:检查一个用户一次
+        //TODO:一致性
         if (!$dbActivity->where(array("aid"=>$dbActivity->aid))->setInc("zan"))
+            exit("false");
+
+        $tmp    =   $dbUser->where(array("uid"=>$this->uid))->find();
+        $tmp["zanTable"]   =   json_decode($tmp["zanTable"]);
+        if ($tmp["zanTable"] === null)
+            $tmp["zanTable"] = array((int)$dbActivity->aid);
+        else
+            array_push($tmp["zanTable"],(int)$dbActivity->aid);
+        $tmp2   =   null;
+        $tmp2   =   json_encode($tmp["zanTable"]);
+
+        $tmp3   =   $dbUser->save(array("uid"=>$this->uid,"zanTable"=>$tmp2));
+        if ( ($tmp3 === null) || ($tmp3 === false) )
             exit("false");
         else
             exit("true");
+    }
+
+
+
+    /**
+     * 查询用户都赞过哪些活动
+     * @return json 一个json的数组，类似：[1,2,3]代表aid=1、2、3的活动都被这个用户赞过了
+     * @return error "" 出错
+     * @return null "" 数据为空
+     */
+    public function queryZan()
+    {
+        $dbUser     =   D("User");
+
+        $tmp    =   $dbUser->where(array("uid"=>$this->uid))->find();
+
+        if (empty($tmp))
+            exit("error");
+        elseif (empty($tmp["zanTable"]))
+            exit("null");
+        else
+            exit($tmp["zanTable"]);
     }
 }
