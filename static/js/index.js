@@ -29,8 +29,9 @@ $(document).ready(function(){
     var apiBaseurl='../server/index.php?';
     var pagenow=1;
     var rishitubgcolorarray=['#fff9b8','#fdf598','#ffed59','#ffd83e','#ffb71d','#ff8a00','#ff5400','#ff2400'];
-    var rishitucolorarray=['#ff8787','#ff9088','#ff8787','#ffffff','#ffffff','#ffffff','#ffffff','#ffffff'];
+    var rishitucolorarray=['#ff8787','#ff9088','#ff8787','#f1a6a6','#f39800','#f2aa31','#ebb458','#dfba7d'];
     var itemnow;
+    var isloading=false;
     function geturl(api,m,c,a){
         return api+'m='+m+'&c='+c+'&a='+a;
     }
@@ -112,19 +113,7 @@ $(document).ready(function(){
         userinfourl=geturl(apiBaseurl,'Home','User','setUserInfo');
         $('.column2-bottom form').attr('action',userinfourl);
     })
-    $('body').on('click','#column2-bottom-setting-userinfo-submit',function(){
-        userinfourl='../server/index.php?m=Home&c=User&a=editUserInfo';
-        setTimeout(function(){$('.column2-bottom form').attr('action',userinfourl);},1000);
-        timeinter=setInterval(function(){
-            var message=$(document.getElementById('userInfoiframe').contentWindow.document.body).html();
-            if(message=='true'){
-                alert('修改成功了哦');
-                jiazai();
-                clearInterval(timeinter);
-                userInfo();
-            }
-        },500)
-    })
+
     //日期点击出选择
     $('.column2-date-time').click(function(){
         $(this).find('input').focus();
@@ -183,13 +172,27 @@ $(document).ready(function(){
                     '地&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;址: <input type="text" name="address" value="'+data.address+'"/>'+
                     '</div>'+
                     '<div class="column2-bottom-setting-userinfo-all-name">'+
-                    '<input type="submit" id="column2-bottom-setting-userinfo-submit"/>'+
+                    '<input type="submit" id="column2-bottom-setting-userinfo-submit" value="修改"/>'+
                     '</div>'+
                     '</div>'+
                     '</div>').css('background','#fff');
                 $('.column2-bottom-setting-userinfo-touxiang img').css('height',$('.column2-bottom-setting-userinfo-touxiang img').css('width')).css('border-radius','50%');
             })
         })
+    })
+    //个人页面提交
+    $('body').on('click','#column2-bottom-setting-userinfo-submit',function(){
+        userinfourl='../server/index.php?m=Home&c=User&a=editUserInfo';
+        setTimeout(function(){$('.column2-bottom form').attr('action',userinfourl);},1000);
+        timeinter=setInterval(function(){
+            var message=$(document.getElementById('userInfoiframe').contentWindow.document.body).html();
+            if(message=='true'){
+                alert('修改成功了哦');
+                jiazai();
+                clearInterval(timeinter);
+                userInfo();
+            }
+        },500)
     })
     $('body').on('click','.column2-bottom-actmanager-item',function(){
         $('.column2-bottom-actmanager-action[id="actmanager-action-'+($(this).attr('id').split('-'))[2]+'"]').slideToggle();
@@ -281,7 +284,8 @@ $(document).ready(function(){
                     if(data!=''){
                         $('.column2-bottom').html(
                                 '<div class="column2-bottom-actmanager">'+
-                                '</div>').attr('state','actmanager');
+                                '</div>'+
+                                '<div class="column2-bottom-actmanager-button">创建一个活动</div>').attr('state','actmanager');
                         for(var i=0;i<data.content.length;i++){
                             var aid=data.content[i].aid;
                             var src=getLogopicSrc(data.content[i].logoPic);
@@ -326,75 +330,81 @@ $(document).ready(function(){
         $('.column3-setting-hover').css('display','none');
     })
     //这里测试
-
+    $('body').on('click','.column2-bottom-actmanager-button',function(){
+        window.open('create.html');
+    })
     $('body').on('click','#oneday-page',function(){
         if($('.column3-bottom').attr('state')=='detail'){
-            $.post(geturl(apiBaseurl,'Home','Schedule','query'),{sid:$('.column3-bottom').attr('sid')},function(data){
-                var time=dbtimetojsdate(data.startTime);
-                var nexttime=dbtimetojsdate(data.endTime);
-                $('.column3-bottom').html('<div class="column3-bottom-title">'+
-                    '<div class="left"><img src="image/oneday-rightarrow.png"></div>'+
-                    '正在修改任务'+
-                    '</div>'+
-                    '<form id="newtask">'+
-                    '<div class="column3-bottom-input">'+
-                    '<label>标题</label><input type="text" name="title" placeholder="在此输入标题" value="'+data.title+'"/>'+
-                    '</div>'+
-                    '<div class="column3-bottom-input">'+
-                    '<label>标签</label><input type="text"  name="tag" placeholder="添加标签,用空格分开" value="'+(data.tag==null?'':data.tag)+'"/>'+
-                    '</div>'+
-                    '<div class="column3-bottom-input">'+
-                    '<label>地点</label><input type="text"  name="destination" placeholder="在此输入地点" value="'+data.location+'"/>'+
-                    '</div>'+
-                    '<div class="column3-bottom-input">'+
-                    '<label>始于</label><input type="text" name="starttime" value="'+formattimetoinput(time)+'"/>'+
-                    '</div>'+
-                    '<div class="column3-bottom-input">'+
-                    '<label>止于</label><input type="text" name="endtime" value="'+formattimetoinput(nexttime)+'"/>'+
-                    '</div>'+
-                    '<div class="column3-bottom-input">'+
-                    '<label>描述</label><textarea name="description">'+data.content+'</textarea>'+
-                    '</div>'+
-                    '<div class="column3-bottom-option">'+
-                    '<div class="column3-bottom-option-label left">检查项</div>'+
-                    '<div class="column3-bottom-group left">'+
-                    '</div>'+
-                    '<div class="column3-bottom-option-new">'+
-                    '<div class="column3-bottom-option-input">'+
-                    '<input type="text" placeholder="输入检查项内容" name="checkoption"/>'+
-                    '</div>'+
-                    '<div class="clear">'+
-                    '<div class="column3-bottom-option-new-confirm left">添 加</div>'+
-                    '<div class="column3-bottom-option-new-cancel left">取 消</div>'+
-                    '</div>'+
-                    '</div>'+
-                    '</div>'+
-                    '</form>'+
-                    '<div class="column3-bottom-person overflow">'+
-                    '<div class="column3-bottom-person-label left">参与者</div>'+
-                    '<div class="column3-bottom-person-img left">'+
-                    '<img src="image/oneday-addperson.png" width="50px" height="50px"/>'+
-                    '</div>'+
-                    '<div id="addperson">'+
-                    '</div>'+
-                    '</div>'+
-                    '<div class="column3-bottom-cancel left">取 消</div>'+
-                    '<div class="column3-bottom-modify left">确 认</div>');
-                for(var i=0;i<data.check.length;i++){
-                    if(data.check[i].state==1){
-                        $('.column3-bottom-group').append(
-                                '<div class="option">'+
-                                '<label value="'+data.check[i].content+'"><input type="checkbox" name="check"/>'+data.check[i].content+'</label>'+
-                                '</div>'
-                        )
-                    }else{
-                        $('.column3-bottom-group').append(
-                                '<div class="option">'+
-                                '<label value="'+data.check[i].content+'"><input type="checkbox" name="check" checked="checked"/>'+data.check[i].content+'</label>'+
-                                '</div>'
-                        )
-                    }
-                }
+            $.post(geturl(apiBaseurl,'Home','User','getUid'),{},function(uid){
+                $.post(geturl(apiBaseurl,'Home','User','getUserInfo'),{uid:uid},function(userinfo){
+                    $.post(geturl(apiBaseurl,'Home','Schedule','query'),{sid:$('.column3-bottom').attr('sid')},function(data){
+                        var time=dbtimetojsdate(data.startTime);
+                        var nexttime=dbtimetojsdate(data.endTime);
+                        $('.column3-bottom').html('<div class="column3-bottom-title">'+
+                            '<div class="left"><img src="image/oneday-rightarrow.png"></div>'+
+                            '正在修改任务'+
+                            '</div>'+
+                            '<form id="newtask">'+
+                            '<div class="column3-bottom-input">'+
+                            '<label>标题</label><input type="text" name="title" placeholder="在此输入标题" value="'+data.title+'"/>'+
+                            '</div>'+
+                            '<div class="column3-bottom-input">'+
+                            '<label>标签</label><input type="text"  name="tag" placeholder="添加标签,用空格分开" value="'+(data.tag==null?'':data.tag)+'"/>'+
+                            '</div>'+
+                            '<div class="column3-bottom-input">'+
+                            '<label>地点</label><input type="text"  name="destination" placeholder="在此输入地点" value="'+data.location+'"/>'+
+                            '</div>'+
+                            '<div class="column3-bottom-input">'+
+                            '<label>始于</label><input type="text" name="starttime" value="'+formattimetoinput(time)+'"/>'+
+                            '</div>'+
+                            '<div class="column3-bottom-input">'+
+                            '<label>止于</label><input type="text" name="endtime" value="'+formattimetoinput(nexttime)+'"/>'+
+                            '</div>'+
+                            '<div class="column3-bottom-input">'+
+                            '<label>描述</label><textarea name="description">'+data.content+'</textarea>'+
+                            '</div>'+
+                            '<div class="column3-bottom-option">'+
+                            '<div class="column3-bottom-option-label left">检查项</div>'+
+                            '<div class="column3-bottom-group left">'+
+                            '</div>'+
+                            '<div class="column3-bottom-option-new">'+
+                            '<div class="column3-bottom-option-input">'+
+                            '<input type="text" placeholder="输入检查项内容" name="checkoption"/>'+
+                            '</div>'+
+                            '<div class="clear">'+
+                            '<div class="column3-bottom-option-new-confirm left">添 加</div>'+
+                            '<div class="column3-bottom-option-new-cancel left">取 消</div>'+
+                            '</div>'+
+                            '</div>'+
+                            '</div>'+
+                            '</form>'+
+                            '<div class="column3-bottom-person overflow">'+
+                            '<div class="column3-bottom-person-label left">参与者</div>'+
+                            '<div class="column3-bottom-person-img left">'+
+                            '<img src="'+getLogopicSrc(userinfo.logoPic)+'" width="50px" height="50px"/>'+
+                            '</div>'+
+                            '<div id="addperson">'+
+                            '</div>'+
+                            '</div>'+
+                            '<div class="column3-bottom-cancel left">取 消</div>'+
+                            '<div class="column3-bottom-modify left">确 认</div>');
+                        for(var i=0;i<data.check.length;i++){
+                            if(data.check[i].state==1){
+                                $('.column3-bottom-group').append(
+                                        '<div class="option">'+
+                                        '<label value="'+data.check[i].content+'"><input type="checkbox" name="check"/>'+data.check[i].content+'</label>'+
+                                        '</div>'
+                                )
+                            }else{
+                                $('.column3-bottom-group').append(
+                                        '<div class="option">'+
+                                        '<label value="'+data.check[i].content+'"><input type="checkbox" name="check" checked="checked"/>'+data.check[i].content+'</label>'+
+                                        '</div>'
+                                )
+                            }
+                        }
+                    })
+                })
             })
             $('.column2-bottom').css('background','url("image/oneday-dayview-bg.png")').css('background-size','100%');
         }
@@ -480,8 +490,116 @@ $(document).ready(function(){
     //周视图单元格点击事件
     $('body').on('click','.column2-bottom-week-container .column2-bottom-week-container-item',function(){
         timenow=dbtimetojsdate(($(this).attr('date')).replace(/-/g,'/'));
-        jiazai();
+        jiazai(1);
         changetime(timenow);
+        var sid=$(this).attr('sid');
+        $.post(geturl(apiBaseurl,'Home','Schedule','query'),{sid:sid},function(data){
+            if(data.state==1){
+                var src="image/oneday-confirm-button-on.png";
+            }else{
+                var src="image/oneday-confirm-button.png";
+            }
+            var endTime=dbtimetojsdate(data.endTime);
+            if(endTime.getHours()>=12){
+                var str=checktime(endTime.getHours()-12)+':'+checktime(endTime.getMinutes())+'p.m';
+            }else{
+                var str=checktime(endTime.getHours())+':'+checktime(endTime.getMinutes())+'a.m';
+            }
+            $('.column3-bottom').attr('sid',data.sid).html(
+                    '<div class="column3-bottom-taskdetail">'+
+                    '<div class="column3-bottom-taskdetail-header">'+
+                    '<img src="image/oneday-rightarrow.png" class="rightarrow"/>'+
+                    '<span class="column3-bottom-taskdetail-header-title">任务标题</span>'+
+                    '<span class="column3-bottom-taskdetail-header-ddl">DDL&nbsp'+str+'</span>'+
+                    '<img src="'+src+'" class="confirm"/>'+
+                    '</div>'+
+                    '<div class="column3-bottom-taskdetail-action">'+
+                    '<div class="column3-page left reverge-tag" id="oneday-page">'+
+                    '</div>'+
+                    '<div class="column3-divider left"></div>'+
+                    '<div class="column3-rubbish left reverge-tag" id="oneday-rubbish">'+
+                    '</div>'+
+                    '<div class="column3-divider left"></div>'+
+                    '</div>'+
+                    '<div class="column3-bottom-taskdetail-content clear">'+
+                    '<h6>地点&nbsp&nbsp&nbsp'+data.location+'</h6>'+
+                    '<h6>描述&nbsp&nbsp&nbsp'+data.content+'</h6>'+
+                    '<h6>' +
+                    '<span class="left">检查项&nbsp&nbsp&nbsp</span>'+
+                    '<div class="column3-bottom-taskdetail-content-options left">'+
+                    '</div>'+
+                    '</h6>'+
+                    '<h6 class="clear column3-bottom-taskdetail-content-canyu">'+
+                    '参与者'+
+                    '</h6>'+
+                    '</div>'+
+                    '<div class="column3-bottom-taskdetail-divider"></div>'+
+                    '<div class="column3-bottom-taskdetail-bottom">'+
+                    '<div class="column3-bottom-taskdetail-bottom-pinglun">'+
+                    '</div>'+
+                    '<div class="column3-bottom-taskdetail-bottom-textarea">'+
+                    '<textarea placeholder="说一点你喜欢的。。。"></textarea>'+
+                    '</div>'+
+                    '<div class="column3-bottom-taskdetail-bottom-buttons">'+
+                    '<div class="column3-bottom-taskdetail-bottom-button" id="column3-bottom-taskdetail-bottom-buttons-confirm">'+
+                    '确认'+
+                    '</div>'+
+                    '<div class="column3-bottom-taskdetail-bottom-button" id="column3-bottom-taskdetail-bottom-buttons-cancel">'+
+                    '取消'+
+                    '</div>'+
+                    '</div>'+
+                    '</div>'+
+                    '</div>').attr('state','detail');
+            if(data.check!=null){
+                for(var i=0;i<data.check.length;i++){
+                    if(data.check[i].state==1){
+                        $('.column3-bottom-taskdetail-content-options').append(
+                                '<div class="column3-bottom-taskdetail-content-option">'+
+                                '<img src="image/oneday-option.jpg" width="20px" height="20px"/><span>'+data.check[i].content+'</span>'+
+                                '</div>'
+                        )
+                    }else{
+                        $('.column3-bottom-taskdetail-content-options').append(
+                                '<div class="column3-bottom-taskdetail-content-option">'+
+                                '<img src="image/oneday-option-on.jpg" width="20px" height="20px"/><span>'+data.check[i].content+'</span>'+
+                                '</div>'
+                        )
+                    }
+                }
+            }
+            if(data.participant!=null){
+                for(var i=0;i<data.participant.length;i++){
+                    $.post(geturl(apiBaseurl,'Home','User','getUserInfo'),{uid:data.participant[i]},function(userinfo){
+                        $('.column3-bottom-taskdetail-content-canyu').append('<img src="'+getLogopicSrc(userinfo.logoPic)+'" width="40px" height="40px"/>');
+                    })
+                }
+            }
+            var comment=JSON.parse(data.comment);
+            if(comment!=''){
+                $.each(comment,function(i,d){
+                    $.ajax({
+                        async:false,
+                        type:'POST',
+                        url:geturl(apiBaseurl,'Home','User','getUserInfo'),
+                        data:{uid:comment[i].uid},
+                        success:function(userinfo){
+                            $('.column3-bottom-taskdetail-bottom-pinglun').append(
+                                    '<div class="column3-bottom-taskdetail-bottom-item left ">'+
+                                    '<div class="column3-bottom-taskdetail-bottom-item-img left">'+
+                                    '<img src="image/oneday-weishangchuan.png" width="90%" height="90%" class="left"/>'+
+                                    '</div>'+
+                                    '<div class="column3-bottom-taskdetail-bottom-item-content left">'+
+                                    '<h4>'+userinfo.realName+'</h4>'+
+                                    '<h5>'+comment[i].content+'</h5>'+
+                                    '<h6 class="right">'+comment[i].date+'</h6>'+
+                                    '</div>'+
+                                    '</div>'
+                            )
+                        }
+                    })
+                })
+            }
+        })
     })
     //颜色替换
     function fanzhuan(num,length){
@@ -497,6 +615,7 @@ $(document).ready(function(){
             var timenow=new Date();
             drawcalcu();
             $.post(geturl(apiBaseurl,'Home','Schedule','month'),{date:timenow.getFullYear()+'-'+(timenow.getMonth()+1)+'-'+timenow.getDate()},function(data){
+                console.log(data);
                 initMonth(data,timenow);
             });
             $(this).attr('state','on');
@@ -508,6 +627,7 @@ $(document).ready(function(){
     })
     //周视图点击事件
     $('#oneday-calender').click(function(){
+        $('#oneday-calcu').attr('state','off');
         jiazaiweek();
     })
     //周视图加载
@@ -521,14 +641,14 @@ $(document).ready(function(){
     function drawweekdom(){
         $('.column2-bottom').html('').attr('state','zhoushitu');
         $('.column2-bottom').append('<table class="column2-bottom-calender" rules=none cellspacing=0 align=center>'+
-            '<tr class="column2-bottom-calender-title">'+
-            '<th>周日</th>'+
-            '<th>周一</th>'+
-            '<th>周二</th>'+
-            '<th>周三</th>'+
-            '<th>周四</th>'+
-            '<th>周五</th>'+
-            '<th>周六</th>'+
+            '<tr class="column2-bottom-calender1-title">'+
+            '<th>周 日</th>'+
+            '<th>周 一</th>'+
+            '<th>周 二</th>'+
+            '<th>周 三</th>'+
+            '<th>周 四</th>'+
+            '<th>周 五</th>'+
+            '<th>周 六</th>'+
             '</tr>'+
             '<tr class="column2-bottom-week-container">'+
             '<td></td>'+
@@ -561,7 +681,7 @@ $(document).ready(function(){
                 var title=weekarray[i].title
             }
             var a=new Date((weekarray[i].startTime.split(' '))[0].replace(/-/g,'/'));
-            $('.column2-bottom-week-container').find('td:eq('+ a.getDay()+')').append('<div class="column2-bottom-week-container-item item-new" date="'+weekarray[i].startTime+'"><h2>'+title+'</h2></div>');
+            $('.column2-bottom-week-container').find('td:eq('+ a.getDay()+')').append('<div sid="'+weekarray[i].sid+'" class="column2-bottom-week-container-item item-new" date="'+weekarray[i].startTime+'"><h2>'+title+'</h2></div>');
             $('.item-new').css('background',colorarray[a.getDay()%2][fanzhuan($('.item-new').parent().parent().find('td:eq('+ a.getDay()+')').find('.column2-bottom-week-container-item').length,colorarray[0].length)]);
             $('.item-new').removeClass('item-new');
         }
@@ -655,12 +775,7 @@ $(document).ready(function(){
             timenow=getpreviousmonth(timenow.getFullYear(),(timenow.getMonth()+1),timenow.getDate());
             drawcalcu();
             $.post(geturl(apiBaseurl,'Home','Schedule','month'),{date:timenow.getFullYear()+'-'+(timenow.getMonth()+1)+'-'+timenow.getDate()},function(data){
-                if(data){
-                    initMonth(data,timenow);
-                }
-                else{
-
-                }
+                initMonth(data,timenow);
             });
             changetime(timenow);
         }else if($('.column2-bottom').attr('state')=='rishitu'){
@@ -731,11 +846,7 @@ $(document).ready(function(){
             timenow=getnextmonth(timenow.getFullYear(),(timenow.getMonth()+1),timenow.getDate());
             drawcalcu();
             $.post(geturl(apiBaseurl,'Home','Schedule','month'),{date:timenow.getFullYear()+'-'+(timenow.getMonth()+1)+'-'+timenow.getDate()},function(data){
-                if(data){
-                    initMonth(data,timenow);
-                }else{
-
-                }
+                initMonth(data,timenow);
             });
             changetime(timenow);
         }else if($('.column2-bottom').attr('state')=='rishitu'){
@@ -801,41 +912,9 @@ $(document).ready(function(){
                 jiazaiActivity(pagenow);
                 $('.column3-bottom').html('<div class="column3-bottom-activity-title"><img src="image/oneday-rightarrow.png"/>最近活动</div>'+
                     '<div class="column3-bottom-activity-container" id="column3-bottom-activity-container-recently">'+
-                    /*'<div class="column3-bottom-activity-item">'+
-                    '<img src="image/oneday-activity-img.jpg"/>'+
-                    '<span>练练——别在冬天放弃自己</span>'+
-                    '</div>'+
-                    '<div class="column3-bottom-activity-item">'+
-                    '<img src="image/oneday-activity-img.jpg"/>'+
-                    '<span>练练——别在冬天放弃自己</span>'+
-                    '</div>'+
-                    '<div class="column3-bottom-activity-item">'+
-                    '<img src="image/oneday-activity-img.jpg"/>'+
-                    '<span>练练——别在冬天放弃自己</span>'+
-                    '</div>'+
-                    '<div class="column3-bottom-activity-item">'+
-                    '<img src="image/oneday-activity-img.jpg"/>'+
-                    '<span>练练——别在冬天放弃自己</span>'+
-                    '</div>'+*/
                     '</div>'+
                     '<div class="column3-bottom-activity-title"><img src="image/oneday-rightarrow.png"/>热门活动</div>'+
                     '<div class="column3-bottom-activity-container" id="column3-bottom-activity-container-hot">'+
-                    /*'<div class="column3-bottom-activity-item">'+
-                    '<img src="image/oneday-activity-img.jpg"/>'+
-                    '<span>练练——别在冬天放弃自己</span>'+
-                    '</div>'+
-                    '<div class="column3-bottom-activity-item">'+
-                    '<img src="image/oneday-activity-img.jpg"/>'+
-                    '<span>练练——别在冬天放弃自己</span>'+
-                    '</div>'+
-                    '<div class="column3-bottom-activity-item">'+
-                    '<img src="image/oneday-activity-img.jpg"/>'+
-                    '<span>练练——别在冬天放弃自己</span>'+
-                    '</div>'+
-                    '<div class="column3-bottom-activity-item">'+
-                    '<img src="image/oneday-activity-img.jpg"/>'+
-                    '<span>练练——别在冬天放弃自己</span>'+
-                    '</div>'+*/
                     '</div>');
                 $.post(geturl(apiBaseurl,'Home','Activity','queryRecently'),{},function(data){
                     if(data!=null){
@@ -1256,14 +1335,6 @@ $(document).ready(function(){
         str=str.replace(/&quot;/g,'');
         return str;
     }
-    //搜索栏聚焦事件
-    $('.column1-search input').focus(function(){
-        $('.column1-search img').attr('src','image/oneday-delete.png');
-    })
-    //搜索栏失焦事件
-    $('.column1-search input').blur(function(){
-        $('.column1-search img').attr('src','image/oneday-fangda.png');
-    })
     //获取全部活动并放进activityarray中
     function getActivityArray(pagenow){
         $.post(geturl(apiBaseurl,'Home','Activity','queryAll'),{page:pagenow,class:9999},function(data2){
@@ -1303,26 +1374,30 @@ $(document).ready(function(){
         $(this).css('color','#666');
         var thisobj=$(this);
         $(this)[0].addEventListener('keydown',function(e){
-            if(e.keyCode==13){
-                var offsetdate=new Date();
-                timenow=new Date(timenow.getFullYear()+'/'+(timenow.getMonth()+1)+'/'+timenow.getDate()+' '+offsetdate.getHours()+':'+offsetdate.getMinutes()+':'+offsetdate.getSeconds());
-                var nexttime=new Date(timenow.getTime()+60*60*1000);
-                $.post(geturl(apiBaseurl,'Home','User','getUid'),{},function(uid){
-                    var array=new Array();
-                    array.push(uid);
-                    $.post(geturl(apiBaseurl,'Home','Schedule','create'),{
-                        title:thisobj.val(),
-                        tag:null,
-                        location:null,
-                        startTime:timenow.getFullYear()+'-'+(timenow.getMonth()+1)+'-'+timenow.getDate()+' '+timenow.getHours()+':'+checktime(timenow.getMinutes())+':'+'00',/*starttimeobj.month+'-'+starttimeobj.day+'-'+' '+starttimeobj.hour+':'+starttimeobj.minute+':'+'00';*/
-                        endTime:nexttime.getFullYear()+'-'+(nexttime.getMonth()+1)+'-'+nexttime.getDate()+' '+nexttime.getHours()+':'+checktime(nexttime.getMinutes())+':'+'00',
-                        content:thisobj.val(),
-                        check:null,
-                        participant:JSON.stringify(array)
-                    },function(result){
-                        jiazai();
+            if(!isloading){
+                isloading=true;
+                if(e.keyCode==13){
+                    var offsetdate=new Date();
+                    timenow=new Date(timenow.getFullYear()+'/'+(timenow.getMonth()+1)+'/'+timenow.getDate()+' '+offsetdate.getHours()+':'+offsetdate.getMinutes()+':'+offsetdate.getSeconds());
+                    var nexttime=new Date(timenow.getTime()+60*60*1000);
+                    $.post(geturl(apiBaseurl,'Home','User','getUid'),{},function(uid){
+                        var array=new Array();
+                        array.push(uid);
+                        $.post(geturl(apiBaseurl,'Home','Schedule','create'),{
+                            title:thisobj.val(),
+                            tag:null,
+                            location:null,
+                            startTime:timenow.getFullYear()+'-'+(timenow.getMonth()+1)+'-'+timenow.getDate()+' '+timenow.getHours()+':'+checktime(timenow.getMinutes())+':'+'00',/*starttimeobj.month+'-'+starttimeobj.day+'-'+' '+starttimeobj.hour+':'+starttimeobj.minute+':'+'00';*/
+                            endTime:nexttime.getFullYear()+'-'+(nexttime.getMonth()+1)+'-'+nexttime.getDate()+' '+nexttime.getHours()+':'+checktime(nexttime.getMinutes())+':'+'00',
+                            content:thisobj.val(),
+                            check:null,
+                            participant:JSON.stringify(array)
+                        },function(result){
+                            jiazai();
+                            isloading=false;
+                        })
                     })
-                })
+                }
             }
         })
     });
@@ -1331,6 +1406,7 @@ $(document).ready(function(){
             $(this).val('点此快速新建任务');
         $(this).css('color','#dddddd');
     });
+    //日视图点击详情
     $('body').on('click','.item-cotainer-border',function(){
         $.post(geturl(apiBaseurl,'Home','Schedule','query'),{sid:$(this).parent().parent().attr('sid')},function(data){
             drawc3rilidetail(data);
@@ -1478,10 +1554,10 @@ $(document).ready(function(){
     }
 //得到背景色
     function getbackgroundcolor(num){
-        return rishitubgcolorarray[num];
+        return rishitubgcolorarray[num%rishitubgcolorarray.length];
     }
     function getcolor(num){
-        return rishitucolorarray[num];
+        return rishitucolorarray[num%rishitubgcolorarray.length];
     }
 //加载活动全部
     function jiazaiActivity(pagenow){
@@ -1566,7 +1642,9 @@ $(document).ready(function(){
             })
         })
         $('.column2-bottom').css('background','url("image/oneday-dayview-bg.png")').css('background-size','100%');
-        drawc3rili();
+        if(!arguments[0]){
+            drawc3rili();
+        }
     }
     function jiazaishuju() {
         $.post(geturl(apiBaseurl,'Home','User','getUid'),{},function(uid){
@@ -1585,35 +1663,44 @@ $(document).ready(function(){
         return day[month];
     }
     function initMonth(obj,timenow){
-        var array=new Array();
-        $.each(obj,function(i,d){
-            array.push(d);
-        })
-        array.sort(function(a,b){
-            return parseInt(dbtimetojsdate(a.startTime).getTime())-parseInt(dbtimetojsdate(b.startTime).getTime());
-        })
-        var montharray=array;
-        var firstday=new Date(timenow.getFullYear()+"/"+(timenow.getMonth()+1)+'/1');
-        globelmonthobj={addDate:function(str){
-            if(this[str]){
-                this[str]++;
-            }else{
-                this[str]=1;
-            }
-        }};
-        for(var i=0;i<montharray.length;i++){
-            globelmonthobj.addDate((montharray[i].startTime.split(' '))[0]);
-        }
-        for(var i=0;i<getdays(timenow.getMonth(),timenow.getFullYear());i++){
-            var date=new Date(timenow.getFullYear()+'/'+(timenow.getMonth()+1)+'/'+(i+1));
-            var row=getposition(date.getDate(),firstday.getDay());
-            $(".column2-bottom-calender-container:eq("+row+")").find('td:eq('+ date.getDay()+')').attr('date',date.getFullYear()+'-'+checktime(date.getMonth()+1)+'-'+checktime(date.getDate())).css('cursor','pointer').html('<div class="td-day">'+date.getDate()+'</div>');
-        }
-        for(var i in globelmonthobj){
-            if(typeof globelmonthobj[i]=='number'){
-                var date=new Date(i.replace(/-/g,'/'));
+        if(obj==null){
+            var firstday=new Date(timenow.getFullYear()+"/"+(timenow.getMonth()+1)+'/1');
+            for(var i=0;i<getdays(timenow.getMonth(),timenow.getFullYear());i++){
+                var date=new Date(timenow.getFullYear()+'/'+(timenow.getMonth()+1)+'/'+(i+1));
                 var row=getposition(date.getDate(),firstday.getDay());
-                $(".column2-bottom-calender-container:eq("+row+")").find('td:eq('+ date.getDay()+')').attr('date',i).css('cursor','pointer').html('<div class="td-day">'+date.getDate()+'</div><div class="td-num"><b>'+globelmonthobj[i]+'</b>个</div>').css('background','#f9d1ce');
+                $(".column2-bottom-calender-container:eq("+row+")").find('td:eq('+ date.getDay()+')').attr('date',date.getFullYear()+'-'+checktime(date.getMonth()+1)+'-'+checktime(date.getDate())).css('cursor','pointer').html('<div class="td-day">'+date.getDate()+'</div>');
+            }
+        }else{
+            var array=new Array();
+            $.each(obj,function(i,d){
+                array.push(d);
+            })
+            array.sort(function(a,b){
+                return parseInt(dbtimetojsdate(a.startTime).getTime())-parseInt(dbtimetojsdate(b.startTime).getTime());
+            })
+            var montharray=array;
+            var firstday=new Date(timenow.getFullYear()+"/"+(timenow.getMonth()+1)+'/1');
+            globelmonthobj={addDate:function(str){
+                if(this[str]){
+                    this[str]++;
+                }else{
+                    this[str]=1;
+                }
+            }};
+            for(var i=0;i<montharray.length;i++){
+                globelmonthobj.addDate((montharray[i].startTime.split(' '))[0]);
+            }
+            for(var i=0;i<getdays(timenow.getMonth(),timenow.getFullYear());i++){
+                var date=new Date(timenow.getFullYear()+'/'+(timenow.getMonth()+1)+'/'+(i+1));
+                var row=getposition(date.getDate(),firstday.getDay());
+                $(".column2-bottom-calender-container:eq("+row+")").find('td:eq('+ date.getDay()+')').attr('date',date.getFullYear()+'-'+checktime(date.getMonth()+1)+'-'+checktime(date.getDate())).css('cursor','pointer').html('<div class="td-day">'+date.getDate()+'</div>');
+            }
+            for(var i in globelmonthobj){
+                if(typeof globelmonthobj[i]=='number'){
+                    var date=new Date(i.replace(/-/g,'/'));
+                    var row=getposition(date.getDate(),firstday.getDay());
+                    $(".column2-bottom-calender-container:eq("+row+")").find('td:eq('+ date.getDay()+')').attr('date',i).css('cursor','pointer').html('<div class="td-day">'+date.getDate()+'</div><div class="td-num"><b>'+globelmonthobj[i]+'</b>个</div>').css('background','#f9d1ce');
+                }
             }
         }
     }

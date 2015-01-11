@@ -34,14 +34,15 @@ body{background: url("../image/background.jpg");background-size:cover;overflow-x
 .column2-cal{width:45px;height:45px;background:url("../image/oneday-calcu.jpg");cursor: pointer}
 .column2-bottom{overflow-y:auto;width: 100%;background: #ffffff;height: 90%;margin-top:2%;border-radius: 5px;position: relative;background: url("../image/oneday-dayview-bg.png");background-size: 100%}
 .column2-bottom-calender{width: 100%;height: 100%}
-.column2-bottom-calender-title{width: 100%;background: #a7a6a7;height: 6%;color: #ffffff;border-radius: 5px}
+.column2-bottom-calender-title{width: 100%;background: #a7a6a7;height:6%;overflow:hidden;color: #ffffff;border-radius: 5px}
+.column2-bottom-calender1-title{width: 100%;background: #a7a6a7;height:8.5%;overflow:hidden;color: #ffffff;border-radius: 5px}
 .column2-bottom-calender-container{height: 11%}
 .column2-bottom-week-container{width: 100%}
 .column2-bottom-calender-container td{width: 14%;background: #ffffff;border: 2px solid #ebebeb;vertical-align: top;padding:0;position: relative}
 .column2-bottom-calender-container td .td-day{text-align: right;color: #373836;font-size: 18px;margin-top: 10px;margin-right: 10px}
 .column2-bottom-calender-container td .td-num{text-align: center;color: #373836;font-size: 18px;color: #ffffff;margin-top: 20px;position: absolute;top: 15%;left: 20%}
 .column2-bottom-calender-container td .td-num b{font-size: 53px;}
-.column2-bottom-week-container td{border-left: 3px solid #e3e3e2;border-right: 3px solid #e3e3e2;vertical-align: top;width: 14%}
+.column2-bottom-week-container td{border-left: 3px solid #e3e3e2;border-right: 3px solid #e3e3e2;vertical-align: top;width: 14%;border-top: 3px solid #e3e3e2;}
 .column2-bottom-week-container-item{cursor:pointer;width: 100%;height: 8%;background: #f3f2f0;margin-bottom: 10px;text-align: center;overflow: hidden}
 .column2-bottom-week-container-item h2{margin-top: 20%;font-weight: normal}
 .column2-bottom-activitydetail-top{position: relative}
@@ -186,3 +187,4 @@ body{background: url("../image/background.jpg");background-size:cover;overflow-x
 .column2-bottom-actmanager-action{width: 99%;background: #666666;height: 50px;margin-top: -5px;color: #ffffff;border-radius: 0 0 5px 5px;display: none}
 .column2-bottom-actmanager-action-button{line-height: 50px;width: 33%;text-align: center;cursor: pointer}
 .column2-bottom-actmanager-action-divider{width: 1px;height: 40%;background: #dddddd;margin-top: 14px}
+.column2-bottom-actmanager-button{text-align: center;width: 80%;margin: 0 auto;margin-top: 20px;height: 40px;line-height: 40px;background: #ed7a72;color: white;border-radius: 5px;border: 1px solid #999;cursor: pointer}

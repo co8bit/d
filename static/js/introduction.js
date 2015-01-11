@@ -5,12 +5,12 @@ $(document).ready(function(){
     var height=$(window).height();
     var page=1;
     var isanimate=false;
-    $('.page').css('width',$(window).width());
+    $('.page').css('width',$(document).width());
     $('.page').css('height',$(window).height());
-    $(window).resize(function(){
+    /*$(window).resize(function(){
         $('.page').css('width',$(window).width());
         $('.page').css('height',$(window).height());
-    })
+    })*/
     document.body.onmousewheel=function(event){
         event=event||window.event;
         if(event.wheelDelta<0){
@@ -35,11 +35,39 @@ $(document).ready(function(){
             }
         }
     }
+    if(document.addEventListener){
+         document.addEventListener('DOMMouseScroll',function(event){
+         event=event||window.event;
+         console.log(event);
+         if(event.wheelDelta<0||event.detail>0){
+            if(!isanimate){
+                if(page!=5){
+                    isanimate=true;
+                    page++;
+                     $('#container').animate({top:'-='+height},800,function(){
+                        isanimate=false;
+                     });
+                }
+            }
+         }else{
+             if(!isanimate){
+                 if(page!=1){
+                     isanimate=true;
+                     page--;
+                     $('#container').animate({top:'+='+height},800,function(){
+                        isanimate=false;
+                     });
+                     }
+                 }
+             }
+         },false);
+
+     }
     $('.page1-arrow img').mouseenter(function(){
-        $(this).attr('src','image/oneday-page-arrow-on.png');
+        $(this).attr('src','static/image/oneday-page-arrow-on.png');
     })
     $('.page1-arrow img').mouseout(function(){
-        $(this).attr('src','image/oneday-page-arrow.png');
+        $(this).attr('src','static/image/oneday-page-arrow.png');
     })
     $('.page1-arrow img').click(function(){
         isanimate=true;
@@ -47,5 +75,16 @@ $(document).ready(function(){
         $('#container').animate({top:'-='+height},800,function(){
             isanimate=false;
         });
+    })
+    $('#oneday-bottom-weibo').mouseenter(function(){
+        $(this).attr('src','static/image/oneday-introduction-bottom-img1-on.png');
+    })
+    $('#oneday-bottom-weibo').mouseleave(function(){
+        $(this).attr('src','static/image/oneday-introduction-bottom-img1.png');
+    })
+    $('#oneday-bottom-tieba').hover(function(){
+        $(this).attr('src','static/image/oneday-introduction-bottom-img2-on.png');
+    },function(){
+        $(this).attr('src','static/image/oneday-introduction-bottom-img2.png');
     })
 })
