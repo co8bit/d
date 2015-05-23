@@ -82,7 +82,8 @@ class ScheduleController extends Controller
 
     /**
      * 创建一个日程
-     * @param 多个参数，名称参考returnJson,但是形式是post
+     * @param //2015-05-23之前：多个参数，名称参考returnJson,但是形式是post
+     * @param 课程应传入的参数：uid title class location startTime endTime content participant
      * @param int mode 模式，为0新建日程，为2/3/4，和活动的class一致（需要传活动的aid到日程的aid字段里，代表链接到活动上）
      * @return true "" 成功
      *         其他任何东西 "" 失败

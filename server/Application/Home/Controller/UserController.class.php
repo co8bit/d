@@ -22,8 +22,9 @@ class UserController extends Controller
 
     protected function _initialize()
     {
-        //parent::_initialize();
         header("Content-Type:text/html; charset=utf-8");
+        // $this->uid      =       session("uid");
+        // empty($this->uid) && $this->error("error",U("Index/login"));//TODO:注意，这里如果开启会影响setUserInfoLogo函数的安卓端使用
     }
     
 
@@ -240,7 +241,8 @@ class UserController extends Controller
 
     /**
      * 设置用户头像（必须上传头像）
-     * @param int uid
+     * @param int uid;//get方法
+     * @param string name logoPic;//<input type="file" name="logoPic"/>这里的name
      * @param file 头像文件
      * @return bool "" 是否成功
      * @return error "" uid非法
@@ -249,7 +251,10 @@ class UserController extends Controller
     {
         $dbUser     =   D("User");
 
-        $dbUser->field("uid")->create(I('param.'));
+        if ( (I("get.uid") == null) || (I("get.uid") == "") )
+            $dbUser->uid =  I("post.uid");
+        else
+            $dbUser->uid    =   I("get.uid");
 
         $upload = new \Think\Upload($this->UPLOADCONFIG);// 实例化上传类
         $info   =   $upload->upload();
@@ -261,6 +266,10 @@ class UserController extends Controller
         {// 上传成功获取上传文件信息    
             $dbUser->logoPic = $info["logoPic"]['savepath'].$info["logoPic"]['savename'];
         }
+        
+        // echo $dbUser->logoPic;
+        // echo "a:".I("get.uid");
+        // dump($info);
 
         if ($dbUser->save())
             exit("true");

@@ -33,7 +33,7 @@ create table schedule(
 	uid bigint NOT NULL,
 	title TEXT NOT NULL,
 	tag TEXT NOT NULL,
-	class int NOT NULL,/*0日程，1是活动*/
+	class int NOT NULL,/*0日程，1是活动，2是课程*/
 	aid bigint NOT NULL,/*如果是活动的话这里链接到那个活动的aid*/
 	location TEXT not null,
 	startTime datetime NOT NULL,
@@ -96,5 +96,23 @@ create table bug(
 	phone varchar(20) not null,
 
 	primary key(bugid)
+) CHARACTER SET utf8 COLLATE utf8_general_ci;
+
+
+/**
+	用户上了哪些课的表
+*/
+create table user_course(
+	ucid bigint NOT NULL AUTO_INCREMENT,
+	uid bigint NOT NULL,
+	cid text not null,/*no、teacher、teamLocation三个hash后的值，指我们APP里的课程唯一标识符*/
+
+	no text not null,/*教务网内的课程号*/
+	summary TEXT NOT NULL,
+	teacher TEXT NOT NULL,
+	semester varchar(10) NOT NULL,
+	timeLocation TEXT not null,/*上课时间和地点的json内容*/
+
+	primary key(ucid)
 ) CHARACTER SET utf8 COLLATE utf8_general_ci;
 
