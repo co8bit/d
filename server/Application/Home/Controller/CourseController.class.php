@@ -9,8 +9,8 @@ class CourseController extends Controller
 	protected function _initialize()
     {
         header("Content-Type:text/html; charset=utf-8");
-        $this->uid		=		session("uid");
-        empty($this->uid) && $this->error("error",U("Index/login"));
+        // $this->uid		=		session("uid");
+        // empty($this->uid) && $this->error("error",U("Index/login"));
     }
 
 
@@ -22,7 +22,11 @@ class CourseController extends Controller
 
         // $a = exec("ls",$out,$status);
         // $a = exec("./getCourse/grabber.py 3110000201 gfjhg 3110000201e.json 3110000201c.json",$out,$status);
-        // $a = exec("./getCourse/grabber.py ".$userNo." ".$pwd." ".$userNo."e.json "." ".$userNO."c.json",$out,$status);
+        $a = exec("./getCourse/grabber.py ".$userNo." ".$pwd." ".$userNo."e.json "." ".$userNO."c.json",$out,$status);
+        print_r($a);
+        print_r($out);
+        print_r($status);
+        
         // if ($status == 1)//TODO:是否可以这样判断
         //     exit("用户名密码错误");
 
@@ -31,7 +35,7 @@ class CourseController extends Controller
         // $courseString = json_decode($json_string);
         // dump($courseString);
 
-        exit("true");
+        // exit("true");
     }
 
 }

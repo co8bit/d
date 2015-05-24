@@ -855,4 +855,15 @@ class ActivityController extends Controller
         else
             exit($tmp["zanTable"]);
     }
+
+
+
+
+
+
+
+
+
+
+    /*thinkphp渲染
 }
