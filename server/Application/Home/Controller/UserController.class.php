@@ -41,7 +41,7 @@ class UserController extends Controller
     /**
      * 用户登录函数
      * @param string $userName 用户名
-     * @param string  密码
+     * @param string  $userPassword 密码
      * @return bool"" 是否成功
      *         error"" 用户名或密码为空
      */
@@ -65,6 +65,82 @@ class UserController extends Controller
                 exit("false");
             }
        // }
+    }
+
+
+
+    /**
+     * 阿里第三方用户登录函数
+     * @param string $userId 阿里返回的唯一用户ID
+     * @return bool"" 是否成功
+     *         error"" 用户名或密码为空
+     */
+    public function aliLogin() 
+    {
+        //先判断是否注册，如果没有就注册，如果已经存在就登陆
+        //注册
+        $dbUser = D("User");
+        $data["name"]      =       I('param.userId',"");
+        $data["pwd"]       =       I('param.userId',"");
+        empty($data["name"]) && exit("error");
+        empty($data["pwd"]) && exit("error");
+
+        //判断用户名是否重复 TODO:这么写好么！？添加数据库的唯一标识
+        $tmpResult  =   $dbUser->where(array("name"=>$data["name"]))->find();
+        if ( empty($tmpResult) )//还没注册，注册
+        {
+            $userId = $dbUser->add($data);
+            if(empty($userId))//添加失败
+            {
+                exit("false");
+            }
+            else
+            {
+                $data["uid"]    =   $userId;
+                $this->setSession($data);
+                exit("true");
+            }
+        }
+        else
+        {
+            //登陆
+            $userName           =       I('param.userId',"");
+            $userPassword       =       I('param.userId',"");
+            empty($userName) && exit("error");
+            empty($userPassword) && exit("error");
+            
+            if ( $result = D("User")->login($userName,$userPassword) )
+            {
+                //设置session
+                $this->setSession($result);
+                exit("true");
+            }
+            else
+            {
+                exit("false");
+            }
+        }
+    }
+
+
+    public function getUserInfoForNoLogin()//手机在没有登陆得到UID的时候来得到UID
+    {
+        $userName           =       I('param.userName',"");
+        $userPassword       =       I('param.userPassword',"");
+        empty($userName) && exit("error");
+        empty($userPassword) && exit("error");
+        
+        if ( $result = D("User")->login($userName,$userPassword) )
+        {
+            // echo $result["uid"];
+            //准备返回用户信息
+            $dbUser     =   D("User");
+            $this->ajaxReturn($dbUser->getUserInfo($result["uid"]));
+        }
+        else
+        {
+            exit("false");
+        }
     }
     
 
@@ -125,6 +201,8 @@ class UserController extends Controller
             exit("true");
         }
     }
+
+
 
     /**
      * 获得用户uid
