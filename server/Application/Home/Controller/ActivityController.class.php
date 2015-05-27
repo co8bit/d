@@ -30,7 +30,7 @@ class ActivityController extends Controller
     {
         header("Content-Type:text/html; charset=utf-8");
         $this->uid		=		session("uid");
-        empty($this->uid) && $this->error("error",U("Index/login"));
+        empty($this->uid) && exit("need");
     }
 
     
