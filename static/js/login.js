@@ -84,8 +84,6 @@ $(document).ready(function(){
                     $.post(geturl(apiBaseurl,'Home','User','login'),
                         {userName:username,userPassword:password},
                         function (result){
-                            console.log(result);
-                            console.log(geturl(apiBaseurl,'Home','User','login'));
                             if(result=='true'){
                                 console.log(geturl(apiBaseurl,'Home','User','login'));
                                 $('.container').animate({opacity:0},500,function(){

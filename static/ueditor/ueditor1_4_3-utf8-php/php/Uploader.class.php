@@ -53,6 +53,7 @@ class Uploader
         $this->fileField = $fileField;
         $this->config = $config;
         $this->type = $type;
+
         if ($type == "remote") {
             $this->saveRemote();
         } else if($type == "base64") {
@@ -93,6 +94,7 @@ class Uploader
         $this->filePath = $this->getFilePath();
         $this->fileName = $this->getFileName();
         $dirname = dirname($this->filePath);
+        chmod($dirname,0777);
 
         //检查文件大小是否超出限制
         if (!$this->checkSize()) {
@@ -139,15 +141,16 @@ class Uploader
         $this->filePath = $this->getFilePath();
         $this->fileName = $this->getFileName();
         $dirname = dirname($this->filePath);
+        chmod($dirname,0777);
 
         //检查文件大小是否超出限制
         if (!$this->checkSize()) {
             $this->stateInfo = $this->getStateInfo("ERROR_SIZE_EXCEED");
             return;
         }
-
         //创建目录失败
         if (!file_exists($dirname) && !mkdir($dirname, 0777, true)) {
+
             $this->stateInfo = $this->getStateInfo("ERROR_CREATE_DIR");
             return;
         } else if (!is_writeable($dirname)) {

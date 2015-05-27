@@ -1,0 +1,161 @@
+html, body, h1, h2, h3, h4, h5, h6, p, ol, ul, li, pre, code, address, variable, form, fieldset, blockquote {
+ padding: 0;
+ margin: 0;
+ font-size: 100%;
+ font-weight: normal;
+ height: auto;
+ width: 100%
+}
+table { border-collapse: collapse; border-spacing: 0; }
+td, th, caption { font-weight: normal; text-align: left; }
+img, fieldset { border: 0; }
+ol { padding-left: 1.4em; list-style: decimal; }
+ul { padding-left: 1.4em; list-style:square; }
+q:before, q:after { content:''; }
+
+body{
+	width:100%;
+	background-color:#f0efeb;
+	color:#eee;
+	font-size: 30pt;
+}
+p{
+	color: #4d4d4d;
+	font-size: 39pt;
+	line-height: 150%;
+}
+.theh{
+	width: 100%;
+	position: fixed;
+	z-index: 2;
+}
+.head{
+	width: 100%;
+	
+	background-size: 100% 100%;
+}
+.hdimg{
+	width: 100%;
+	height: 100%;
+	z-index: 3;
+}
+.goback{
+	float: left;
+	width: 15%;
+}
+.backimg{
+	height: 100%;
+}
+.search{
+	float: right;
+	width: 15%;
+}
+.searimg{
+	height: 100%;
+	float: right;
+}
+.logo{
+	text-align: center;
+	margin-left: auto;
+	margin-right: auto;
+	font-size: 55px;
+}
+.category{
+	width: 25%;
+	border-bottom: 3px;
+	float: left;
+	color: #83594c;
+}
+.category:hover{
+	border-bottom: 3px #674845 solid;
+	color: #674845;
+}
+.choice{
+	text-align: center;
+	
+	font-size: 55px;
+}
+#jinri{
+	display: block;
+}
+#jingpin{
+	display: none;
+}
+#paihang{
+	display: none;
+}
+#fenlei{
+	display: none;
+}
+.topic{
+	width: 90%;
+	height: 220px;
+	background-color: #fff;
+	margin:40px 5% 40px 5% ;
+	color: #4b4b4b;
+}
+.words{
+	float: left;
+	width: 70%;
+}
+.pics{
+	float: right;
+	width: 30%;
+}
+.title{
+	font-size: 45px;
+	padding-left: 5%;
+}
+.time{
+	float: left;
+	font-size: 35px;
+	padding-left: 5%;
+	width: 30%;
+}
+.praise{
+	width: 30%;
+	float: right;
+	padding-right: 2%;
+	height: 30px;
+	font-size: 35px;
+}
+.primg{
+	height: 30px;
+}
+@media screen and (min-width: 600px){
+.head{
+	height: 100px;
+}
+.goback{
+	height: 80px;
+	padding-top: 10px;
+}
+.search{
+	height: 80px;
+	padding-top: 10px;
+}
+.logo{
+	line-height: 100px;
+}
+.category{
+	height: 97px;
+}
+.choice{
+	padding-top: 27px;
+}
+.blank{
+	height: 210px;
+}
+.title{
+	padding-top: 30px;
+	padding-bottom: 100px;
+}
+.time{
+
+}
+.evimg{
+	height: 180px;
+	margin-top: 20px;
+	margin-right: 10%;
+}
+}

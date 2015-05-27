@@ -1374,7 +1374,7 @@ $(document).ready(function(){
         $(this).css('color','#666');
         var thisobj=$(this);
         $(this)[0].addEventListener('keydown',function(e){
-            if(!isloading){
+            if(true){
                 isloading=true;
                 if(e.keyCode==13){
                     var offsetdate=new Date();
@@ -1599,13 +1599,18 @@ $(document).ready(function(){
     }
 //注入数组
     function init(obj){
-        itemarray.splice(0,itemarray.length);
-        $.each(obj,function(i,d){
-            itemarray.push(d);
-        });
-        itemarray.sort(function(a,b){
-            return parseInt(dbtimetojsdate(a.startTime).getTime())-parseInt(dbtimetojsdate(b.startTime).getTime());
-        })
+        if(obj==null){
+            itemarray = new Array();
+        }else{
+            itemarray.splice(0,itemarray.length);
+            $.each(obj,function(i,d){
+                itemarray.push(d);
+            });
+            itemarray.sort(function(a,b){
+                return parseInt(dbtimetojsdate(a.startTime).getTime())-parseInt(dbtimetojsdate(b.startTime).getTime());
+            })
+        }
+
     }
 //初始化日历界面
     function jiazai(){
