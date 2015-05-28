@@ -53,6 +53,7 @@ function drawDoms(array,tmpl){
 		obj.title = item.title;
 		obj.startTime = (item.startTime.split(' '))[0];
 		obj.logoPic = item.logoPic;
+		obj.id = item.aid;
 		html += formatTemplate(obj,tmpl);
 	}
 	return html;

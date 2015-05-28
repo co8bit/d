@@ -5,6 +5,7 @@
 <title>huo dong</title>
 <link type="text/css" rel="stylesheet" href="../style/webView/style.css">
 <script type="text/javascript" src="../js/jquery-1.10.2.js"></script>
+	<script src="js/md5.js" type="text/ecmascript"></script>
 <script type="text/javascript" src="../js/webview.js"></script>
 <body>
 	<div class="theh">
@@ -44,18 +45,21 @@
 	<div>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a</div>
 </body>
 <script type="text/templates" id="activityDom">
-	<div class="topic">
-		<div class="words">
-			<div class="title">{title}</div>
-			<div class="time">{startTime}</div>
-			<div class="praise">
-				<img src="../image/join.png" class="primg">
-				7
+	<a href="detail.html?id={id}">
+		<div class="topic">
+			<div class="words">
+				<div class="title">{title}</div>
+				<div class="time">{startTime}</div>
+				<div class="praise">
+					<img src="../image/join.png" class="primg">
+					7
+				</div>
+			</div>
+			<div class="pics">
+				<img src="{logoPic}" class="evimg">
 			</div>
 		</div>
-		<div class="pics">
-			<img src="{logoPic}" class="evimg">
-		</div>
-	</div>
+	</a>
+
 </script>
 </html>
