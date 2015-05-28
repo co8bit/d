@@ -28,9 +28,9 @@ class ActivityController extends Controller
 
 	protected function _initialize()
     {
-        header("Content-Type:text/html; charset=utf-8");
-        $this->uid		=		session("uid");
-        empty($this->uid) && exit("need");
+        header("Content-Type:text/html; charset=utf-8");//TODO:权限验证，因为queryRecent_default不能有权限要求
+        // $this->uid		=		session("uid");
+        // empty($this->uid) && exit("need");
     }
 
     
