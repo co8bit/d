@@ -3,7 +3,7 @@
  */
 $(document).ready(function(){
     var windowWidth = $(window).width();
-    $('html').css('font-size',windowWidth/720*16+'px');
+    $('html').css('font-size',windowWidth/720*12+'px');
     var apiBaseurl='../../server/index.php?';
     var location = window.location.href;
     var id = (location.split('='))[1];
@@ -19,7 +19,7 @@ $(document).ready(function(){
             $('.personal img').attr('src',src);
             $('.title').html(activity.title);
             $('.personal-name').html(userInfo.name+',<b>'+userInfo.realName+'</b>');
-            $('.content').html(activity.content);
+            $('.content').html(gaihuilai(activity.content));
             var comment=JSON.parse(activity.comment);
             var html='';
             for(var i=0;i<comment.length;i++){
@@ -73,7 +73,12 @@ $(document).ready(function(){
             })
         })
     })
-
+    function gaihuilai(str){
+        str=str.replace(/&lt;/g,'<');
+        str=str.replace(/&gt;/g,'>');
+        str=str.replace(/&quot;/g,'');
+        return str;
+    }
     function geturl(api,m,c,a){
         return api+'m='+m+'&c='+c+'&a='+a;
     }
