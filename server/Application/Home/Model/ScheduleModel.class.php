@@ -30,8 +30,14 @@ class ScheduleModel extends Model
 		return true;
 	}
 
-	public function participantValidateRules()
+	public function participantValidateRules($inputData)
 	{
+		// $data 	=	json_decode($inputData,true);
+		// foreach ($data as $key=>$value)
+		// {
+		// 	if (!is_int($data[$key]))
+		// 		return false;
+		// }
 		return true;
 	}
 

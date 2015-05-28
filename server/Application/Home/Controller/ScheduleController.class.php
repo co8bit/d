@@ -36,7 +36,8 @@ class ScheduleController extends Controller
     {
         header("Content-Type:text/html; charset=utf-8");
         $this->uid		=		session("uid");
-        empty($this->uid) && $this->error("error",U("Index/login"));
+        // empty($this->uid) && $this->error("error",U("Index/login"));
+        empty($this->uid) && exit("need");
     }
 
 
@@ -201,7 +202,7 @@ class ScheduleController extends Controller
 
         $map["startTime"]   =   array("between",array($date." 00:00:00",$date." 23:59:59"));
         $data   =   null;
-        $data   =   $dbSchedule->where($map)->where(array("uid"=>$this->uid))->select();
+        $data   =   $dbSchedule->where($map)->where(array("uid"=>$this->uid))->order("startTime")->select();
         
         $this->ajaxReturn($this->trimForAjax($data));
     }
@@ -230,7 +231,7 @@ class ScheduleController extends Controller
 
         $map["startTime"]   =   array("between",array(date("Y-m-d",$startDate)." 00:00:00",date("Y-m-d",$endDate)." 23:59:59"));
         $data   =   null;
-        $data   =   $dbSchedule->where($map)->where(array("uid"=>$this->uid))->select();
+        $data   =   $dbSchedule->where($map)->where(array("uid"=>$this->uid))->order("startTime")->select();
         
         $this->ajaxReturn($this->trimForAjax($data));
     }
@@ -271,7 +272,7 @@ class ScheduleController extends Controller
 
         $map["startTime"]   =   array("between",array($pairDate["sdate"],$pairDate["edate"]));
         $data   =   null;
-        $data   =   $dbSchedule->where($map)->where(array("uid"=>$this->uid))->select();
+        $data   =   $dbSchedule->where($map)->where(array("uid"=>$this->uid))->order("startTime")->select();
         $this->ajaxReturn($this->trimForAjax($data));
     }
 
