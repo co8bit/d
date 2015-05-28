@@ -11,14 +11,17 @@ $(document).ready(function(){
     $.post(geturl(apiBaseurl,'Home','Activity','queryOne'),{aid:id},function(activity){
         $.post(geturl(apiBaseurl,'Home','User','getUserInfo'),{uid:activity.uid},function(userInfo){
             var src;
+            console.log(activity);
             if(userInfo.logoPic){
                 src='../../server/Public'+userInfo.logoPic;
             }else{
                 src='../image/oneday-weishangchuan.png';
             }
-            $('.personal img').attr('src',src);
+            $('.personal-headshot').attr('src',src).css('width','1.8rem');
             $('.title').html(activity.title);
-            $('.personal-name').html(userInfo.name+',<b>'+userInfo.realName+'</b>');
+            $('.personal-name').html(userInfo.name);
+            $('.time').html(getTime(hackDate(activity.startTime)));
+            $('.des').html('活动地点：'+activity.location);
             $('.content').html(gaihuilai(activity.content));
             var comment=JSON.parse(activity.comment);
             var html='';
@@ -73,6 +76,16 @@ $(document).ready(function(){
             })
         })
     })
+    function getTime(date){
+        return '活动时间：'+(date.getMonth()+1)+'月'+date.getDate()+'日'+' （周'+getWeekday(date.getDay())+'），'+date.getHours()+':'+date.getMinutes();
+    }
+    function getWeekday(num){
+        var array=['日','一','二','三','四','五','六'];
+        return array[num];
+    }
+    function hackDate(str){
+        return new Date(str.replace('-','/'));
+    }
     function gaihuilai(str){
         str=str.replace(/&lt;/g,'<');
         str=str.replace(/&gt;/g,'>');

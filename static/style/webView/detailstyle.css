@@ -39,162 +39,6 @@ p{
     color: #000;
     border-bottom: 1px #b3b3b3 solid;
 }
-.theword{
-    margin-left: 3%;
-    width: 94%;
-}
-.who{
-    padding-left: 4%;
-    padding-bottom: 5px;
-    color: #666666;
-    font-size: 10px;
-}
-.icons{
-    position: fixed;
-    z-index: 2;
-    width: 15%;
-    right: 0px;
-    top: 0px;
-    height: 100px;
-}
-.head{
-    width: 100%;
-
-    background-size: 100% 100%;
-}
-.hdimg{
-    width: 100%;
-    height: 100%;
-    z-index: 3;
-}
-.goback{
-    float: left;
-    width: 15%;
-}
-.backimg{
-    height: 100%;
-}
-.search{
-    float: right;
-    width: 15%;
-}
-.searimg{
-    height: 100%;
-    float: right;
-}
-.logo{
-    text-align: center;
-    margin-left: auto;
-    margin-right: auto;
-    font-size: 27px;
-}
-.category{
-    width: 25%;
-    border-bottom: 2px;
-    float: left;
-    color: #83594c;
-}
-.category:hover{
-    border-bottom: 2px #674845 solid;
-    color: #674845;
-}
-.choice{
-    text-align: center;
-
-    font-size: 27px;
-}
-#jinri{
-    display: block;
-}
-#jingpin{
-    display: none;
-}
-#paihang{
-    display: none;
-}
-#fenlei{
-    display: none;
-}
-.topic{
-    width: 90%;
-    height: 120px;
-    background-color: #fff;
-    margin:20px 5% 20px 5% ;
-    color: #4b4b4b;
-}
-.words{
-    float: left;
-    width: 70%;
-}
-.pics{
-    float: right;
-    width: 30%;
-}
-.time{
-    float: left;
-    font-size: 17px;
-    padding-left: 5%;
-    width: 30%;
-}
-.praise{
-    width: 30%;
-    float: right;
-    padding-right: 2%;
-    height: 15px;
-    font-size: 17px;
-}
-.primg{
-    height: 15px;
-}
-.il{
-    width: 94%;
-    margin: 0 auto;
-    border-bottom: 1px #b3b3b3 solid;
-    position: relative;
-}
-.ilword{
-    margin-top: 17px;
-    margin-bottom: 15px;
-    width: 78%;
-    padding-left: 3%;
-    font-size: 20px;
-}
-.blk2{
-
-}
-@media screen and (min-width: 200px){
-    .head{
-        height: 50px;
-    }
-    .goback{
-        height: 40px;
-        padding-top: 5px;
-    }
-    .search{
-        height: 40px;
-        padding-top: 5px;
-    }
-    .logo{
-        line-height: 50px;
-    }
-    .category{
-        height: 48px;
-    }
-    .choice{
-        padding-top: 13px;
-    }
-    .blank{
-        height: 105px;
-    }
-    .time{
-
-    }
-    .evimg{
-        height: 80px;
-        margin-top: 20px;
-        margin-right: 10%;
-    }
-}
 .container{
     width: 90%;
     margin: 0 auto;
@@ -203,11 +47,11 @@ p{
     font-size: 2.08rem;
 }
 .personal{
-    margin-top:2.25rem;
+    margin-top:2rem;
 }
 .personal .personal-name{
-    font-size: 1.5rem;
-    vertical-align: top;
+    font-size: 1.2rem;
+    vertical-align: 0.5rem;
     line-height: 1.8em;
     padding-left: 0.5rem;
     letter-spacing: 0.05rem;
@@ -216,6 +60,17 @@ p{
     color: #adafab;
     vertical-align: top;
     font-weight: normal;
+    font-size: 1.2rem;
+}
+.time{
+    font-size: 1rem;
+    color: #ff3f3d;
+    margin-top: 2rem;
+}
+.des{
+    font-size: 1rem;
+    color: #ff3f3d;
+    margin-top: 0.5rem;
 }
 .content{
     font-size: 1.5625rem;
