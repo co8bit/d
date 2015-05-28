@@ -199,6 +199,32 @@ class ActivityController extends Controller
 
 
     /**
+     * 查询最近活动_标准json格式。（范围：所有类别的未完成活动）
+     * @param [GET]:int num 代表返回多少条，默认为4
+     * @return null 没有该类活动
+     * @return jsonArray 活动内容，形如：
+     *         {
+     *             "RecentlyActivity":
+     *             [
+     *                 {},//一个活动，一行数据表中的内容
+     *                 {}
+     *             ]
+     *         }
+     */
+    public function queryRecently_standard($num = 4)
+    {
+        $dbActivity     =   D("Activity");
+
+        $map["startTime"]   =   array("egt",date("Y-m-d H:i:00"));
+        $result     =   $dbActivity->where($map)->where(array("state"=>0))->order("startTime")->limit(0,$num)->select();
+        $re     =   null;
+        $re["RecentlyActivity"]     =   $this->trimForAjax($result);
+        $this->ajaxReturn($re);
+    }
+
+
+
+    /**
      * 查询热门活动。（范围：所有类别的未完成活动）
      * @param [GET]:int num 代表返回多少条，默认为4
      * @return null 没有该类活动
