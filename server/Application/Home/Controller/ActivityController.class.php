@@ -29,7 +29,7 @@ class ActivityController extends Controller
 	protected function _initialize()
     {
         header("Content-Type:text/html; charset=utf-8");//TODO:权限验证，因为queryRecent_default不能有权限要求
-        // $this->uid		=		session("uid");
+        $this->uid		=		session("uid");
         // empty($this->uid) && exit("need");
     }
 
@@ -244,6 +244,32 @@ class ActivityController extends Controller
         $this->ajaxReturn($this->trimForAjax($result));
     }
 
+
+
+    /**
+     * 查询热门活动_标准json格式。（范围：所有类别的未完成活动）
+     * @param [GET]:int num 代表返回多少条，默认为4
+     * @return null 没有该类活动
+     * @return jsonArray 活动内容，形如：
+     *         {
+     *             "RecentlyActivity":
+     *             [
+     *                 {},//一个活动，一行数据表中的内容
+     *                 {}
+     *             ]
+     *         }
+     */
+    public function queryHot_standard($num = 4)
+    {
+        $dbActivity     =   D("Activity");
+
+        $map["startTime"]   =   array("egt",date("Y-m-d H:i:00"));
+        $map["zan"]         =   array("egt",_HOT_ACTIVITY_ZAN_THRESHOLD);
+        $result     =   $dbActivity->where($map)->where(array("state"=>0))->order("startTime")->limit(0,$num)->select();
+        $re     =   null;
+        $re["RecentlyActivity"]     =   $this->trimForAjax($result);
+        $this->ajaxReturn($re);
+    }
 
 
     /**

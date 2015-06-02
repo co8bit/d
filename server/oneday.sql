@@ -8,14 +8,14 @@ use oneday;
 
 /*创建表*/
 create table user(
-	uid bigint NOT NULL AUTO_INCREMENT,
-	name varchar(100) NOT NULL,/*TODO：唯一*/
-	pwd varchar(100) NOT NULL,
+	uid bigint not null AUTO_INCREMENT,/*用户主键*/
+	name varchar(100) not null,/*用户名，TODO：唯一*/
+	pwd varchar(100) not null,/*用户密码*/
 
-	realName varchar(100) not null,
-	logoPic varchar(150) not null,
-	phone varchar(20) not null,
-	address varchar(150) not null,
+	realName varchar(100) not null,/*用户真实信息*/
+	logoPic varchar(150) not null,/*用户头像*/
+	phone varchar(20) not null,/*用户电话*/
+	address varchar(150) not null,/*用户地址*/
 
 	smsBalance	bigint	not null,/*短信的余额*/
 
@@ -29,23 +29,24 @@ INSERT INTO `user` VALUES (null,"neirong1@goOneDay.com","fa5f47fc60ac772d1c74dc8
 INSERT INTO `user` VALUES (null,"neirong2@goOneDay.com","fa5f47fc60ac772d1c74dc8284ba0e9d","传说内容发布者","","","zju",50,"");
 
 create table schedule(
-	sid bigint NOT NULL AUTO_INCREMENT,
-	uid bigint NOT NULL,
-	title TEXT NOT NULL,
-	tag TEXT NOT NULL,
-	class int NOT NULL,/*0日程，1是活动，2是课程*/
-	aid bigint NOT NULL,/*如果是活动的话这里链接到那个活动的aid*/
-	location TEXT not null,
-	startTime datetime NOT NULL,
-	endTime datetime NOT NULL,
-	content text not null,
-	participant text not null,
-	state int not null,/*0:未完成;1:完成*/
-	comment TEXT not null,/*评论*/
+	gsid bigint not null AUTO_INCREMENT,/*日程全局主键*/
+	lsid bigint not null,/*日程客户端主键*/
+	uid bigint not null,/*用户主键*/
+	title TEXT not null,/*日程标题*/
+	tag TEXT not null,/*日程标记*/
+	class int not null,/*日程类别，0日程，1是活动，2是课程*/
+	aid bigint not null,/*活动主键，如果是活动的话这里链接到那个活动的aid*/
+	location TEXT not null,/*日程位置*/
+	startTime datetime not null,/*日程开始时间*/
+	endTime datetime not null,/*日程结束时间*/
+	content text not null,/*日程内容*/
+	participant text not null,/*日程参与者*/
+	state int not null,/*日程状态，0:未完成;1:完成*/
+	comment TEXT not null,/*日程评论*/
 
-	`check` text not null,/*活动的时候为""（空）*/
+	`check` text not null,/*日程检查项，活动的时候为""（空）*/
 
-	logoPic TEXT NOT NULL,
+	logoPic TEXT not null,/*当日程为活动时，活动的logo图片*/
 
 	isSMS boolean not null,/*是否发送过短信*/
 
@@ -56,21 +57,21 @@ INSERT INTO `oneday`.`schedule` (`sid`, `uid`, `title`, `tag`,`class`, `location
 
 
 create table activity(
-	aid bigint NOT NULL AUTO_INCREMENT,
-	uid bigint NOT NULL,
-	title TEXT NOT NULL,
-	tag TEXT NOT NULL,
-	class int NOT NULL,/*0，1被日程占用，2是学校活动，3是社团活动，4是兴趣活动*/
-	location TEXT not null,
-	startTime datetime NOT NULL,
-	endTime datetime NOT NULL,
-	content text not null,
-	participant text not null,
-	state int not null,/*0:未完成;1:完成*/
-	comment TEXT not null,/*评论*/
+	aid bigint not null AUTO_INCREMENT,/*活动主键*/
+	uid bigint not null,/*创建用户的uid*/
+	title TEXT not null,/*活动标题*/
+	tag TEXT not null,/*活动标记*/
+	class int not null,/*活动类别，0，1被日程占用，2是学校活动，3是社团活动，4是兴趣活动*/
+	location TEXT not null,/*活动位置*/
+	startTime datetime not null,/*活动开始时间*/
+	endTime datetime not null,/*活动结束时间*/
+	content text not null,/*活动内容*/
+	participant text not null,/*活动参与者*/
+	state int not null,/*活动状态，0:未完成;1:完成*/
+	comment TEXT not null,/*活动评论*/
 
-	logoPic TEXT NOT NULL,
-	templateNo int not null,/*模板编号*/
+	logoPic TEXT not null,/*活动logo图片*/
+	templateNo int not null,/*活动模板编号*/
 	brief varchar(200) not null,/*活动的摘要内容 TODO:字数待定*/
 	zan bigint not null,/*赞的数量*/
 
@@ -81,16 +82,16 @@ INSERT INTO `oneday`.`activity` (`aid`, `uid`, `title`, `tag`,`class`, `location
 
 
 create table bug(
-	bugid bigint NOT NULL AUTO_INCREMENT,
-	level int NOT NULL,/*紧急或重要程度*/
-	title TEXT NOT NULL,
-	class int NOT NULL,/*0是bug，1是建议*/
-	createTime datetime NOT NULL,
+	bugid bigint not null AUTO_INCREMENT,
+	level int not null,/*紧急或重要程度*/
+	title TEXT not null,
+	class int not null,/*0是bug，1是建议*/
+	createTime datetime not null,
 	content text not null,/*这里应该是富文本编辑器的内容*/
 	state int not null,/*0:未读;1:已读未回复；2：已回复未处理；3：已处理*/
 	comment TEXT not null,/*评论*/
 
-	uid bigint NOT NULL,
+	uid bigint not null,
 	qq varchar(20) not null,
 	email varchar(100) not null,
 	phone varchar(20) not null,
@@ -103,14 +104,14 @@ create table bug(
 	用户上了哪些课的表
 */
 create table user_course(
-	ucid bigint NOT NULL AUTO_INCREMENT,
-	uid bigint NOT NULL,
+	ucid bigint not null AUTO_INCREMENT,
+	uid bigint not null,
 	cid text not null,/*no、teacher、teamLocation三个hash后的值，指我们APP里的课程唯一标识符*/
 
 	no text not null,/*教务网内的课程号*/
-	summary TEXT NOT NULL,
-	teacher TEXT NOT NULL,
-	semester varchar(10) NOT NULL,
+	summary TEXT not null,
+	teacher TEXT not null,
+	semester varchar(10) not null,
 	timeLocation TEXT not null,/*上课时间和地点的json内容*/
 
 	primary key(ucid)

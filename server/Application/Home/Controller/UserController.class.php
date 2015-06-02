@@ -23,7 +23,7 @@ class UserController extends Controller
     protected function _initialize()
     {
         header("Content-Type:text/html; charset=utf-8");
-        // $this->uid      =       session("uid");
+        $this->uid      =       session("uid");
         // empty($this->uid) && $this->error("error",U("Index/login"));//TODO:注意，这里如果开启会影响setUserInfoLogo函数的安卓端使用
     }
     
