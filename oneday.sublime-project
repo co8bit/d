@@ -2,16 +2,25 @@
 	"folders":
 	[
 		{
-			"follow_symlinks": true,
 			"path": "."
 		},
 		{
-			"follow_symlinks": true,
 			"path": "C:\\wamp\\www"
 		},
 		{
-			"follow_symlinks": true,
 			"path": "C:\\wamp\\www\\onethink1.1"
+		},
+		{
+			"path": "/Applications/XAMPP/xamppfiles/htdocs/hst"
+		},
+		{
+			"path": "/Applications/XAMPP/xamppfiles/htdocs/topic"
+		},
+		{
+			"path": "/Applications/XAMPP/xamppfiles/htdocs/Stock-Trading-System"
+		},
+		{
+			"path": "/Applications/XAMPP/xamppfiles/htdocs/KuaidianOrder"
 		}
 	]
 }

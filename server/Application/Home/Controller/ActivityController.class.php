@@ -10,13 +10,13 @@ class ActivityController extends Controller
      * 上传文件的配置数组
      * @var array
      */
-    protected $UPLOADCONFIG = array(    
+    protected $UPLOADCONFIG = array(
         'maxSize'    =>    3145728,
         'rootPath'   =>    _UPLOADPATH,
-        'savePath'   =>    '/Uploads/',    
-        'saveName'   =>    array('uniqid',''),    
-        'exts'       =>    array('jpg', 'png', 'jpeg'),    
-        'autoSub'    =>    true,    
+        'savePath'   =>    '/Uploads/',
+        'saveName'   =>    array('uniqid',''),
+        'exts'       =>    array('jpg', 'png', 'jpeg'),
+        'autoSub'    =>    true,
         'subName'    =>    array('date','Ymd'),
     );
 
@@ -71,6 +71,50 @@ class ActivityController extends Controller
         $result    =   $dbActivity->where(array("aid"=>$dbActivity->aid))->find();
         $result["tag"] = json_decode($result["tag"],true);
         $result["participant"] = json_decode($result["participant"],true);
+        $this->ajaxReturn($result);
+    }
+
+
+    /**
+    * 查询某个活动，此查询附带返回用户的相关信息，如是否参加等
+    * @param int aid
+    * @return error 错误
+    * @return ReturnJson 返回数据
+    */
+    public function queryOneWithUserInfo()
+    {
+        $isJoin =   false;//是否参加
+        $renshu =   0;//参加的人数
+
+        $dbActivity = D("Activity");
+        $dbSchedule = D("Schedule");
+        $dbUser = D("User");
+
+        $dbActivity->field("aid")->create(I('param.'));
+
+        $res    =   $dbActivity->where(array("aid"=>$dbActivity->aid))->find();
+
+        $tmp = null;
+        $tmp = $dbSchedule->where(array("uid"=>$this->uid,"aid"=>$aid))->find();
+        if ( ($tmp !== false) && ($tmp !== null) )
+            $isJoin = true;
+
+        $renshu = $dbSchedule->where(array("aid"=>$aid))->count();
+
+        $userInfo = $dbUser->where(array("uid"=>$res["uid"]))->find();
+
+        $result = null;
+        $result["isJoin"] = $isJoin;
+        $result["renshu"] = (int)$renshu;
+        $result["title"] = $res["title"];
+        $result["zhubanfang"] = $userInfo["realName"];
+        $result["startTime"] = $res["startTime"];
+        $result["endTime"] = $res["endTime"];
+        $result["location"] = $res["location"];
+        $result["picNum"] = $res["picNum"];
+        $result["picList"] = json_decode($res["picList"],true);
+        $result["content"] = $res["content"];
+
         $this->ajaxReturn($result);
     }
 

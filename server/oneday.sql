@@ -23,14 +23,16 @@ create table user(
 
 	primary key(uid)
 ) CHARACTER SET utf8 COLLATE utf8_general_ci;
+INSERT INTO `user` VALUES (null,"co8bit@gmail.com","123456","王博鑫","","15355494740","zju",50,"");
 INSERT INTO `user` VALUES (null,"wbx@wbx.com","9ca633d2c9103309e8ab7f2d20818aef","王博鑫","","15355494740","zju",50,"");
 INSERT INTO `user` VALUES (null,"1@2.com","efe6398127928f1b2e9ef3207fb82663","苏州","","18868100713","zju",50,"");
 INSERT INTO `user` VALUES (null,"neirong1@goOneDay.com","fa5f47fc60ac772d1c74dc8284ba0e9d","内容发布者","","","zju",50,"");
 INSERT INTO `user` VALUES (null,"neirong2@goOneDay.com","fa5f47fc60ac772d1c74dc8284ba0e9d","传说内容发布者","","","zju",50,"");
 
 create table schedule(
-	gsid bigint not null AUTO_INCREMENT,/*日程全局主键*/
-	lsid bigint not null,/*日程客户端主键*/
+	/*gsid bigint not null AUTO_INCREMENT,/*日程全局主键*/
+	/*lsid bigint not null,/*日程客户端主键*/
+	sid bigint not null AUTO_INCREMENT,
 	uid bigint not null,/*用户主键*/
 	title TEXT not null,/*日程标题*/
 	tag TEXT not null,/*日程标记*/
@@ -75,9 +77,13 @@ create table activity(
 	brief varchar(200) not null,/*活动的摘要内容 TODO:字数待定*/
 	zan bigint not null,/*赞的数量*/
 
+	picNum int Default 0,/*图片个数*/
+	picList text not null,/*图片地址，json格式*/
+
+
 	primary key(aid)
 ) CHARACTER SET utf8 COLLATE utf8_general_ci;
-INSERT INTO `oneday`.`activity` (`aid`, `uid`, `title`, `tag`,`class`, `location`, `startTime`, `endTIme`, `content`, `participant`, `logoPic`) VALUES (NULL, 1, '程序员沙龙', 'null',3 ,'zju', '2014-12-25 09:25:32', '2014-12-26 15:36:37', '这是一个活动', '[1,2,3]',"/Uploads/20150102/54a6c00ae2115.png");
+INSERT INTO `oneday`.`activity` (`aid`, `uid`, `title`, `tag`,`class`, `location`, `startTime`, `endTIme`, `content`, `participant`, `logoPic`,`picNum`,`picList`) VALUES (NULL, 1, '程序员沙龙', 'null',3 ,'zju', '2014-12-25 09:25:32', '2014-12-26 15:36:37', '这是一个活动', '[1,2,3]',"/Uploads/20150102/54a6c00ae2115.png",'2','[{"address":"a.jpg"},{"address":"b.jpg"}]');
 
 
 

@@ -1,0 +1,9 @@
+[ 2015-10-10T03:15:14+08:00 ] 127.0.0.1 /ondeday/server/index.php?m=Home&c=Activity&a=queryOneWithUser&aid=1
+ERR: 非法操作:queryOneWithUser
+
+[ 2015-10-10T03:15:23+08:00 ] 127.0.0.1 /ondeday/server/index.php?m=Home&c=Activity&a=queryOneWithUser&aid=1
+ERR: 非法操作:queryOneWithUser
+
+[ 2015-10-10T03:34:11+08:00 ] ::1 /ondeday/server/index.php?m=Home&c=Activity&a=queryOneWithUser&aid=1
+ERR: 非法操作:queryOneWithUser
+
