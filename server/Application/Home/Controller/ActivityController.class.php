@@ -111,7 +111,7 @@ class ActivityController extends Controller
         $result["startTime"] = $res["startTime"];
         $result["endTime"] = $res["endTime"];
         $result["location"] = $res["location"];
-        $result["picNum"] = $res["picNum"];
+        $result["picNum"] = (int)$res["picNum"];
         $result["picList"] = json_decode($res["picList"],true);
         $result["content"] = $res["content"];
 
@@ -951,5 +951,7 @@ class ActivityController extends Controller
         else
             exit($tmp["zanTable"]);
     }
+
+    
 
 }

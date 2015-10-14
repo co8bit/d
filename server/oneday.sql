@@ -12,6 +12,8 @@ create table user(
 	name varchar(100) not null,/*用户名，TODO：唯一*/
 	pwd varchar(100) not null,/*用户密码*/
 
+	zhonglei int Default 0,/*用户类别，0：普通，1：社团，2：学校官方，3：商家*/
+
 	realName varchar(100) not null,/*用户真实信息*/
 	logoPic varchar(150) not null,/*用户头像*/
 	phone varchar(20) not null,/*用户电话*/
@@ -23,11 +25,12 @@ create table user(
 
 	primary key(uid)
 ) CHARACTER SET utf8 COLLATE utf8_general_ci;
-INSERT INTO `user` VALUES (null,"co8bit@gmail.com","123456","王博鑫","","15355494740","zju",50,"");
-INSERT INTO `user` VALUES (null,"wbx@wbx.com","9ca633d2c9103309e8ab7f2d20818aef","王博鑫","","15355494740","zju",50,"");
-INSERT INTO `user` VALUES (null,"1@2.com","efe6398127928f1b2e9ef3207fb82663","苏州","","18868100713","zju",50,"");
-INSERT INTO `user` VALUES (null,"neirong1@goOneDay.com","fa5f47fc60ac772d1c74dc8284ba0e9d","内容发布者","","","zju",50,"");
-INSERT INTO `user` VALUES (null,"neirong2@goOneDay.com","fa5f47fc60ac772d1c74dc8284ba0e9d","传说内容发布者","","","zju",50,"");
+INSERT INTO `user` VALUES (null,"co8bit@gmail.com","123456",0,"王博鑫","","15355494740","zju",50,"");
+INSERT INTO `user` VALUES (null,"co8bit","123456",1,"王博鑫","","15355494740","zju",50,"");
+INSERT INTO `user` VALUES (null,"wbx@wbx.com","9ca633d2c9103309e8ab7f2d20818aef",0,"王博鑫","","15355494740","zju",50,"");
+INSERT INTO `user` VALUES (null,"1@2.com","efe6398127928f1b2e9ef3207fb82663",0,"苏州","","18868100713","zju",50,"");
+INSERT INTO `user` VALUES (null,"neirong1@goOneDay.com","fa5f47fc60ac772d1c74dc8284ba0e9d",0,"内容发布者","","","zju",50,"");
+INSERT INTO `user` VALUES (null,"neirong2@goOneDay.com","fa5f47fc60ac772d1c74dc8284ba0e9d",0,"传说内容发布者","","","zju",50,"");
 
 create table schedule(
 	/*gsid bigint not null AUTO_INCREMENT,/*日程全局主键*/
