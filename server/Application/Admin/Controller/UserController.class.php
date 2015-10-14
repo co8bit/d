@@ -2,12 +2,31 @@
 namespace Admin\Controller;
 use Think\Controller;
 
+require_once(APP_PATH."/Admin/Conf/MyConfigINI.php");
+
 class UserController extends Controller
 {
+    protected $uid    =   null;
+
+    /**
+     * 上传文件的配置数组
+     * @var array
+     */
+    protected $UPLOADCONFIG = array(    
+        'maxSize'    =>    3145728,
+        'rootPath'   =>    _UPLOADPATH,
+        'savePath'   =>    '/Uploads/',    
+        'saveName'   =>    array('uniqid',''),    
+        'exts'       =>    array('jpg', 'png', 'jpeg'),    
+        'autoSub'    =>    true,    
+        'subName'    =>    array('date','Ymd'),
+    );
+
     protected function _initialize()
     {
         //parent::_initialize();
         header("Content-Type:text/html; charset=utf-8");
+        $this->uid      =       session("uid");
     }
     
 
@@ -37,7 +56,7 @@ class UserController extends Controller
             {
                 //设置session
                 $this->setSession($result);
-                $this->success("登录成功",U("User/createActivity"));
+                $this->success("登录成功",U("User/index"));
             }
             else
             {
@@ -103,7 +122,7 @@ class UserController extends Controller
             {
                 $data["uid"]    =   $userId;
                 $this->setSession($data);
-                $this->success("注册成功",U("User/createActivity"));
+                $this->success("注册成功",U("User/index"));
             }  
         }
         else
@@ -140,9 +159,86 @@ class UserController extends Controller
         $this->display();
     }
 
+    /**
+     * 信息维护页面
+     */
+    public function personal()
+    {
+        $dbUser = D("User");
 
+        $data   =   $dbUser->where(array("uid"=>$this->uid))->find();
 
+        if (IS_POST)
+        {
+            if (!$dbUser->create())
+            {
+                 exit($dbUser->getError());
+            }
+            else
+            {
+                $dbUser->uid  =   $this->uid;
+                $dbUser->state    =   0;
 
+                if ($dbUser->corpBook == "") $dbUser->corpBook = $data["corpBook"];
+                if ($dbUser->businessCard == "") $dbUser->businessCard = $data["businessCard"];
+
+                $upload = new \Think\Upload($this->UPLOADCONFIG);// 实例化上传类
+                $info   =   $upload->upload();
+                if(!$info)
+                {// 上传错误提示错误信息
+                    //exit($upload->getError());
+                }
+                else
+                {// 上传成功获取上传文件信息  
+                    //trace(dump($info,false),'提示','debug');  
+                    foreach($info as $key=>$file)
+                    {
+                        $dbUser->$key = $file['savepath'].$file['savename'];
+                    }
+                }
+
+                $dbUser->save();
+                $edit   =   1;
+            }
+        }
+
+        
+
+        if ($data["state"] != 1)
+        {
+            $msg    =   "未通过审核";
+        }
+        else
+        {
+            $msg    =   $data["checkdate"]."通过审核";
+        }
+        
+        $this->assign("data",$data);
+        $this->assign("msg",$msg);
+        $this->assign("edit",$edit);
+
+        $this->general(2);
+        $this->display();
+    }
+
+    public function index()
+    {
+        $this->general(1);
+        $this->display();
+    }
+
+    /**
+     * 生成本控制器页面的通用信息，目前是两个内容：上导航栏和左导航栏
+     * @param  int $nav 导航条选中当前项的值
+     */
+    protected function general($nav)
+    {
+        $this->assign("nav",$nav);//导航条选中当前项的值
+        $dbUser  =    D("User");
+        $headerData   =   $dbUser->where(array("uid"=>$this->uid))->find();
+        $this->name   =   $headerData["name"];
+        $this->assign("userName",$this->name);
+    }
 
 
 
@@ -262,41 +358,5 @@ class UserController extends Controller
             exit("false");
     }
 
-
-
-    /**
-     * 发送手机绑定验证码
-     * @param string phone 要绑定的手机号
-     * @return void
-     */
-    public function sendSMSForBindPhone()
-    {
-        require_once(COMMON_PATH."/function.php");
-
-        $dbUser     =   D("User");
-
-        $dbUser->field("phone")->create(I(_INPUT_METHOD));
-
-        $Verify = new \Think\Verify(array('length'=>4));
-        $code   =   $Verify->entry(1,false);
-
-        sendSMS("$code,30",$dbUser->phone,2650);
-    }
-
-
-
-    /**
-     * 判断手机验证码是否正确
-     * @param string code 用户输入的验证码
-     * @return bool "" 是否正确
-     */
-    public function bindPhoneVerify()
-    {
-        $verify = new \Think\Verify();
-        if ($verify->check(I(_INPUT_METHOD."code"), 1))
-            exit("true");
-        else
-            exit("false");
-    }
 
 }

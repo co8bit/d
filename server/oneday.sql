@@ -23,14 +23,23 @@ create table user(
 
 	zanTable text not null,/*这个uid都赞过哪些的表*/
 
+
+	/*第三方用户信息*/
+	state varchar(4) DEFAULT 0,/*0:未认证；1：通过*/
+	checkdate datetime not null,/*通过审核的日期*/
+
+	idcard int not NULL,
+	email varchar(100) not null,
+	corp varchar(100) not null,/*当前任职机构*/
+	career varchar(100) not null,/*职务*/
+	businessCard varchar(100) not null,/*名片*/
+	corpBook varchar(150) not null,/*机构授权书*/
+
 	primary key(uid)
 ) CHARACTER SET utf8 COLLATE utf8_general_ci;
-INSERT INTO `user` VALUES (null,"co8bit@gmail.com","123456",0,"王博鑫","","15355494740","zju",50,"");
-INSERT INTO `user` VALUES (null,"co8bit","123456",1,"王博鑫","","15355494740","zju",50,"");
-INSERT INTO `user` VALUES (null,"wbx@wbx.com","9ca633d2c9103309e8ab7f2d20818aef",0,"王博鑫","","15355494740","zju",50,"");
-INSERT INTO `user` VALUES (null,"1@2.com","efe6398127928f1b2e9ef3207fb82663",0,"苏州","","18868100713","zju",50,"");
-INSERT INTO `user` VALUES (null,"neirong1@goOneDay.com","fa5f47fc60ac772d1c74dc8284ba0e9d",0,"内容发布者","","","zju",50,"");
-INSERT INTO `user` VALUES (null,"neirong2@goOneDay.com","fa5f47fc60ac772d1c74dc8284ba0e9d",0,"传说内容发布者","","","zju",50,"");
+INSERT INTO `user` VALUES (null,"co8bit@gmail.com","123456",0,"王博鑫","","15355494740","zju",50,"","","","","","","","","");
+INSERT INTO `user` VALUES (null,"co8bit","123456",1,"王博鑫","","15355494740","zju",50,"","","","","","","","","");
+INSERT INTO `user` VALUES (null,"wbx@wbx.com","9ca633d2c9103309e8ab7f2d20818aef",0,"王博鑫","","15355494740","zju",50,"","","","","","","","","");
 
 create table schedule(
 	/*gsid bigint not null AUTO_INCREMENT,/*日程全局主键*/

@@ -1,25 +1,11 @@
 <div class="col-sm-3 col-md-2 sidebar">
   <ul class="nav nav-sidebar">
-    <li <if condition="$nav eq '1'">class="active"</if>><a href="{:U('Provider/index')}">概览 <span class="sr-only">(current)</span></a></li>
+    <li <if condition="$nav eq '1'">class="active"</if>><a href="{:U('User/index')}">概览 <span class="sr-only">(current)</span></a></li>
     <li>基本信息维护</li>
-    <li <if condition="$nav eq '2'">class="active"</if>><a href="{:U('Provider/personal')}">个人信息维护</a></li>
-    <li <if condition="$nav eq '3'">class="active"</if>><a href="{:U('Provider/')}">机构信息维护</a></li>
-    <li <if condition="$nav eq '4'">class="active"</if>><a href="{:U('Provider/projectlib')}">项目库</a></li>
+    <li <if condition="$nav eq '2'">class="active"</if>><a href="{:U('User/personal')}">基本信息维护</a></li>
   </ul>
   <ul class="nav nav-sidebar">
-    <li>服务</li>
-    <li <if condition="$nav eq '5'">class="active"</if>><a href="{:U('Provider/castservice')}">发布服务</a></li>
-  </ul>
-  <ul class="nav nav-sidebar">
-    <li>投标</li>
-    <li <if condition="$nav eq '6'">class="active"</if>><a href="{:U('Provider/buybiaoshu')}">查看标书</a></li>
-    <li <if condition="$nav eq '7'">class="active"</if>><a href="{:U('Provider/ownbiaoshu')}">查看已买标书</a></li>
-    <li <if condition="$nav eq '8'">class="active"</if>><a href="{:U('Provider/managebiaoshu')}">中标管理</a></li>
-  </ul>
-  <ul class="nav nav-sidebar">
-    <li>数据中心</li>
-    <li <if condition="$nav eq '9'">class="active"</if>><a href="{:U('Provider/manageservice')}">服务管理</a></li>
-    <li <if condition="$nav eq '10'">class="active"</if>><a href="{:U('Provider/')}">排期</a></li>
-    <li <if condition="$nav eq '11'">class="active"</if>><a href="{:U('Provider/spread')}">推广</a></li>
+    <li>活动管理</li>
+    <li <if condition="$nav eq '3'">class="active"</if>><a href="{:U('User/createActivity')}">发布活动</a></li>
   </ul>
 </div>
