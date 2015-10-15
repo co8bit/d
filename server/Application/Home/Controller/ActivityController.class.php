@@ -727,19 +727,30 @@ class ActivityController extends Controller
      * @param int aid
      * @param int mode 模式，为1返回头像logoPic字段，为0不反回
      * @return array[i][数据库字段] 详细信息数组，每一个array[i]是数据库中的一行
+     * @return  null 没有人参加
      */
     protected function getActivityUserArray($aid,$mode = 0)
     {
         $dbActivity     =   D("Activity");
         $dbUser         =   D("User");
+        $dbSchedule     =   D("Schedule");
 
         $tmp    =   $dbActivity->where(array("aid"=>$aid))->find();
         if ($tmp["uid"] != $this->uid)
             exit("error");
 
-        $uidList    =   json_decode($tmp["participant"],true);
+        $uidListOrigin    =   $dbSchedule->where(array("aid"=>$aid))->select();
+        if ($uidListOrigin === null)//不然in查询会报错
+            return null;
 
-        $map["uid"] = arraY("in",$uidList);
+        $i = 0;
+        foreach ($uidListOrigin as $key => $value)
+        {
+            $uidList[$i] = $value["uid"];
+            $i++;
+        }
+
+        $map["uid"] = array("in",$uidList);
         $result     =   $dbUser->where($map)->select();
 
         //删选出现的字段
@@ -791,10 +802,10 @@ class ActivityController extends Controller
     public function createActivityUserExcel()
     {
         $dbActivity     =   D("Activity");
-        $dbActivity->field("aid")->create(I("param."));
+        $aid = I("param.aid");
 
-        $tmp    =   $dbActivity->find();
-        $data   =   $this->getActivityUserArray($dbActivity->aid);
+        $tmp    =   $dbActivity->where(array("aid"=>$aid))->find();
+        $data   =   $this->getActivityUserArray($aid);
         //============================EXCEL====================================
 
         /** Error reporting */

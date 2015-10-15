@@ -274,10 +274,81 @@ class UserController extends Controller
     }
 
 
+    /**
+     * 查看已发布的活动的页面
+     */
+    public function manageActivity()
+    {
+        $dbActivity   =   D("Activity");
+
+        //显示页面
+        $tmp = $dbActivity->where(array("uid"=>$this->uid))->select();
+
+        $this->assign("list",$tmp);
+
+        $this->general(4);
+        $this->display();
+    }
+
+    /**
+     * 修改活动状态
+     * @note 属于manageActivity
+     * @param [get] int mode;操作模式，0：上架，1：下架，2：删除
+     */
+    public function editActivityState()
+    {
+        $dbActivity = D("Activity");
+
+        switch (I("param.mode")) {
+            case 0:
+            {
+                $tmp = $dbActivity->save(array("aid"=>I("param.aid"),"state"=>0));
+                if ( ($tmp !== false) || ($tmp !== null) )
+                    $this->success("操作成功");
+                else
+                    $this->error("操作失败");
+                break;
+            }
+            case 1:
+            {
+                $tmp = $dbActivity->save(array("aid"=>I("param.aid"),"state"=>1));
+                if( ($tmp !== false) || ($tmp !== null) )
+                    $this->success("操作成功");
+                else
+                    $this->error("操作失败");
+                break;
+            }
+            case 2:
+            {
+                $tmp = $dbActivity->where(array("aid"=>I("param.aid")))->delete();
+                if($tmp)
+                    $this->success("操作成功");
+                else
+                    $this->error("操作失败");
+                break;
+            }
+            default:
+                break;
+        }
+    }
 
 
+    /**
+     * 查看活动详情的页面
+     * @note 属于manageActivity
+     */
+    public function viewActivity()
+    {
+        $dbActivity   =   D("Activity");
 
+        //显示页面
+        $tmp = $dbActivity->where(array("aid"=>I("param.aid")))->find();
 
+        $this->assign("data",$tmp);
+
+        $this->general(4);
+        $this->display();
+    }
 
 
 

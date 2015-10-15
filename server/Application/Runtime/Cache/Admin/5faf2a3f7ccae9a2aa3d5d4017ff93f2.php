@@ -36,6 +36,7 @@
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
             <li><a href="#"><?php echo $userName;?></a></li>
+            <li><a href="<?php echo U('User/logout');?>">退出</a></li>
           </ul>
         </div>
       </div>
@@ -52,6 +53,7 @@
   <ul class="nav nav-sidebar">
     <li>活动管理</li>
     <li <?php if($nav == '3'): ?>class="active"<?php endif; ?>><a href="<?php echo U('User/createActivity');?>">发布活动</a></li>
+    <li <?php if($nav == '4'): ?>class="active"<?php endif; ?>><a href="<?php echo U('User/manageActivity');?>">已发布的活动</a></li>
   </ul>
 </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">

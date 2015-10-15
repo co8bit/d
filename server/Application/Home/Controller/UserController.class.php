@@ -58,7 +58,7 @@ class UserController extends Controller
             {
                 //设置session
                 $this->setSession($result);
-                exit("true");
+                exit("ture");
             }
             else
             {
@@ -123,7 +123,13 @@ class UserController extends Controller
     }
 
 
-    public function getUserInfoForNoLogin()//手机在没有登陆得到UID的时候来得到UID
+    /**
+     * 手机首次登陆所使用的接口
+     * @param string $userName
+     * @param string $userPassword 
+     * @return json 数据库用户表的一行
+     */
+    public function getUserInfoForNoLogin()
     {
         $userName           =       I('param.userName',"");
         $userPassword       =       I('param.userPassword',"");

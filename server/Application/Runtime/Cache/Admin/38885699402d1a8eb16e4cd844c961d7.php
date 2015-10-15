@@ -28,7 +28,7 @@
 </head>
 <body>
 
-    <nav class="navbar navbar-inverse navbar-fixed-top">
+<nav class="navbar navbar-inverse navbar-fixed-top">
       <div class="container-fluid">
         <div class="navbar-header">
           <a class="navbar-brand" href="<?php echo U("Index/index");?>">OneDay活动发布系统</a>
@@ -42,8 +42,8 @@
       </div>
 </nav>
 
-    <div class="container-fluid">
-      <div class="row">
+<div class="container">
+    <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
   <ul class="nav nav-sidebar">
     <li <?php if($nav == '1'): ?>class="active"<?php endif; ?>><a href="<?php echo U('User/index');?>">概览 <span class="sr-only">(current)</span></a></li>
@@ -57,10 +57,49 @@
   </ul>
 </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-          <h1 class="page-header">Hello</h1>
+            <h1 class="page-header">查看活动</h1>
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <tbody>
+                    <tr>
+                        <td>活动标题*</td>
+                        <td><input name="title" type="text" class="form-control" value="<?php echo ($data["title"]); ?>"/></td>
+                    </tr>
+                    <tr>
+                        <td>开始时间*</td>
+                        <td>
+                            <input name="startTime" type="text" class="form-control" placeholder="请按照此格式填写：2015-09-01 09:09:09" value="<?php echo ($data["startTime"]); ?>"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>结束时间*</td>
+                        <td>
+                            <input name="endTime" type="text" class="form-control" placeholder="请按照此格式填写：2015-09-01 09:09:09" value="<?php echo ($data["endTime"]); ?>"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>地点*</td>
+                        <td>
+                            <input name="location" type="text" class="form-control" value="<?php echo ($data["location"]); ?>"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>活动内容介绍*</td>
+                        <td>
+                            <input name="content" type="text" class="form-control" value="<?php echo ($data["content"]); ?>"/>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="row">
+                <div class="col-md-5 col-md-offset-4">
+                    <a class="btn btn-primary" href='<?php echo U("User/manageActivity");?>'>返回</a>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
+</div>
 	<!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->

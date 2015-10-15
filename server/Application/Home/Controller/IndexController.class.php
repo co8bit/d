@@ -25,6 +25,14 @@ class IndexController extends Controller
             </form><br>
         ';
 
+        echo '<br>手机登录：User/getUserInfoForNoLogin
+            <form action="'.U("User/getUserInfoForNoLogin").'" method="post" >
+                用户名:<input type="text" name="userName" value="co8bit@gmail.com"/>
+                密码:<input type="text" name="userPassword" value="123456"/>
+                <input type="submit" value="登录" >
+            </form><br>
+        ';
+
     	echo '<br>注册：User/sign：
             <form action="'.U("User/sign").'" method="post" >
                 用户名:<input type="text" name="userName" value=""/>
