@@ -163,3 +163,6 @@ ERR: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error i
 [ 2015-10-15T18:06:07+08:00 ] 127.0.0.1 /ondeday/server/index.php?m=Home&c=Activity&a=createActivityUserExcel&aid=3
 ERR: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 1
 
+[ 2015-10-15T18:33:59+08:00 ] ::1 /d/server/index.php?m=Home&c=User&a=login
+ERR: SQLSTATE[HY000] [1045] Access denied for user 'onedayt54w'@'localhost' (using password: YES)
+
