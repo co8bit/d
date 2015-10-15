@@ -166,3 +166,6 @@ ERR: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error i
 [ 2015-10-15T18:33:59+08:00 ] ::1 /d/server/index.php?m=Home&c=User&a=login
 ERR: SQLSTATE[HY000] [1045] Access denied for user 'onedayt54w'@'localhost' (using password: YES)
 
+[ 2015-10-15T18:45:35+08:00 ] ::1 /d/server/index.php?m=Home&c=User&a=personal
+ERR: 非法操作:personal
+

@@ -1,3 +1,5 @@
 server/Application/Runtime/
 server/Public/Uploads/
 server/Application/Runtime/Cache/
+server/Application/Runtime/Cache/Admin/*.php
+server/Application/Runtime/Logs/Home/*.log
