@@ -46,10 +46,10 @@ class ActivityController extends Controller
         {
             foreach ($data[$key1] as $key2=>$value2)
             {
-                if ( ($key2 == "tag") || ($key2 == "check") || ($key2 == "participant") || ($key2 == "comment") )
+                if ( ($key2 == "tag") || ($key2 == "check") || ($key2 == "participant") || ($key2 == "comment") || ($key2 == "picList"))
                 {
-                    if ( ($valu2 == "null") || ($valu2 == null) )
-                        $data[$key1][$key2] = "[]";
+                    if ( ($valu2 == "null") || ($valu2 == null) || ($valu2 == "") )
+                        $data[$key1][$key2] = "";
                     else
                         $data[$key1][$key2]     =   json_decode($value2,true);
                 }
