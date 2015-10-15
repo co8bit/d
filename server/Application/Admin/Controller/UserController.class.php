@@ -144,18 +144,51 @@ class UserController extends Controller
      */
     public function createActivity()
     {
+        $edit = 0;
+
         $this->uid      =       session("uid");
         empty($this->uid) && exit("非法登陆");
         
         if (IS_POST)
         {
+            $dbActivity = D("Activity");
+            if (!$dbActivity->create())
+            {
+                 exit($dbActivity->getError());
+            }
+            else
+            {
+                $dbActivity->uid  =   $this->uid;
+                $dbActivity->class = 3;
+                $dbActivity->state = 0;
 
+                $upload = new \Think\Upload($this->UPLOADCONFIG);// 实例化上传类
+                $info   =   $upload->upload();
+                if(!$info)
+                {// 上传错误提示错误信息
+                    //exit($upload->getError());
+                }
+                else
+                {// 上传成功获取上传文件信息  
+                    //trace(dump($info,false),'提示','debug');  
+                    $i = 0;
+                    foreach($info as $key=>$file)
+                    {
+                        $tmp[$i]["address"] = $file['savepath'].$file['savename'];
+                        $i++;
+                    }
+                }
+
+                $dbActivity->picNum = count($info);
+                $dbActivity->picList = json_encode($tmp);
+                
+                $dbActivity->add();
+                $edit = 1;
+            }
         }
-        else
-        {
 
-        }
-
+        $this->assign("edit",$edit);
+        $this->general(3);
         $this->display();
     }
 
