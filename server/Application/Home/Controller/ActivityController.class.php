@@ -49,7 +49,7 @@ class ActivityController extends Controller
                 if ( ($key2 == "tag") || ($key2 == "check") || ($key2 == "participant") || ($key2 == "comment") || ($key2 == "picList"))
                 {
                     if ( ($valu2 == "null") || ($valu2 == null) || ($valu2 == "") )
-                        $data[$key1][$key2] = "";
+                        $data[$key1][$key2] = array();
                     else
                         $data[$key1][$key2]     =   json_decode($value2,true);
                 }
