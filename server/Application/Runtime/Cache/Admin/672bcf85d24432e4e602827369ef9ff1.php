@@ -15,7 +15,7 @@
     <link href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="/ondeday/server/Public/wbx/dashboard.css" rel="stylesheet">
+    <link href="/oneday/server/Public/wbx/dashboard.css" rel="stylesheet">
     <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
     
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -90,6 +90,8 @@
         </select>
         <label></label>
         <button class="btn btn-lg btn-success btn-block" type="submit">注册</button>
+        <label></label>
+        <a class="btn btn-lg btn-primary btn-block" href="<?php echo U('User/login');?>">返回</a>
       </form>
 
     </div> <!-- /container -->
