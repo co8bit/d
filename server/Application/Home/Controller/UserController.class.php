@@ -58,7 +58,7 @@ class UserController extends Controller
             {
                 //设置session
                 $this->setSession($result);
-                exit("ture");
+                exit("true");
             }
             else
             {
