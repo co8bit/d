@@ -1,2 +1,3 @@
 server/Application/Runtime/
 server/Public/Uploads/
+server/Application/Runtime/Cache/
